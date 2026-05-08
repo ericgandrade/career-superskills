@@ -1,0 +1,41 @@
+{
+  "version": "1.0.0",
+  "generated": "2026-05-08T00:00:00Z",
+  "bundles": {
+    "resume": {
+      "name": "Resume & CV",
+      "description": "Skills for building, optimizing, and tailoring resumes and CVs.",
+      "skills": ["resume-tailor","resume-formatter","resume-quantifier","resume-bullet-writer",
+                 "resume-section-builder","resume-ats-optimizer","resume-version-manager",
+                 "executive-resume-writer","tech-resume-optimizer","academic-cv-builder",
+                 "creative-portfolio-resume"],
+      "target": "Job seekers, career changers"
+    },
+    "job-search": {
+      "name": "Job Search",
+      "description": "Skills for the full job search cycle: applications, interviews, and offers.",
+      "skills": ["job-description-analyzer","offer-comparison-analyzer","interview-prep-generator",
+                 "salary-negotiation-prep","cover-letter-generator","linkedin-profile-optimizer",
+                 "career-changer-translator"],
+      "target": "Active job seekers"
+    },
+    "portfolio": {
+      "name": "Portfolio & Presence",
+      "description": "Build your professional brand and online presence.",
+      "skills": ["portfolio-case-study-writer","reference-list-builder",
+                 "linkedin-profile-optimizer","creative-portfolio-resume"],
+      "target": "Creatives, consultants, executives"
+    },
+    "all": {
+      "name": "All Career Skills",
+      "description": "Complete career development toolkit — all 20 skills.",
+      "skills": ["academic-cv-builder","career-changer-translator","cover-letter-generator",
+                 "creative-portfolio-resume","executive-resume-writer","interview-prep-generator",
+                 "job-description-analyzer","linkedin-profile-optimizer","offer-comparison-analyzer",
+                 "portfolio-case-study-writer","reference-list-builder","resume-ats-optimizer",
+                 "resume-bullet-writer","resume-formatter","resume-quantifier","resume-section-builder",
+                 "resume-tailor","resume-version-manager","salary-negotiation-prep","tech-resume-optimizer"],
+      "target": "All career stages"
+    }
+  }
+}

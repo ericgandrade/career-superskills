@@ -1,0 +1,14 @@
+{
+  "name": "career-superskills",
+  "version": "1.0.0",
+  "description": "20 AI skills for job search, resume optimization, career transitions, and professional development.",
+  "author": {
+    "name": "Eric Andrade",
+    "url": "https://github.com/ericgandrade"
+  },
+  "homepage": "https://github.com/ericgandrade/career-superskills",
+  "repository": "https://github.com/ericgandrade/career-superskills",
+  "license": "MIT",
+  "skills": "skills/",
+  "keywords": ["career", "resume", "job-search", "linkedin", "interview", "ats", "ai", "skills"]
+}

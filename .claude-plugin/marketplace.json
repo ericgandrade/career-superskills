@@ -1,0 +1,29 @@
+{
+  "name": "career-superskills",
+  "owner": {
+    "name": "Eric Andrade",
+    "email": "egandrade@gmail.com"
+  },
+  "metadata": {
+    "description": "20 skills for career development: resume optimization, ATS tuning, cover letters, LinkedIn, interview prep, salary negotiation, job search, and portfolio building."
+  },
+  "plugins": [
+    {
+      "name": "career-superskills",
+      "source": {
+        "source": "github",
+        "repo": "ericgandrade/career-superskills"
+      },
+      "description": "20 skills for career development: resume optimization, ATS tuning, cover letters, LinkedIn, interview prep, salary negotiation, job search, and portfolio building.",
+      "author": {
+        "name": "Eric Andrade"
+      },
+      "homepage": "https://github.com/ericgandrade/career-superskills",
+      "repository": "https://github.com/ericgandrade/career-superskills",
+      "license": "MIT",
+      "keywords": ["career", "resume", "job-search", "linkedin", "interview", "ats"],
+      "category": "productivity",
+      "tags": ["career", "resume", "job-search", "interview", "ats"]
+    }
+  ]
+}
