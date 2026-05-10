@@ -217,18 +217,8 @@ async function uninstallManagedSkills(platforms, quiet) {
   let removedCount = 0;
 
   if (managedSkills.length === 0) {
-    const discovered = new Set();
-    for (const targetDir of targets) {
-      if (!(await fs.pathExists(targetDir))) continue;
-      const entries = await fs.readdir(targetDir);
-      for (const entry of entries) {
-        const skillDir = path.join(targetDir, entry);
-        if (!(await fs.pathExists(path.join(skillDir, 'SKILL.md')))) continue;
-        const stat = await fs.stat(skillDir);
-        if (stat.isDirectory()) discovered.add(entry);
-      }
-    }
-    managedSkills = Array.from(discovered);
+    console.log(chalk.red('❌ Could not determine managed skills list. Uninstall aborted to avoid removing skills from other packages.\n'));
+    return;
   }
 
   for (const targetDir of targets) {
@@ -246,6 +236,80 @@ async function uninstallManagedSkills(platforms, quiet) {
   if (!quiet) {
     console.log(chalk.gray(`🧹 Uninstalled ${removedCount} managed skill folder(s)`));
   }
+}
+
+async function nuclearUninstall(quiet) {
+  const home = os.homedir();
+  const allPlatformDirs = [
+    { name: 'GitHub Copilot', dir: path.join(home, '.github', 'skills') },
+    { name: 'Claude Code',    dir: path.join(home, '.claude', 'skills') },
+    { name: 'Codex',          dir: path.join(home, '.codex', 'skills') },
+    { name: 'OpenCode',       dir: path.join(home, '.agent', 'skills') },
+    { name: 'Gemini CLI',     dir: path.join(home, '.gemini', 'skills') },
+    { name: 'Antigravity',    dir: path.join(home, '.gemini', 'antigravity', 'skills') },
+    { name: 'Cursor IDE',     dir: path.join(home, '.cursor', 'skills') },
+    { name: 'AdaL CLI',       dir: path.join(home, '.adal', 'skills') },
+  ];
+
+  let removed = 0;
+  for (const { name, dir } of allPlatformDirs) {
+    if (!(await fs.pathExists(dir))) continue;
+    const entries = await fs.readdir(dir);
+    for (const entry of entries) {
+      const skillDir = path.join(dir, entry);
+      const stat = await fs.stat(skillDir).catch(() => null);
+      if (!stat || !stat.isDirectory()) continue;
+      await fs.remove(skillDir);
+      removed++;
+      if (!quiet) console.log(chalk.gray(`  🗑️  ${name}: ${entry}`));
+    }
+  }
+
+  const cachePackages = [
+    '.claude-superskills', '.career-superskills', '.design-superskills',
+    '.obsidian-superskills', '.product-superskills', '.avanade-superskills',
+  ];
+  for (const pkg of cachePackages) {
+    const cacheDir = path.join(home, pkg, 'cache');
+    if (await fs.pathExists(cacheDir)) {
+      await fs.remove(cacheDir);
+      if (!quiet) console.log(chalk.gray(`  🗑️  Cache: ~/${pkg}/cache`));
+    }
+  }
+
+  if (!quiet) {
+    console.log(chalk.green(`\n✨ Nuclear uninstall complete — ${removed} skill folder(s) removed.\n`));
+  }
+}
+
+async function runNuclearFlow(quiet) {
+  console.log('\n' + chalk.bgRed.white.bold('  ☢️  NUCLEAR UNINSTALL — THIS CANNOT BE UNDONE  ') + '\n');
+  console.log(chalk.red('  This will delete ALL skill folders from ALL AI platforms:\n'));
+  console.log(chalk.dim('    ~/.github/skills/              (GitHub Copilot)'));
+  console.log(chalk.dim('    ~/.claude/skills/              (Claude Code)'));
+  console.log(chalk.dim('    ~/.codex/skills/               (OpenAI Codex)'));
+  console.log(chalk.dim('    ~/.agent/skills/               (OpenCode)'));
+  console.log(chalk.dim('    ~/.gemini/skills/              (Gemini CLI)'));
+  console.log(chalk.dim('    ~/.gemini/antigravity/skills/  (Antigravity)'));
+  console.log(chalk.dim('    ~/.cursor/skills/              (Cursor IDE)'));
+  console.log(chalk.dim('    ~/.adal/skills/                (AdaL CLI)\n'));
+  console.log(chalk.red('  Skills from ALL installed packages will be removed,'));
+  console.log(chalk.red('  including claude-superskills, design-superskills,'));
+  console.log(chalk.red('  obsidian-superskills, product-superskills, and any others.\n'));
+
+  const { confirm } = await inquirer.prompt([{
+    type: 'input',
+    name: 'confirm',
+    message: chalk.red.bold('Type "nuke" to confirm, or anything else to cancel:'),
+  }]);
+
+  if (confirm !== 'nuke') {
+    console.log(chalk.dim('\n❌ Nuclear uninstall cancelled.\n'));
+    return;
+  }
+
+  console.log(chalk.red('\n☢️  Proceeding with nuclear uninstall...\n'));
+  await nuclearUninstall(quiet);
 }
 
 async function runUninstallFlow(detected, quiet, skipPrompt) {
@@ -266,6 +330,7 @@ async function runUninstallFlow(detected, quiet, skipPrompt) {
       choices: [
         { name: 'Uninstall from all detected platforms', value: 'all' },
         { name: 'Choose platforms to uninstall', value: 'select' },
+        { name: chalk.red('☢️  Nuclear: remove ALL skills from ALL platforms'), value: 'nuclear' },
         { name: 'Cancel', value: 'cancel' }
       ],
       default: 'all'
@@ -274,6 +339,11 @@ async function runUninstallFlow(detected, quiet, skipPrompt) {
     if (uninstallMode === 'cancel') {
       console.log(chalk.dim('\n❌ Operation cancelled.\n'));
       process.exit(0);
+    }
+
+    if (uninstallMode === 'nuclear') {
+      await runNuclearFlow(quiet);
+      return;
     }
 
     if (uninstallMode === 'select') {
@@ -771,8 +841,12 @@ async function main() {
     }
 
     case 'uninstall':
-      console.log(chalk.cyan('🔍 Detecting installed AI CLI tools...\n'));
-      await runUninstallFlow(detectTools(), quiet, skipPrompt);
+      if (args.includes('--nuclear')) {
+        await runNuclearFlow(quiet);
+      } else {
+        console.log(chalk.cyan('🔍 Detecting installed AI CLI tools...\n'));
+        await runUninstallFlow(detectTools(), quiet, skipPrompt);
+      }
       break;
 
     case 'doctor':
@@ -823,6 +897,7 @@ Examples:
   npx career-superskills package-cowork        # Generate Cowork zip for manual upload
   npx career-superskills status                # Show global status and version differences
   npx career-superskills uninstall -y          # Uninstall all + clear cache
+  npx career-superskills uninstall --nuclear   # ☢️  Remove ALL skills from ALL platforms
 `);
 }
 

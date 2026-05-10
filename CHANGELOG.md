@@ -1,5 +1,16 @@
 # Changelog
 
+## [1.0.1] - 2026-05-10
+
+### Fixed
+- Remove dangerous fallback in `uninstallManagedSkills()` that could delete skills from other packages
+- Delete dead code `lib/commands/uninstall.js`
+
+### Added
+- Nuclear uninstall option (`--nuclear` flag and interactive menu choice) with type-to-confirm safety gate
+
+---
+
 ## [1.0.0] - 2026-05-08
 
 ### Added

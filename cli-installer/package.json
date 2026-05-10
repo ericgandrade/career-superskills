@@ -1,6 +1,6 @@
 {
   "name": "career-superskills",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "20 AI skills for job search, resume optimization, and career development. Works with Claude Code, GitHub Copilot, and 6 more AI platforms.",
   "main": "lib/index.js",
   "bin": {
@@ -18,11 +18,28 @@
     "prepublishOnly": "npm run build && npm test",
     "version": "git add -A"
   },
-  "keywords": ["career", "resume", "job-search", "linkedin", "interview", "claude", "copilot", "ai", "skills", "ats"],
+  "keywords": [
+    "career",
+    "resume",
+    "job-search",
+    "linkedin",
+    "interview",
+    "claude",
+    "copilot",
+    "ai",
+    "skills",
+    "ats"
+  ],
   "author": "Eric Andrade",
   "license": "MIT",
-  "engines": { "node": ">=14.0.0" },
-  "files": ["bin/", "lib/", "README.md"],
+  "engines": {
+    "node": ">=14.0.0"
+  },
+  "files": [
+    "bin/",
+    "lib/",
+    "README.md"
+  ],
   "dependencies": {
     "adm-zip": "^0.5.16",
     "axios": "^1.6.5",
@@ -38,6 +55,8 @@
     "type": "git",
     "url": "git+https://github.com/ericgandrade/career-superskills.git"
   },
-  "bugs": { "url": "https://github.com/ericgandrade/career-superskills/issues" },
+  "bugs": {
+    "url": "https://github.com/ericgandrade/career-superskills/issues"
+  },
   "homepage": "https://github.com/ericgandrade/career-superskills#readme"
 }

@@ -1,3 +1,9 @@
+# GitHub Copilot Instructions
+
+> For full project context, see [CLAUDE.md](../CLAUDE.md).
+
+---
+
 # Copilot Instructions for CLI AI Skills
 
 This repository contains reusable AI skills for **GitHub Copilot CLI**, **Claude Code**, and **OpenAI Codex**. Skills are Markdown-based workflow specifications (`SKILL.md`) that teach AI agents specific tasks.
