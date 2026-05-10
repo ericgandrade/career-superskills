@@ -1,4 +1,4 @@
-# 💼 Career Superskills v1.0.0
+# 💼 Career Superskills v1.0.1
 
 20 AI skills for job search, resume optimization, career transitions, and professional development. Install once across all 8 AI platforms.
 
