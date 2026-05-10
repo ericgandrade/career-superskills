@@ -1,6 +1,4 @@
 # GEMINI.md
 
-> This file provides guidance to Gemini CLI when working in this repository.
-> For full project context, see [CLAUDE.md](./CLAUDE.md).
-
-<!-- All canonical project instructions live in CLAUDE.md. -->
+> ⛔ DO NOT ADD INSTRUCTIONS HERE. This file is a redirect pointer only.
+> All instructions belong in [CLAUDE.md](./CLAUDE.md). Read CLAUDE.md.

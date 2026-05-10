@@ -2,101 +2,101 @@
 
 ## 📦 Publish to npm
 
-Workflow automático que publica o pacote `claude-superskills` no npm quando você cria uma tag de versão.
+Automatic workflow that publishes the `career-superskills` package to npm when you create a version tag.
 
-### Como Usar
+### How to Use
 
-#### 1️⃣ Configurar NPM Token (uma vez apenas)
+#### 1️⃣ Configure NPM Token (once only)
 
-1. Crie um **Automation Token** no npm:
-   - Acesse: https://www.npmjs.com/settings/~/tokens/create
-   - Token Type: **Automation** (importante!)
-   - Token Name: `github-actions-claude-superskills`
+1. Create an **Automation Token** on npm:
+   - Go to: https://www.npmjs.com/settings/~/tokens/create
+   - Token Type: **Automation** (important!)
+   - Token Name: `github-actions-career-superskills`
    - Expiration: No expiration
-   - Copie o token (começa com `npm_...`)
+   - Copy the token (starts with `npm_...`)
 
-2. Adicione como Secret no GitHub:
-   - Acesse: https://github.com/ericgandrade/claude-superskills/settings/secrets/actions
+2. Add as a Secret on GitHub:
+   - Go to: https://github.com/ericgandrade/career-superskills/settings/secrets/actions
    - Click **"New repository secret"**
    - Name: `NPM_TOKEN`
-   - Value: Cole o token npm
+   - Value: Paste the npm token
    - Click **"Add secret"**
 
-#### 2️⃣ Publicar Nova Versão
+#### 2️⃣ Publish a New Version
 
-Sempre que quiser publicar uma nova versão:
+Whenever you want to publish a new version:
 
 ```bash
-# 1. Atualizar versão no package.json
+# 1. Update version in package.json
 cd cli-installer
-npm version patch   # Para bug fixes (1.0.0 → 1.0.1)
-# ou
-npm version minor   # Para novas features (1.0.0 → 1.1.0)
-# ou
-npm version major   # Para breaking changes (1.0.0 → 2.0.0)
+npm version patch   # For bug fixes (1.0.0 → 1.0.1)
+# or
+npm version minor   # For new features (1.0.0 → 1.1.0)
+# or
+npm version major   # For breaking changes (1.0.0 → 2.0.0)
 
-# 2. Fazer push da tag
+# 2. Push the tag
 git push origin main --tags
 
-# 3. GitHub Actions publica automaticamente! 🎉
+# 3. GitHub Actions publishes automatically! 🎉
 ```
 
-#### 3️⃣ Acompanhar Publicação
+#### 3️⃣ Monitor Publication
 
-- Acesse: https://github.com/ericgandrade/claude-superskills/actions
-- Veja o workflow "Publish to npm" rodando
-- ✅ Quando terminar, pacote está no npm!
+- Go to: https://github.com/ericgandrade/career-superskills/actions
+- Watch the "Publish to npm" workflow run
+- ✅ When done, the package is live on npm!
 
-### O Que o Workflow Faz
+### What the Workflow Does
 
-1. ✅ Detecta quando você faz push de uma tag `v*`
-2. ✅ Faz checkout do código
-3. ✅ Instala Node.js 20
-4. ✅ Instala dependências (`npm ci`)
-5. ✅ Roda testes (`npm test`)
-6. ✅ Publica no npm (`npm publish`)
+1. ✅ Detects when you push a `v*` tag
+2. ✅ Checks out the code
+3. ✅ Installs Node.js 20
+4. ✅ Installs dependencies (`npm ci`)
+5. ✅ Runs tests (`npm test`)
+6. ✅ Publishes to npm (`npm publish`)
 
-### Vantagens
+### Advantages
 
-- ✅ **Sem 2FA local**: Token está seguro no GitHub
-- ✅ **Automático**: Push tag → Publicado
-- ✅ **Testado**: Roda testes antes de publicar
-- ✅ **Rastreável**: Logs completos no GitHub
-- ✅ **Profissional**: CI/CD padrão da indústria
+- ✅ **No local 2FA**: Token is securely stored in GitHub
+- ✅ **Automatic**: Push tag → Published
+- ✅ **Tested**: Runs tests before publishing
+- ✅ **Traceable**: Full logs on GitHub
+- ✅ **Professional**: Industry-standard CI/CD
 
 ### Troubleshooting
 
-**Erro: "npm ERR! need auth"**
-- Verifique se o secret `NPM_TOKEN` está configurado
-- Verifique se o token é do tipo "Automation"
+**Error: "npm ERR! need auth"**
+- Check that the `NPM_TOKEN` secret is configured
+- Check that the token type is "Automation"
 
-**Erro: "npm ERR! 403 Forbidden"**
-- Token expirado ou revogado
-- Crie novo token e atualize o secret
+**Error: "npm ERR! 403 Forbidden"**
+- Token expired or revoked
+- Create a new token and update the secret
 
-**Workflow não executou**
-- Certifique-se que a tag começa com `v` (ex: `v1.0.0`)
-- Verifique se fez push da tag: `git push --tags`
+**Workflow did not run**
+- Make sure the tag starts with `v` (e.g. `v1.0.0`)
+- Verify you pushed the tag: `git push --tags`
 
-### Exemplo Completo
+### Full Example
 
 ```bash
-# Preparar nova versão
+# Prepare new version
 cd cli-installer
 npm version patch
-# Saída: v1.0.1
+# Output: v1.0.1
 
-# Commit e push (a tag foi criada automaticamente)
+# Commit and push (tag was created automatically)
 git add package.json package-lock.json
 git commit -m "chore: bump version to 1.0.1"
 git push origin main
 git push origin v1.0.1
 
-# Aguardar GitHub Actions publicar
-# Ver em: https://github.com/ericgandrade/claude-superskills/actions
+# Wait for GitHub Actions to publish
+# See at: https://github.com/ericgandrade/career-superskills/actions
 ```
 
-### Links Úteis
+### Useful Links
 
 - [GitHub Actions Docs](https://docs.github.com/en/actions)
 - [npm Publishing Docs](https://docs.npmjs.com/using-private-packages-in-a-ci-cd-workflow)

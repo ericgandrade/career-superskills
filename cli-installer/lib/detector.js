@@ -51,7 +51,7 @@ function extractGeminiVersionFromPath(binPath) {
 }
 
 /**
- * Detecta ferramentas AI CLI instaladas no sistema
+ * Detects AI CLI tools installed on the system
  * @returns {Object} { copilot: {installed, version, path}, claude: {...}, codex_cli: {...}, codex_app: {...}, ... }
  */
 function detectTools() {
@@ -114,7 +114,7 @@ function readLinuxDesktopFileVersion(desktopFilePath) {
 }
 
 /**
- * Detecta Claude Desktop / Cowork-capable app
+ * Detects Claude Desktop / Cowork-capable app
  */
 function detectCowork() {
   // macOS
@@ -203,7 +203,7 @@ function detectCowork() {
 }
 
 /**
- * Detecta GitHub Copilot CLI
+ * Detects GitHub Copilot CLI
  */
 function detectCopilot() {
   try {
@@ -216,7 +216,7 @@ function detectCopilot() {
 }
 
 /**
- * Detecta Claude Code
+ * Detects Claude Code
  */
 function detectClaude() {
   try {
@@ -229,7 +229,7 @@ function detectClaude() {
 }
 
 /**
- * Detecta OpenAI Codex CLI
+ * Detects OpenAI Codex CLI
  */
 function detectCodexCli() {
   try {
@@ -242,7 +242,7 @@ function detectCodexCli() {
 }
 
 /**
- * Detecta OpenAI Codex App (Desktop)
+ * Detects OpenAI Codex App (Desktop)
  */
 function detectCodexApp() {
   // Check macOS
@@ -290,14 +290,14 @@ function detectCodexApp() {
 
 /**
  * @deprecated Use detectCodexCli() and detectCodexApp() instead
- * Detecta OpenAI Codex (mantido para backward compatibility)
+ * Detects OpenAI Codex (kept for backward compatibility)
  */
 function detectCodex() {
   return detectCodexCli();
 }
 
 /**
- * Detecta OpenCode
+ * Detects OpenCode
  */
 function detectOpenCode() {
   try {
@@ -310,7 +310,7 @@ function detectOpenCode() {
 }
 
 /**
- * Detecta Gemini CLI
+ * Detects Gemini CLI
  */
 function detectGemini() {
   // Helper: run a binary with spawnSync to capture stdout+stderr without throwing on non-zero exit
@@ -481,15 +481,15 @@ function detectAdal() {
 }
 
 /**
- * Retorna mensagem de ajuda para ferramentas não instaladas
+ * Returns help message for tools that are not installed
  */
 function getInstallInstructions() {
   return `
 ╔════════════════════════════════════════════════════════════╗
-║  Nenhuma ferramenta AI CLI detectada!                      ║
+║  No AI CLI tool detected!                                  ║
 ╚════════════════════════════════════════════════════════════╝
 
-Instale ao menos uma das seguintes ferramentas:
+Install at least one of the following tools:
 
 📦 GitHub Copilot CLI:
    gh extension install github/gh-copilot
@@ -509,7 +509,7 @@ Instale ao menos uma das seguintes ferramentas:
 📦 Google Antigravity:
    https://antigravity.google/download
 
-Após instalar, execute novamente: npx claude-superskills
+After installing, run again: npx claude-superskills
   `;
 }
 

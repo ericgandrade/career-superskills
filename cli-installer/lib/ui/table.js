@@ -9,13 +9,13 @@ function sanitizeCell(value) {
 }
 
 /**
- * Exibe tabela formatada de ferramentas detectadas
- * Agora com Codex CLI e Codex App separados
- * @param {Object} tools - Objeto retornado por detectTools()
+ * Displays formatted table of detected tools
+ * Now with Codex CLI and Codex App shown separately
+ * @param {Object} tools - Object returned by detectTools()
  */
 function displayToolsTable(tools) {
   console.log('\n┌──────────────────────────────────────────────────────────────────┐');
-  console.log('│ Ferramenta            │ Status   │ Versão                    │');
+  console.log('│ Tool                  │ Status   │ Version                   │');
   console.log('├──────────────────────────────────────────────────────────────────┤');
   
   const toolNames = {
@@ -38,7 +38,7 @@ function displayToolsTable(tools) {
     const status = tool.installed ? chalk.green('✓') : chalk.red('✗');
     const version = tool.version || chalk.gray('-');
     
-    // Formatar linha com espaçamento fixo
+    // Format row with fixed spacing
     const namePadded = name.padEnd(21);
     const statusPadded = '  ' + status + '      ';
     const versionStr = sanitizeCell(version).substring(0, 26);
@@ -51,8 +51,8 @@ function displayToolsTable(tools) {
 }
 
 /**
- * Retorna resumo de ferramentas detectadas (simples)
- * @param {Object} tools - Objeto retornado por detectTools()
+ * Returns summary of detected tools (simple)
+ * @param {Object} tools - Object returned by detectTools()
  * @returns {Object} { total: number, installed: number, names: string[] }
  */
 function getToolsSummary(tools) {

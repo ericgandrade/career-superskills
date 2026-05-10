@@ -24,13 +24,13 @@ function clearPartialInstalls() {
 }
 
 /**
- * Reverte instalações parciais em caso de cancelamento
+ * Reverts partial installs in case of cancellation
  * @returns {Promise<void>}
  */
 async function revertPartialInstalls() {
   if (partialInstalls.length === 0) return;
-  
-  console.log(chalk.cyan('\n🧹 Limpando instalações parciais...\n'));
+
+  console.log(chalk.cyan('\n🧹 Cleaning up partial installs...\n'));
   
   let removed = 0;
   let failed = 0;
@@ -57,7 +57,7 @@ async function revertPartialInstalls() {
   }
   
   if (removed > 0) {
-    console.log(chalk.green(`\n✅ Cleanup concluído (${removed} removidos).\n`));
+    console.log(chalk.green(`\n✅ Cleanup complete (${removed} removed).\n`));
   }
   
   if (failed > 0) {

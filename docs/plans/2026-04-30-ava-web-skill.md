@@ -1,44 +1,44 @@
-# ava-web Skill — Plano de Criação v1.25.0
+# ava-web Skill — Creation Plan v1.25.0
 
 ## Goal
 
-Criar o skill `ava-web` para gerar websites, landing pages e componentes web com identidade visual Avanade.
-O skill usa o mesmo sistema de cores/tipografia do `ava-pptx` (brand-guidelines.md), adaptado para web.
-Suporta HTML puro, HTML+Tailwind, React+Tailwind e Next.js.
+Create the `ava-web` skill to generate websites, landing pages, and web components following Avanade visual identity.
+The skill uses the same color/typography system as `ava-pptx` (brand-guidelines.md), adapted for the web.
+Supports plain HTML, HTML+Tailwind, React+Tailwind, and Next.js.
 
 ---
 
-## Análise de Referências
+## Reference Analysis
 
-### Brand Avanade (extraído de ava-pptx/references/brand-guidelines.md)
+### Avanade Brand (extracted from ava-pptx/references/brand-guidelines.md)
 
-| Token | Valor | Uso web |
-|-------|-------|---------|
-| Primary Orange | `#FF5800` | Botões, links ativos, acentos, bordas de card |
+| Token | Value | Web usage |
+|-------|-------|-----------|
+| Primary Orange | `#FF5800` | Buttons, active links, accents, card borders |
 | Dark Orange | `#DC4600` | Hover states, Pantone 159 |
-| Yellow Accent | `#FFD700` | Wave accent line, gradiente decorativo |
+| Yellow Accent | `#FFD700` | Wave accent line, decorative gradient |
 | Gradient Start | `#FF5800` | Hero backgrounds |
 | Gradient Mid | `#B43C14` | Hero backgrounds |
 | Gradient End | `#870032` | Hero backgrounds |
-| Body Text | `#333333` | Parágrafos, títulos em fundos claros |
-| Secondary Text | `#666666` | Subtítulos, captions |
+| Body Text | `#333333` | Paragraphs, headings on light backgrounds |
+| Secondary Text | `#666666` | Subtitles, captions |
 | Tertiary Text | `#999999` | Labels, footers |
-| Background Tint | `#FFF0E8` | Callout boxes, seções de destaque suave |
-| White | `#FFFFFF` | Texto sobre gradiente, fundos primários |
+| Background Tint | `#FFF0E8` | Callout boxes, soft highlight sections |
+| White | `#FFFFFF` | Text on gradient, primary backgrounds |
 | Font | Segoe UI | Web: `'Segoe UI', system-ui, -apple-system, sans-serif` |
-| Tagline | "Do what matters" | Footer e nav |
-| Wave | SVG orgânico | Decoração de seções (reaproveitado de brand-guidelines.md) |
+| Tagline | "Do what matters" | Footer and nav |
+| Wave | Organic SVG | Section decoration (reused from brand-guidelines.md) |
 
-### Padrões visuais observados em avanade.com
+### Visual patterns observed on avanade.com
 
-- **Hero**: gradiente laranja→roxo full-width, texto branco, onda SVG inferior
-- **Nav**: logo esquerda, links no centro/direita, botão CTA laranja
-- **Seções de conteúdo**: fundo branco com acentos laranja, grid 2-3 colunas
-- **Stats bar**: números grandes em laranja (ex: "50,000+ employees")
-- **Cards**: sombra suave, borda superior laranja ou ícone laranja
-- **CTA sections**: fundo gradiente ou laranja sólido, texto branco
-- **Footer**: escuro com links brancos e logo branca
-- **Separadores**: onda SVG entre seções (elemento-assinatura da marca)
+- **Hero**: full-width orange→purple gradient, white text, SVG wave at the bottom
+- **Nav**: logo left, links center/right, orange CTA button
+- **Content sections**: white background with orange accents, 2–3 column grid
+- **Stats bar**: large numbers in orange (e.g. "50,000+ employees")
+- **Cards**: soft shadow, orange top border or orange icon
+- **CTA sections**: gradient or solid orange background, white text
+- **Footer**: dark with white links and white logo
+- **Dividers**: SVG wave between sections (brand signature element)
 
 ---
 
@@ -46,85 +46,85 @@ Suporta HTML puro, HTML+Tailwind, React+Tailwind e Next.js.
 
 ```
 skills/ava-web/
-├── SKILL.md                          # Spec principal do skill
-├── README.md                         # Documentação usuário
+├── SKILL.md                          # Main skill spec
+├── README.md                         # User documentation
 ├── references/
-│   ├── web-brand-guidelines.md       # CSS vars, tipografia, spacing, componentes
-│   ├── components.md                 # Catálogo de componentes c/ código HTML+Tailwind+React
-│   └── tailwind-config.md            # Tailwind config com tokens Avanade
+│   ├── web-brand-guidelines.md       # CSS vars, typography, spacing, components
+│   ├── components.md                 # Component catalog with HTML+Tailwind+React code
+│   └── tailwind-config.md            # Tailwind config with Avanade tokens
 └── evals/
-    ├── evals.json                    # 5 cenários de teste
-    └── trigger-eval.json             # 15 queries trigger/no-trigger
+    ├── evals.json                    # 5 test scenarios
+    └── trigger-eval.json             # 15 trigger/no-trigger queries
 ```
 
 ---
 
 ## Tech Stack
 
-- **HTML puro**: tags semânticas + CSS custom properties + SVG inline
-- **HTML + Tailwind**: Tailwind config com tokens Avanade + classes utilitárias
-- **React + Tailwind**: componentes JSX, mesma config Tailwind
-- **Next.js**: estrutura de páginas Next.js App Router, Tailwind, componentes reutilizáveis
+- **Plain HTML**: semantic tags + CSS custom properties + inline SVG
+- **HTML + Tailwind**: Tailwind config with Avanade tokens + utility classes
+- **React + Tailwind**: JSX components, same Tailwind config
+- **Next.js**: Next.js App Router page structure, Tailwind, reusable components
 
-O skill detecta o stack do projeto ou pergunta ao usuário.
+The skill detects the project stack or asks the user.
 
 ---
 
-## Componentes / Seções a Documentar
+## Components / Sections to Document
 
-| Componente | Variantes |
-|------------|-----------|
-| **Navbar** | Light (branca + laranja), Dark (laranja sólido), Sticky |
-| **Hero** | Gradient full-width + onda, Image bg overlay, Solid orange |
-| **Features Grid** | 2 cols, 3 cols, 4 cols — cards com ícone laranja |
-| **Stats Bar** | Números grandes laranja, fundo claro ou gradiente |
+| Component | Variants |
+|-----------|----------|
+| **Navbar** | Light (white + orange), Dark (solid orange), Sticky |
+| **Hero** | Gradient full-width + wave, Image bg overlay, Solid orange |
+| **Features Grid** | 2 cols, 3 cols, 4 cols — cards with orange icon |
+| **Stats Bar** | Large orange numbers, light or gradient background |
 | **Content + Image** | Image left, Image right, alternating |
-| **Callout / Quote** | Borda laranja, fundo FFF0E8, pull-quote |
-| **CTA Section** | Gradiente (como cover PPTX), sólido laranja |
-| **Testimonials** | Card branco, borda laranja, avatar |
-| **Footer** | Escuro, logo branca, links, tagline "Do what matters" |
-| **Wave Divider** | SVG onda reutilizável entre seções |
-| **Button** | Primary (laranja), Secondary (outline laranja), Ghost |
+| **Callout / Quote** | Orange border, FFF0E8 background, pull-quote |
+| **CTA Section** | Gradient (like PPTX cover), solid orange |
+| **Testimonials** | White card, orange border, avatar |
+| **Footer** | Dark, white logo, links, tagline "Do what matters" |
+| **Wave Divider** | Reusable SVG wave between sections |
+| **Button** | Primary (orange), Secondary (orange outline), Ghost |
 | **Card** | Default shadow, orange top-border, gradient header |
 
 ---
 
-## Tipos de Página Suportados
+## Supported Page Types
 
-| Tipo | Descrição |
-|------|-----------|
+| Type | Description |
+|------|-------------|
 | **Landing Page** | Hero + Features + Stats + CTA + Footer |
 | **Service Page** | Hero + Content-Image alternating + Features + CTA |
 | **About Page** | Hero + Stats + Two-col + Team grid + CTA |
 | **Case Study** | Hero + Challenge/Solution/Result + Stats + Quote + CTA |
-| **Contact Page** | Hero curto + Form + Map/Office info + Footer |
+| **Contact Page** | Short hero + Form + Map/Office info + Footer |
 
 ---
 
 ## Tasks
 
-### Task 1: Criar `references/web-brand-guidelines.md`
+### Task 1: Create `references/web-brand-guidelines.md`
 
-Documento completo com:
+Complete document with:
 - CSS custom properties (`:root { --ava-orange: #FF5800; ... }`)
-- Tailwind config completo com tokens Avanade
-- Escala tipográfica para web (px/rem equivalentes às dimensões PPTX)
+- Full Tailwind config with Avanade tokens
+- Web typography scale (px/rem equivalents of PPTX dimensions)
 - Spacing system
-- SVG das ondas (reaproveitado de brand-guidelines.md, adaptado para HTML)
-- Dark/light section guidance (quando usar gradiente vs branco)
-- Regras de acessibilidade (contraste mínimo 4.5:1 — laranja sobre branco FALHA, usar apenas em texto grande ou sobre fundos escuros)
+- Wave SVGs (reused from brand-guidelines.md, adapted for HTML)
+- Dark/light section guidance (when to use gradient vs white)
+- Accessibility rules (minimum contrast 4.5:1 — orange on white FAILS, use only in large text or on dark backgrounds)
 
-**Atenção crítica — acessibilidade**: `#FF5800` sobre `#FFFFFF` tem contraste **2.8:1** (WCAG AA fail para texto normal). Regra: laranja apenas para texto ≥24px bold (large text — ratio OK ≥3:1) ou como elemento decorativo/CTA. Texto de leitura sempre em `#333333`.
+**Critical accessibility note**: `#FF5800` on `#FFFFFF` has contrast **2.8:1** (WCAG AA fail for normal text). Rule: orange only for text ≥24px bold (large text — ratio OK ≥3:1) or as decorative/CTA element. Reading text always in `#333333`.
 
-### Task 2: Criar `references/components.md`
+### Task 2: Create `references/components.md`
 
-Catálogo de todos os 12 componentes com:
-- HTML semântico completo
-- Versão Tailwind com classes utilitárias
-- Versão React (JSX + props)
-- Notas de uso e variantes
+Catalog of all 12 components with:
+- Complete semantic HTML
+- Tailwind version with utility classes
+- React version (JSX + props)
+- Usage notes and variants
 
-### Task 3: Criar `references/tailwind-config.md`
+### Task 3: Create `references/tailwind-config.md`
 
 ```js
 // tailwind.config.js — Avanade brand tokens
@@ -156,16 +156,16 @@ module.exports = {
 }
 ```
 
-### Task 4: Criar `SKILL.md`
+### Task 4: Create `SKILL.md`
 
-Workflow completo:
-- **Step 0: Discovery** — detectar stack (HTML/Tailwind/React/Next.js), tipo de página, conteúdo
-- **Step 1: Load brand** — `Read references/web-brand-guidelines.md` antes de qualquer código
-- **Step 2: Select components** — mapear seções necessárias ao tipo de página pedido
-- **Step 3: Generate** — código pronto para uso, comentado por seção
-- **Step 4: QA** — checklist de brand compliance antes de entregar
+Full workflow:
+- **Step 0: Discovery** — detect stack (HTML/Tailwind/React/Next.js), page type, content
+- **Step 1: Load brand** — `Read references/web-brand-guidelines.md` before any code
+- **Step 2: Select components** — map required sections to the requested page type
+- **Step 3: Generate** — ready-to-use code, commented by section
+- **Step 4: QA** — brand compliance checklist before delivering
 
-Frontmatter mínimo (apenas name, description, license):
+Minimal frontmatter (name, description, license only):
 ```yaml
 ---
 name: ava-web
@@ -174,27 +174,27 @@ license: MIT
 ---
 ```
 
-### Task 5: Criar `README.md`
+### Task 5: Create `README.md`
 
-Com tabela Metadata (Version 1.0.0, Author Eric Andrade, Category design, Tags ui, web, avanade, branding, tailwind, react).
+With Metadata table (Version 1.0.0, Author Eric Andrade, Category design, Tags ui, web, avanade, branding, tailwind, react).
 
-### Task 6: Criar evals
+### Task 6: Create evals
 
-`evals/evals.json` — 5 cenários:
-1. Landing page para um serviço de AI
+`evals/evals.json` — 5 scenarios:
+1. Landing page for an AI service
 2. Hero section React+Tailwind
-3. Página de Case Study
-4. Componente de Stats bar
-5. Footer com tagline "Do what matters"
+3. Case Study page
+4. Stats bar component
+5. Footer with tagline "Do what matters"
 
-`evals/trigger-eval.json` — 15 queries (10 true, 5 false como Python scripts, áudio, Excel).
+`evals/trigger-eval.json` — 15 queries (10 true, 5 false such as Python scripts, audio, Excel).
 
-### Task 7: Atualizar metadata do repositório
+### Task 7: Update repository metadata
 
-- `README.md`: 63→64 skills, add `ava-web` na tabela UI/UX Design
-- `CLAUDE.md`: contagem + skills tree + bundles
-- `CHANGELOG.md`: entrada v1.25.0
-- `bundles.json`: add `ava-web` ao bundle `content` (conteúdo branded) e ao `all`
+- `README.md`: 63→64 skills, add `ava-web` to the UI/UX Design table
+- `CLAUDE.md`: count + skills tree + bundles
+- `CHANGELOG.md`: v1.25.0 entry
+- `bundles.json`: add `ava-web` to the `content` bundle (branded content) and to `all`
 - `cli-installer/README.md`: 63→64
 - `.claude-plugin/marketplace.json`: 63→64
 
@@ -202,7 +202,7 @@ Com tabela Metadata (Version 1.0.0, Author Eric Andrade, Category design, Tags u
 
 ```bash
 ./scripts/bump-version.sh patch
-# Editar .claude-plugin/plugin.json: "version": "1.25.0"
+# Edit .claude-plugin/plugin.json: "version": "1.25.0"
 git add skills/ava-web/ bundles.json README.md CLAUDE.md CHANGELOG.md \
         cli-installer/package.json cli-installer/package-lock.json cli-installer/README.md \
         .claude-plugin/plugin.json .claude-plugin/marketplace.json
@@ -213,15 +213,15 @@ git push origin main && git push origin v1.25.0
 
 ---
 
-## Critério de Qualidade
+## Quality Criteria
 
-- [ ] Frontmatter SKILL.md tem APENAS `name`, `description`, `license`
-- [ ] Nenhuma data em SKILL.md (apenas em README.md Metadata)
-- [ ] Descrição começa com "This skill should be used when..."
-- [ ] Acessibilidade documentada: laranja apenas em texto ≥24px bold ou decorativo
-- [ ] Pelo menos 4 stacks documentados (HTML, Tailwind, React, Next.js)
-- [ ] Wave SVG reutilizável incluído nas referências
-- [ ] Todos os componentes têm versão HTML + Tailwind + React
-- [ ] evals.json tem 5 cenários realistas
-- [ ] trigger-eval.json tem 15 queries (10 true, 5 false)
-- [ ] YAML validation passa: `./scripts/validate-skill-yaml.sh skills/ava-web`
+- [ ] SKILL.md frontmatter has ONLY `name`, `description`, `license`
+- [ ] No date in SKILL.md (only in README.md Metadata)
+- [ ] Description starts with "This skill should be used when..."
+- [ ] Accessibility documented: orange only in text ≥24px bold or decorative
+- [ ] At least 4 stacks documented (HTML, Tailwind, React, Next.js)
+- [ ] Reusable wave SVG included in references
+- [ ] All components have HTML + Tailwind + React versions
+- [ ] evals.json has 5 realistic scenarios
+- [ ] trigger-eval.json has 15 queries (10 true, 5 false)
+- [ ] YAML validation passes: `./scripts/validate-skill-yaml.sh skills/ava-web`

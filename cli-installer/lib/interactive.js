@@ -32,31 +32,31 @@ function setupEscapeHandler() {
  */
 async function confirmCancel() {
   console.log('\n'); // New line for better UX
-  
+
   const { cancel } = await inquirer.prompt([{
     type: 'confirm',
     name: 'cancel',
-    message: chalk.yellow('⚠️  Deseja cancelar a instalação?'),
+    message: chalk.yellow('⚠️  Cancel installation?'),
     default: false
   }]);
-  
+
   if (cancel) {
-    console.log(chalk.red('\n❌ Instalação cancelada pelo usuário.\n'));
+    console.log(chalk.red('\n❌ Installation cancelled by user.\n'));
     process.exit(0);
   } else {
-    console.log(chalk.dim('Continuando...\n'));
+    console.log(chalk.dim('Continuing...\n'));
   }
 }
 
 /**
- * Pergunta ao usuário para quais plataformas instalar
- * Codex CLI e Codex App são mostrados SEMPRE separadamente
- * @param {Object} detected - Ferramentas detectadas { copilot, claude, codex_cli, codex_app, opencode, gemini }
- * @returns {Promise<Array>} Plataformas escolhidas
+ * Ask user which platforms to install to
+ * Codex CLI and Codex App are always shown separately
+ * @param {Object} detected - Detected tools { copilot, claude, codex_cli, codex_app, opencode, gemini }
+ * @returns {Promise<Array>} Selected platforms
  */
 async function promptPlatforms(detected, options = {}) {
   const {
-    message = 'Instalar skills para quais plataformas? (Pressione ESC para cancelar)',
+    message = 'Install skills for which platforms? (Press ESC to cancel)',
     defaultChecked = true,
     includeCowork = false
   } = options;
@@ -147,7 +147,7 @@ async function promptPlatforms(detected, options = {}) {
       choices: choices,
       validate: (answer) => {
         if (answer.length < 1) {
-          return 'Selecione ao menos uma plataforma!';
+          return 'Select at least one platform!';
         }
         return true;
       }

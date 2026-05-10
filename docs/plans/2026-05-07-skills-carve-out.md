@@ -14,92 +14,92 @@
 
 | Skill | Decision | Reason |
 |-------|----------|--------|
-| `code-method` | ❌ Delete | Nome genérico, sem bundle, baixo valor |
-| `ai-native-product` | ❌ Delete | Overlap com `product-strategy` |
-| `docling-converter` | ❌ Delete | `document-converter` cobre o caso |
-| `storytelling-expert` | ✅ Fica em claude-superskills | Content/storytelling genérico |
-| `slides` | → `design-superskills` | HTML + Chart.js — coeso com design/UI |
-| `mckinsey-strategist` | ✅ Fica em claude-superskills | Estratégia consultiva cross-domínio |
+| `code-method` | ❌ Delete | Generic name, no bundle, low value |
+| `ai-native-product` | ❌ Delete | Overlaps with `product-strategy` |
+| `docling-converter` | ❌ Delete | `document-converter` covers the use case |
+| `storytelling-expert` | ✅ Stays in claude-superskills | Generic content/storytelling |
+| `slides` | → `design-superskills` | HTML + Chart.js — cohesive with design/UI |
+| `mckinsey-strategist` | ✅ Stays in claude-superskills | Cross-domain consulting strategy |
 
 ---
 
 ## Skill Distribution After Carve-Out
 
-### obsidian-superskills (6 skills) — novo repo público
+### obsidian-superskills (6 skills) — new public repo
 `obsidian-markdown`, `obsidian-links`, `obsidian-frontmatter`, `obsidian-automation`, `obsidian-note-builder`, `obsidian-canvas`
 
-### career-superskills (20 skills) — novo repo público
+### career-superskills (20 skills) — new public repo
 `academic-cv-builder`, `career-changer-translator`, `cover-letter-generator`, `creative-portfolio-resume`, `executive-resume-writer`, `interview-prep-generator`, `job-description-analyzer`, `linkedin-profile-optimizer`, `offer-comparison-analyzer`, `portfolio-case-study-writer`, `reference-list-builder`, `resume-ats-optimizer`, `resume-bullet-writer`, `resume-formatter`, `resume-quantifier`, `resume-section-builder`, `resume-tailor`, `resume-version-manager`, `salary-negotiation-prep`, `tech-resume-optimizer`
 
-### product-superskills (8 skills) — novo repo público
+### product-superskills (8 skills) — new public repo
 `product-strategy`, `product-discovery`, `product-delivery`, `product-leadership`, `product-architecture`, `product-operating-model`, `abx-strategy`, `startup-growth-strategist`
 
-### design-superskills (9 skills) — novo repo público
+### design-superskills (9 skills) — new public repo
 `ui-ux-pro-max`, `design`, `design-system`, `brand`, `ui-styling`, `slides`, `banner-design`, `excalidraw-diagram`, `mermaid-diagram`
 
-### avanade-superskills (3 skills) — novo repo PRIVADO, sem npm
-`avanade-pptx`, `avanade-web`, `avanade-pdf` (novo skill — criado neste plano)
+### avanade-superskills (3 skills) — new PRIVATE repo, no npm
+`avanade-pptx`, `avanade-web`, `avanade-pdf` (new skill — created in this plan)
 
-### claude-superskills (17 skills) — bumpa para v2.0.0
-Core focado: meta/orquestração, planejamento, pesquisa, conteúdo, e `mckinsey-strategist`.
+### claude-superskills (17 skills) — bumped to v2.0.0
+Focused core: meta/orchestration, planning, research, content, and `mckinsey-strategist`.
 
-| Grupo | Skills |
+| Group | Skills |
 |-------|--------|
-| Meta/Orquestração | `skill-creator`, `agent-skill-discovery`, `agent-skill-orchestrator` |
-| Planejamento | `brainstorming`, `writing-plans`, `executing-plans`, `prompt-engineer` |
-| Pesquisa | `deep-research`, `us-program-research`, `senior-solution-architect`, `webpage-reader` |
-| Conteúdo/Mídia | `youtube-summarizer`, `audio-transcriber`, `pptx-translator`, `document-converter`, `storytelling-expert` |
-| Estratégia | `mckinsey-strategist` |
+| Meta/Orchestration | `skill-creator`, `agent-skill-discovery`, `agent-skill-orchestrator` |
+| Planning | `brainstorming`, `writing-plans`, `executing-plans`, `prompt-engineer` |
+| Research | `deep-research`, `us-program-research`, `senior-solution-architect`, `webpage-reader` |
+| Content/Media | `youtube-summarizer`, `audio-transcriber`, `pptx-translator`, `document-converter`, `storytelling-expert` |
+| Strategy | `mckinsey-strategist` |
 
 ---
 
-## Task 1: Criar obsidian-superskills
+## Task 1: Create obsidian-superskills
 
-### 1.1 — Clonar estrutura base
+### 1.1 — Clone base structure
 
 ```bash
 cd ~/Library/CloudStorage/OneDrive-Avanade/14_Code_Projects
 
-# Copia tudo do repo principal como base (exceto git history e artefatos)
+# Copy everything from the main repo as base (excluding git history and artifacts)
 cp -r claude-superskills obsidian-superskills
 cd obsidian-superskills
 
-# Remove git history — será um repo novo
+# Remove git history — this will be a new repo
 rm -rf .git
 
-# Remove artefatos gerados e específicos do repo original
+# Remove generated and repo-specific artifacts
 rm -rf output/ proposta-media/ plugin-output/
 rm -rf .codex/ .opencode/ .adal/ .agent/ .cursor/ .gemini/
 rm -f .claude/settings.local.json
 rm -f .DS_Store
 
-# Remove planos internos do repo original
+# Remove internal planning docs from original repo
 rm -rf docs/plans/ docs/plan/
 ```
 
-### 1.2 — Manter apenas os 6 skills Obsidian
+### 1.2 — Keep only the 6 Obsidian skills
 
 ```bash
-# Dentro de obsidian-superskills/
+# Inside obsidian-superskills/
 
-# Remove TODOS os skills
+# Remove ALL skills
 rm -rf skills/
 
-# Recria a pasta e copia apenas os 6 obsidian
+# Recreate the folder and copy only the 6 obsidian skills
 mkdir skills
 for skill in obsidian-markdown obsidian-links obsidian-frontmatter obsidian-automation obsidian-note-builder obsidian-canvas; do
   cp -r ../claude-superskills/skills/$skill skills/
 done
 ```
 
-**Verificar:**
+**Verify:**
 ```bash
-ls skills/ | wc -l   # deve retornar 6
+ls skills/ | wc -l   # should return 6
 ```
 
-### 1.3 — Atualizar cli-installer/package.json
+### 1.3 — Update cli-installer/package.json
 
-Editar `cli-installer/package.json` — substituir todos os campos com referências ao repo original:
+Edit `cli-installer/package.json` — replace all fields referencing the original repo:
 
 ```json
 {
@@ -147,25 +147,25 @@ Editar `cli-installer/package.json` — substituir todos os campos com referênc
 }
 ```
 
-Deletar `cli-installer/package-lock.json` — será regenerado.
+Delete `cli-installer/package-lock.json` — it will be regenerated.
 
-### 1.4 — Atualizar cli-installer/bin/cli.js
+### 1.4 — Update cli-installer/bin/cli.js
 
-Fazer busca-e-substituição em `cli-installer/bin/cli.js`:
+Find-and-replace in `cli-installer/bin/cli.js`:
 - `claude-superskills` → `obsidian-superskills`
 - `ericgandrade/claude-superskills` → `ericgandrade/obsidian-superskills`
-- Qualquer referência ao skill count (`64 skills`, `55 skills`) → `6 skills`
+- Any reference to skill count (`64 skills`, `55 skills`) → `6 skills`
 
-### 1.5 — Atualizar cli-installer/lib/core/downloader.js
+### 1.5 — Update cli-installer/lib/core/downloader.js
 
-Fazer busca-e-substituição:
+Find-and-replace:
 - `claude-superskills` → `obsidian-superskills`
 - `ericgandrade/claude-superskills` → `ericgandrade/obsidian-superskills`
 - `~/.claude-superskills/` → `~/.obsidian-superskills/`
 
-O cache path deve ser único por pacote para evitar colisões quando múltiplos repos estão instalados na mesma máquina.
+The cache path must be unique per package to avoid collisions when multiple repos are installed on the same machine.
 
-### 1.6 — Atualizar .claude-plugin/plugin.json
+### 1.6 — Update .claude-plugin/plugin.json
 
 ```json
 {
@@ -178,7 +178,7 @@ O cache path deve ser único por pacote para evitar colisões quando múltiplos 
 }
 ```
 
-### 1.7 — Atualizar .claude-plugin/marketplace.json
+### 1.7 — Update .claude-plugin/marketplace.json
 
 ```json
 {
@@ -193,9 +193,9 @@ O cache path deve ser único por pacote para evitar colisões quando múltiplos 
 }
 ```
 
-### 1.8 — Atualizar bundles.json (raiz)
+### 1.8 — Update bundles.json (root)
 
-Substituir o conteúdo completo por:
+Replace the entire content with:
 
 ```json
 {
@@ -226,37 +226,37 @@ Substituir o conteúdo completo por:
 }
 ```
 
-### 1.9 — Atualizar scripts/release.js
+### 1.9 — Update scripts/release.js
 
-Fazer busca-e-substituição:
+Find-and-replace:
 - `Claude Superskills` → `Obsidian Superskills`
 - `claude-superskills` → `obsidian-superskills`
 
-### 1.10 — Atualizar README.md
+### 1.10 — Update README.md
 
-Substituir conteúdo do README.md:
-- Título: `# 🧠 Obsidian Superskills v1.0.0`
-- Badge de versão: `version-1.0.0`
+Replace README.md content:
+- Title: `# 🧠 Obsidian Superskills v1.0.0`
+- Version badge: `version-1.0.0`
 - Skill count badge: `skills-6`
-- Descrição: foco em Obsidian knowledge management
-- Tabela de skills: apenas os 6 obsidian
-- Instruções de install: `npx obsidian-superskills`
-- Links do repo: `github.com/ericgandrade/obsidian-superskills`
+- Description: focused on Obsidian knowledge management
+- Skills table: only the 6 obsidian skills
+- Install instructions: `npx obsidian-superskills`
+- Repo links: `github.com/ericgandrade/obsidian-superskills`
 - Footer: `*Version 1.0.0 | May 2026*`
-- Adicionar seção: `## Part of the Superskills Family` com links para `claude-superskills` e `career-superskills`
+- Add section: `## Part of the Superskills Family` with links to `claude-superskills` and `career-superskills`
 
-### 1.11 — Atualizar CLAUDE.md
+### 1.11 — Update CLAUDE.md
 
-Fazer busca-e-substituição:
+Find-and-replace:
 - `claude-superskills` → `obsidian-superskills`
 - `v1.25.0` → `v1.0.0`
 - skill count: `64` → `6`
-- Skill list na architecture tree: manter apenas os 6 obsidian
+- Skill list in architecture tree: keep only the 6 obsidian skills
 - npm package name: `obsidian-superskills`
 
-### 1.12 — Atualizar CHANGELOG.md
+### 1.12 — Update CHANGELOG.md
 
-Substituir com conteúdo inicial:
+Replace with initial content:
 ```markdown
 # Changelog
 
@@ -272,28 +272,28 @@ Substituir com conteúdo inicial:
 - obsidian-canvas: Creates visual workspaces with Obsidian Canvas
 ```
 
-### 1.13 — Atualizar .github/workflows/publish-npm.yml
+### 1.13 — Update .github/workflows/publish-npm.yml
 
 ```bash
 sed -i '' 's/claude-superskills/obsidian-superskills/g' .github/workflows/publish-npm.yml
 ```
 
-Remover manualmente o step `Deprecate old cli-ai-skills package` (não aplicável).
+Manually remove the `Deprecate old cli-ai-skills package` step (not applicable).
 
-Verificar que não sobrou nenhuma referência:
+Verify no references remain:
 ```bash
 grep "claude-superskills\|cli-ai-skills" .github/workflows/publish-npm.yml
-# deve retornar vazio
+# should return empty
 ```
 
-### 1.14 — Atualizar docs/
+### 1.14 — Update docs/
 
-- `docs/INSTALLATION.md` — substituir nome do pacote e URLs
-- `docs/guides/getting-started.md` — substituir nome e skill list
-- `docs/guides/skill-anatomy.md` — substituir referências ao repo
-- `docs/bundles/bundles.md` — substituir com bundles do obsidian
+- `docs/INSTALLATION.md` — replace package name and URLs
+- `docs/guides/getting-started.md` — replace name and skill list
+- `docs/guides/skill-anatomy.md` — replace repo references
+- `docs/bundles/bundles.md` — replace with obsidian bundles
 
-### 1.15 — Reinstalar dependências do cli-installer
+### 1.15 — Reinstall cli-installer dependencies
 
 ```bash
 cd cli-installer
@@ -301,7 +301,7 @@ npm install
 cd ..
 ```
 
-Verificar que nenhum bundle referencia skills fora dos 6 do repo:
+Verify that no bundle references skills outside the 6 in the repo:
 ```bash
 node -e "
 const b = require('./bundles.json');
@@ -313,10 +313,10 @@ Object.entries(b.bundles).forEach(([name, bundle]) => {
 });
 console.log('bundles ok');
 "
-# deve imprimir apenas "bundles ok"
+# should print only "bundles ok"
 ```
 
-### 1.16 — Inicializar git e criar repo no GitHub
+### 1.16 — Initialize git and create repo on GitHub
 
 ```bash
 git init
@@ -331,27 +331,27 @@ git remote add origin https://github.com/ericgandrade/obsidian-superskills.git
 git branch -M main
 git push -u origin main
 
-# OBRIGATÓRIO antes do tag push — sem isso o publish no npm vai falhar silenciosamente
+# REQUIRED before tag push — without this the npm publish will fail silently
 gh secret set NPM_TOKEN --repo ericgandrade/obsidian-superskills --body "$NPM_TOKEN"
 
 git tag v1.0.0
 git push origin v1.0.0
 ```
 
-Tag push aciona o GitHub Actions workflow → publica no npm automaticamente.
+Tag push triggers the GitHub Actions workflow → publishes to npm automatically.
 
-**Verificar:**
+**Verify:**
 ```bash
-# Aguardar ~2min para o Actions completar, depois:
-npx obsidian-superskills --version   # deve retornar 1.0.0
-claude --plugin-dir ./obsidian-superskills   # deve carregar 6 skills
+# Wait ~2min for Actions to complete, then:
+npx obsidian-superskills --version   # should return 1.0.0
+claude --plugin-dir ./obsidian-superskills   # should load 6 skills
 ```
 
 ---
 
-## Task 2: Criar career-superskills
+## Task 2: Create career-superskills
 
-### 2.1 — Clonar estrutura base
+### 2.1 — Clone base structure
 
 ```bash
 cd ~/Library/CloudStorage/OneDrive-Avanade/14_Code_Projects
@@ -364,7 +364,7 @@ rm -f .claude/settings.local.json .DS_Store
 rm -rf docs/plans/ docs/plan/
 ```
 
-### 2.2 — Manter apenas os 20 skills de carreira
+### 2.2 — Keep only the 20 career skills
 
 ```bash
 rm -rf skills/
@@ -380,12 +380,12 @@ for skill in \
 done
 ```
 
-**Verificar:**
+**Verify:**
 ```bash
-ls skills/ | wc -l   # deve retornar 20
+ls skills/ | wc -l   # should return 20
 ```
 
-### 2.3 — Atualizar cli-installer/package.json
+### 2.3 — Update cli-installer/package.json
 
 ```json
 {
@@ -401,19 +401,19 @@ ls skills/ | wc -l   # deve retornar 20
   "homepage": "https://github.com/ericgandrade/career-superskills#readme"
 }
 ```
-(manter todas as outras seções do package.json iguais ao obsidian-superskills)
+(keep all other package.json sections the same as obsidian-superskills)
 
-Deletar `cli-installer/package-lock.json`.
+Delete `cli-installer/package-lock.json`.
 
-### 2.4 — Atualizar cli-installer/bin/cli.js e downloader.js
+### 2.4 — Update cli-installer/bin/cli.js and downloader.js
 
-Busca-e-substituição:
+Find-and-replace:
 - `claude-superskills` → `career-superskills`
 - `ericgandrade/claude-superskills` → `ericgandrade/career-superskills`
 - `~/.claude-superskills/` → `~/.career-superskills/`
 - Skill count → `20 skills`
 
-### 2.5 — Atualizar .claude-plugin/plugin.json
+### 2.5 — Update .claude-plugin/plugin.json
 
 ```json
 {
@@ -426,7 +426,7 @@ Busca-e-substituição:
 }
 ```
 
-### 2.6 — Atualizar .claude-plugin/marketplace.json
+### 2.6 — Update .claude-plugin/marketplace.json
 
 ```json
 {
@@ -441,7 +441,7 @@ Busca-e-substituição:
 }
 ```
 
-### 2.7 — Atualizar bundles.json (raiz)
+### 2.7 — Update bundles.json (root)
 
 ```json
 {
@@ -487,28 +487,28 @@ Busca-e-substituição:
 }
 ```
 
-### 2.8 — Atualizar scripts/release.js, README.md, CLAUDE.md, CHANGELOG.md, docs/
+### 2.8 — Update scripts/release.js, README.md, CLAUDE.md, CHANGELOG.md, docs/
 
-Mesmas substituições que Task 1.9–1.14, com:
+Same replacements as Task 1.9–1.14, with:
 - `Obsidian Superskills` → `Career Superskills`
 - `obsidian-superskills` → `career-superskills`
 - Skill count: `20 skills`
-- Título: `# 💼 Career Superskills v1.0.0`
+- Title: `# 💼 Career Superskills v1.0.0`
 
-Incluindo o step 1.13 para o workflow:
+Including step 1.13 for the workflow:
 ```bash
 sed -i '' 's/claude-superskills/career-superskills/g' .github/workflows/publish-npm.yml
-# Remover step "Deprecate old cli-ai-skills package"
-grep "claude-superskills\|cli-ai-skills" .github/workflows/publish-npm.yml  # deve retornar vazio
+# Remove step "Deprecate old cli-ai-skills package"
+grep "claude-superskills\|cli-ai-skills" .github/workflows/publish-npm.yml  # should return empty
 ```
 
-### 2.9 — Reinstalar dependências e publicar
+### 2.9 — Reinstall dependencies and publish
 
 ```bash
 cd cli-installer && npm install && cd ..
 ```
 
-Verificar bundles:
+Verify bundles:
 ```bash
 node -e "
 const b = require('./bundles.json');
@@ -535,25 +535,25 @@ git remote add origin https://github.com/ericgandrade/career-superskills.git
 git branch -M main
 git push -u origin main
 
-# OBRIGATÓRIO antes do tag push — sem isso o publish no npm vai falhar silenciosamente
+# REQUIRED before tag push — without this the npm publish will fail silently
 gh secret set NPM_TOKEN --repo ericgandrade/career-superskills --body "$NPM_TOKEN"
 
 git tag v1.0.0 && git push origin v1.0.0
 ```
 
-**Verificar:**
+**Verify:**
 ```bash
-npx career-superskills --version    # deve retornar 1.0.0
-claude --plugin-dir ./career-superskills   # deve carregar 20 skills
+npx career-superskills --version    # should return 1.0.0
+claude --plugin-dir ./career-superskills   # should load 20 skills
 ```
 
 ---
 
-## Task 3: Criar product-superskills
+## Task 3: Create product-superskills
 
-Segue exatamente o mesmo padrão do Task 1 (obsidian) e Task 2 (career): clone completo, adaptar, npm, GitHub Actions.
+Follows exactly the same pattern as Task 1 (obsidian) and Task 2 (career): full clone, adapt, npm, GitHub Actions.
 
-### 3.1 — Clonar estrutura base
+### 3.1 — Clone base structure
 
 ```bash
 cd ~/Library/CloudStorage/OneDrive-Avanade/14_Code_Projects
@@ -565,7 +565,7 @@ rm -f .claude/settings.local.json .DS_Store
 rm -rf docs/plans/ docs/plan/
 ```
 
-### 3.2 — Manter apenas os 8 skills de produto
+### 3.2 — Keep only the 8 product skills
 
 ```bash
 rm -rf skills/
@@ -577,9 +577,9 @@ for skill in \
 done
 ```
 
-**Verificar:** `ls skills/ | wc -l` → 8
+**Verify:** `ls skills/ | wc -l` → 8
 
-### 3.3 — Atualizar cli-installer/package.json
+### 3.3 — Update cli-installer/package.json
 
 ```json
 {
@@ -594,17 +594,17 @@ done
 }
 ```
 
-Deletar `cli-installer/package-lock.json`.
+Delete `cli-installer/package-lock.json`.
 
-### 3.4 — Atualizar cli-installer/bin/cli.js e downloader.js
+### 3.4 — Update cli-installer/bin/cli.js and downloader.js
 
-Busca-e-substituição:
+Find-and-replace:
 - `claude-superskills` → `product-superskills`
 - `ericgandrade/claude-superskills` → `ericgandrade/product-superskills`
 - `~/.claude-superskills/` → `~/.product-superskills/`
 - Skill count → `8 skills`
 
-### 3.5 — Atualizar .claude-plugin/plugin.json
+### 3.5 — Update .claude-plugin/plugin.json
 
 ```json
 {
@@ -617,7 +617,7 @@ Busca-e-substituição:
 }
 ```
 
-### 3.6 — Atualizar .claude-plugin/marketplace.json
+### 3.6 — Update .claude-plugin/marketplace.json
 
 ```json
 {
@@ -632,7 +632,7 @@ Busca-e-substituição:
 }
 ```
 
-### 3.7 — Atualizar bundles.json
+### 3.7 — Update bundles.json
 
 ```json
 {
@@ -668,28 +668,28 @@ Busca-e-substituição:
 }
 ```
 
-### 3.8 — Atualizar scripts/release.js, README.md, CLAUDE.md, CHANGELOG.md, docs/
+### 3.8 — Update scripts/release.js, README.md, CLAUDE.md, CHANGELOG.md, docs/
 
 - `Claude Superskills` → `Product Superskills`
 - `claude-superskills` → `product-superskills`
 - Skill count: `8 skills`
-- Título README: `# 📦 Product Superskills v1.0.0`
+- README title: `# 📦 Product Superskills v1.0.0`
 - CHANGELOG: `## [1.0.0] - 2026-05-08 — Initial release, 8 product skills carved out from claude-superskills v1.25.0`
 
 Workflow:
 ```bash
 sed -i '' 's/claude-superskills/product-superskills/g' .github/workflows/publish-npm.yml
-# Remover step "Deprecate old cli-ai-skills package"
-grep "claude-superskills\|cli-ai-skills" .github/workflows/publish-npm.yml  # deve retornar vazio
+# Remove step "Deprecate old cli-ai-skills package"
+grep "claude-superskills\|cli-ai-skills" .github/workflows/publish-npm.yml  # should return empty
 ```
 
-### 3.9 — Reinstalar dependências e publicar
+### 3.9 — Reinstall dependencies and publish
 
 ```bash
 cd cli-installer && npm install && cd ..
 ```
 
-Verificar bundles:
+Verify bundles:
 ```bash
 node -e "
 const b = require('./bundles.json');
@@ -714,27 +714,27 @@ git remote add origin https://github.com/ericgandrade/product-superskills.git
 git branch -M main
 git push -u origin main
 
-# OBRIGATÓRIO antes do tag push — sem isso o publish no npm vai falhar silenciosamente
+# REQUIRED before tag push — without this the npm publish will fail silently
 gh secret set NPM_TOKEN --repo ericgandrade/product-superskills --body "$NPM_TOKEN"
 
 git tag v1.0.0 && git push origin v1.0.0
 ```
 
-**Verificar:**
+**Verify:**
 ```bash
 npx product-superskills --version           # → 1.0.0
 ls skills/ | wc -l                          # → 8
-claude --plugin-dir ./product-superskills   # carrega 8 skills sem erro
+claude --plugin-dir ./product-superskills   # loads 8 skills without error
 gh repo view ericgandrade/product-superskills --json visibility -q .visibility  # → PUBLIC
 ```
 
 ---
 
-## Task 4: Criar design-superskills
+## Task 4: Create design-superskills
 
-Segue exatamente o mesmo padrão de Task 1, 2 e 3.
+Follows exactly the same pattern as Tasks 1, 2, and 3.
 
-### 4.1 — Clonar estrutura base
+### 4.1 — Clone base structure
 
 ```bash
 cd ~/Library/CloudStorage/OneDrive-Avanade/14_Code_Projects
@@ -746,7 +746,7 @@ rm -f .claude/settings.local.json .DS_Store
 rm -rf docs/plans/ docs/plan/
 ```
 
-### 4.2 — Manter apenas os 9 skills de design
+### 4.2 — Keep only the 9 design skills
 
 ```bash
 rm -rf skills/
@@ -758,9 +758,9 @@ for skill in \
 done
 ```
 
-**Verificar:** `ls skills/ | wc -l` → 9
+**Verify:** `ls skills/ | wc -l` → 9
 
-### 4.3 — Atualizar cli-installer/package.json
+### 4.3 — Update cli-installer/package.json
 
 ```json
 {
@@ -775,17 +775,17 @@ done
 }
 ```
 
-Deletar `cli-installer/package-lock.json`.
+Delete `cli-installer/package-lock.json`.
 
-### 4.4 — Atualizar cli-installer/bin/cli.js e downloader.js
+### 4.4 — Update cli-installer/bin/cli.js and downloader.js
 
-Busca-e-substituição:
+Find-and-replace:
 - `claude-superskills` → `design-superskills`
 - `ericgandrade/claude-superskills` → `ericgandrade/design-superskills`
 - `~/.claude-superskills/` → `~/.design-superskills/`
 - Skill count → `9 skills`
 
-### 4.5 — Atualizar .claude-plugin/plugin.json
+### 4.5 — Update .claude-plugin/plugin.json
 
 ```json
 {
@@ -798,7 +798,7 @@ Busca-e-substituição:
 }
 ```
 
-### 4.6 — Atualizar .claude-plugin/marketplace.json
+### 4.6 — Update .claude-plugin/marketplace.json
 
 ```json
 {
@@ -813,7 +813,7 @@ Busca-e-substituição:
 }
 ```
 
-### 4.7 — Atualizar bundles.json
+### 4.7 — Update bundles.json
 
 ```json
 {
@@ -849,28 +849,28 @@ Busca-e-substituição:
 }
 ```
 
-### 4.8 — Atualizar scripts/release.js, README.md, CLAUDE.md, CHANGELOG.md, docs/
+### 4.8 — Update scripts/release.js, README.md, CLAUDE.md, CHANGELOG.md, docs/
 
 - `Claude Superskills` → `Design Superskills`
 - `claude-superskills` → `design-superskills`
 - Skill count: `9 skills`
-- Título README: `# 🎨 Design Superskills v1.0.0`
+- README title: `# 🎨 Design Superskills v1.0.0`
 - CHANGELOG: `## [1.0.0] - 2026-05-08 — Initial release, 9 design skills carved out from claude-superskills v1.25.0`
 
 Workflow:
 ```bash
 sed -i '' 's/claude-superskills/design-superskills/g' .github/workflows/publish-npm.yml
-# Remover step "Deprecate old cli-ai-skills package"
-grep "claude-superskills\|cli-ai-skills" .github/workflows/publish-npm.yml  # deve retornar vazio
+# Remove step "Deprecate old cli-ai-skills package"
+grep "claude-superskills\|cli-ai-skills" .github/workflows/publish-npm.yml  # should return empty
 ```
 
-### 4.9 — Reinstalar dependências e publicar
+### 4.9 — Reinstall dependencies and publish
 
 ```bash
 cd cli-installer && npm install && cd ..
 ```
 
-Verificar bundles:
+Verify bundles:
 ```bash
 node -e "
 const b = require('./bundles.json');
@@ -895,27 +895,27 @@ git remote add origin https://github.com/ericgandrade/design-superskills.git
 git branch -M main
 git push -u origin main
 
-# OBRIGATÓRIO antes do tag push — sem isso o publish no npm vai falhar silenciosamente
+# REQUIRED before tag push — without this the npm publish will fail silently
 gh secret set NPM_TOKEN --repo ericgandrade/design-superskills --body "$NPM_TOKEN"
 
 git tag v1.0.0 && git push origin v1.0.0
 ```
 
-**Verificar:**
+**Verify:**
 ```bash
 npx design-superskills --version           # → 1.0.0
 ls skills/ | wc -l                         # → 9
-claude --plugin-dir ./design-superskills   # carrega 9 skills sem erro
+claude --plugin-dir ./design-superskills   # loads 9 skills without error
 gh repo view ericgandrade/design-superskills --json visibility -q .visibility  # → PUBLIC
 ```
 
 ---
 
-## Task 5: Criar avanade-superskills (privado, sem npm, com shell installer)
+## Task 5: Create avanade-superskills (private, no npm, with shell installer)
 
-O `avanade-superskills` é privado e não vai para npm. Em vez do cli-installer Node.js, usa um shell installer completo (`install.sh`) com as mesmas funcionalidades: install para todas as 8 plataformas, uninstall, update, e list.
+`avanade-superskills` is private and not published to npm. Instead of the Node.js cli-installer, it uses a full shell installer (`install.sh`) with the same functionality: install for all 8 platforms, uninstall, update, and list.
 
-### 3.1 — Criar estrutura do repo
+### 3.1 — Create repo structure
 
 ```bash
 cd ~/Library/CloudStorage/OneDrive-Avanade/14_Code_Projects
@@ -925,29 +925,29 @@ git init
 mkdir -p skills .claude-plugin docs scripts
 ```
 
-### 3.2 — Copiar e renomear os 2 skills existentes
+### 3.2 — Copy and rename the 2 existing skills
 
-Os skills existem como `ava-pptx` e `ava-web` em `claude-superskills`. Precisam ser copiados **e renomeados**.
+The skills exist as `ava-pptx` and `ava-web` in `claude-superskills`. They need to be copied **and renamed**.
 
 ```bash
 cp -r ../claude-superskills/skills/ava-pptx skills/avanade-pptx
 cp -r ../claude-superskills/skills/ava-web  skills/avanade-web
 ```
 
-Atualizar o campo `name` no frontmatter de cada SKILL.md:
+Update the `name` field in the frontmatter of each SKILL.md:
 
-`skills/avanade-pptx/SKILL.md` — linha 2: `name: avanade-pptx`
-`skills/avanade-web/SKILL.md` — linha 2: `name: avanade-web`
+`skills/avanade-pptx/SKILL.md` — line 2: `name: avanade-pptx`
+`skills/avanade-web/SKILL.md` — line 2: `name: avanade-web`
 
-Verificar referências internas ao nome antigo:
+Check for internal references to the old name:
 ```bash
 grep -r "ava-pptx\|ava-web" skills/
-# Substituir qualquer ocorrência por avanade-pptx / avanade-web
+# Replace any occurrences with avanade-pptx / avanade-web
 ```
 
-### 3.3 — Criar o novo skill avanade-pdf
+### 3.3 — Create the new skill avanade-pdf
 
-Criar `skills/avanade-pdf/SKILL.md`:
+Create `skills/avanade-pdf/SKILL.md`:
 
 ```markdown
 ---
@@ -1042,7 +1042,7 @@ Report: file path, page count, file size.
 3. "Make an Avanade technical report on AI infrastructure recommendations"
 ```
 
-Criar `skills/avanade-pdf/README.md`:
+Create `skills/avanade-pdf/README.md`:
 
 ```markdown
 ## Metadata
@@ -1059,7 +1059,7 @@ Criar `skills/avanade-pdf/README.md`:
 | Risk | Low |
 ```
 
-### 3.4 — Criar .claude-plugin/plugin.json
+### 3.4 — Create .claude-plugin/plugin.json
 
 ```json
 {
@@ -1072,11 +1072,11 @@ Criar `skills/avanade-pdf/README.md`:
 }
 ```
 
-### 3.5 — Criar o shell installer (scripts/install.sh)
+### 3.5 — Create the shell installer (scripts/install.sh)
 
-Este script substitui o cli-installer Node.js. Deve ter as mesmas funcionalidades do `npx claude-superskills`.
+This script replaces the Node.js cli-installer. It must have the same functionality as `npx claude-superskills`.
 
-Criar `scripts/install.sh`:
+Create `scripts/install.sh`:
 
 ```bash
 #!/usr/bin/env bash
@@ -1207,7 +1207,7 @@ esac
 chmod +x scripts/install.sh
 ```
 
-Criar `scripts/uninstall.sh` como wrapper:
+Create `scripts/uninstall.sh` as a wrapper:
 ```bash
 #!/usr/bin/env bash
 "$(dirname "${BASH_SOURCE[0]}")/install.sh" uninstall
@@ -1216,7 +1216,7 @@ Criar `scripts/uninstall.sh` como wrapper:
 chmod +x scripts/uninstall.sh
 ```
 
-### 3.6 — Criar CLAUDE.md
+### 3.6 — Create CLAUDE.md
 
 ```markdown
 # avanade-superskills
@@ -1257,12 +1257,12 @@ v1.0.0
 To bump version: update `version` in `.claude-plugin/plugin.json` and `scripts/install.sh`, then update `CHANGELOG.md`, commit, and tag.
 ```
 
-### 3.7 — Criar README.md
+### 3.7 — Create README.md
 
-README com:
-- Título: `# Avanade Superskills v1.0.0`
-- Descrição: 3 skills para Avanade-branded content generation
-- **Seção de pré-requisitos** (antes do install):
+README with:
+- Title: `# Avanade Superskills v1.0.0`
+- Description: 3 skills for Avanade-branded content generation
+- **Prerequisites section** (before install):
   ```markdown
   ## Prerequisites
   - You must be added as a collaborator on the private GitHub repo.
@@ -1270,19 +1270,19 @@ README com:
   - SSH key configured for GitHub (`ssh -T git@github.com` must succeed).
     HTTPS clone will fail on private repos without a PAT.
   ```
-- Seção de install com SSH (não HTTPS):
+- Install section with SSH (not HTTPS):
   ```bash
   git clone git@github.com:ericgandrade/avanade-superskills.git
   cd avanade-superskills
   ./scripts/install.sh
   ```
-- Dois métodos: shell installer + `claude --plugin-dir`
-- Tabela dos 3 skills
-- Nota: repo privado, uso interno Avanade
+- Two methods: shell installer + `claude --plugin-dir`
+- Table of the 3 skills
+- Note: private repo, internal Avanade use only
 
-### 3.8 — Criar CHANGELOG.md, .gitignore, LICENSE
+### 3.8 — Create CHANGELOG.md, .gitignore, LICENSE
 
-`.gitignore` — copiar de `claude-superskills`.
+`.gitignore` — copy from `claude-superskills`.
 
 `CHANGELOG.md`:
 ```markdown
@@ -1297,9 +1297,9 @@ README com:
 - scripts/install.sh: Full shell installer — install/uninstall/update/list for all 8 AI platforms
 ```
 
-`LICENSE` — copiar de `claude-superskills`.
+`LICENSE` — copy from `claude-superskills`.
 
-### 3.9 — Criar repo privado e push
+### 3.9 — Create private repo and push
 
 ```bash
 git add .
@@ -1315,20 +1315,20 @@ git push -u origin main
 git tag v1.0.0 && git push origin v1.0.0
 ```
 
-**Verificar:**
+**Verify:**
 ```bash
 ls skills/ | wc -l                          # → 3
-./scripts/install.sh list                   # lista os 3 skills
-claude --plugin-dir ./avanade-superskills   # carrega 3 skills sem erro
+./scripts/install.sh list                   # lists the 3 skills
+claude --plugin-dir ./avanade-superskills   # loads 3 skills without error
 gh repo view ericgandrade/avanade-superskills --json visibility -q .visibility  # → PRIVATE
 ```
 
 ---
 
-## Task 6: Limpar claude-superskills e bumpar para v2.0.0
+## Task 6: Clean up claude-superskills and bump to v2.0.0
 
-> ⛔ **PRÉ-REQUISITO:** Tasks 1–5 devem estar 100% completas e todos os pacotes npm visíveis no registry antes de iniciar esta task.
-> Verificar:
+> ⛔ **PREREQUISITE:** Tasks 1–5 must be 100% complete and all npm packages visible in the registry before starting this task.
+> Verify:
 > ```bash
 > npm view obsidian-superskills version   # → 1.0.0
 > npm view career-superskills version     # → 1.0.0
@@ -1336,18 +1336,18 @@ gh repo view ericgandrade/avanade-superskills --json visibility -q .visibility  
 > npm view design-superskills version     # → 1.0.0
 > gh repo view ericgandrade/avanade-superskills --json visibility -q .visibility  # → PRIVATE
 > ```
-> Só prosseguir após todos os 5 checks passarem.
+> Only proceed after all 5 checks pass.
 
-### 6.1 — Deletar skills removidos
+### 6.1 — Delete removed skills
 
 ```bash
 cd ~/Library/CloudStorage/OneDrive-Avanade/14_Code_Projects/claude-superskills
 
-# Remove obsidian skills (agora em obsidian-superskills)
+# Remove obsidian skills (now in obsidian-superskills)
 git rm -r skills/obsidian-markdown skills/obsidian-links skills/obsidian-frontmatter \
            skills/obsidian-automation skills/obsidian-note-builder skills/obsidian-canvas
 
-# Remove career skills (agora em career-superskills)
+# Remove career skills (now in career-superskills)
 git rm -r skills/academic-cv-builder skills/career-changer-translator skills/cover-letter-generator \
            skills/creative-portfolio-resume skills/executive-resume-writer skills/interview-prep-generator \
            skills/job-description-analyzer skills/linkedin-profile-optimizer skills/offer-comparison-analyzer \
@@ -1356,47 +1356,47 @@ git rm -r skills/academic-cv-builder skills/career-changer-translator skills/cov
            skills/resume-section-builder skills/resume-tailor skills/resume-version-manager \
            skills/salary-negotiation-prep skills/tech-resume-optimizer
 
-# Remove product skills (agora em product-superskills)
+# Remove product skills (now in product-superskills)
 git rm -r skills/product-strategy skills/product-discovery skills/product-delivery \
            skills/product-leadership skills/product-architecture skills/product-operating-model \
            skills/abx-strategy skills/startup-growth-strategist
 
-# Remove design skills (agora em design-superskills)
+# Remove design skills (now in design-superskills)
 git rm -r skills/ui-ux-pro-max skills/design skills/design-system skills/brand \
            skills/ui-styling skills/slides skills/banner-design \
            skills/excalidraw-diagram skills/mermaid-diagram
 
-# Remove ava skills (agora em avanade-superskills como avanade-pptx / avanade-web)
+# Remove ava skills (now in avanade-superskills as avanade-pptx / avanade-web)
 git rm -r skills/ava-pptx skills/ava-web
 
-# Deleta skills de baixo valor (decisão 2026-05-07)
+# Delete low-value skills (decision 2026-05-07)
 git rm -r skills/code-method skills/ai-native-product skills/docling-converter
 ```
 
-**Verificar:**
+**Verify:**
 ```bash
-ls skills/ | wc -l   # deve retornar 17
+ls skills/ | wc -l   # should return 17
 ```
 
-### 6.2 — Atualizar bundles.json
+### 6.2 — Update bundles.json
 
-Remover dos bundles todos os skills movidos para outros repos:
-- Todos os obsidian skills
-- Todos os career skills
-- Todos os product skills (`product-strategy`, `product-discovery`, `product-delivery`, `product-leadership`, `product-architecture`, `product-operating-model`, `abx-strategy`, `startup-growth-strategist`)
-- Todos os design skills (`ui-ux-pro-max`, `design`, `design-system`, `brand`, `ui-styling`, `slides`, `banner-design`, `excalidraw-diagram`, `mermaid-diagram`)
+Remove from bundles all skills moved to other repos:
+- All obsidian skills
+- All career skills
+- All product skills (`product-strategy`, `product-discovery`, `product-delivery`, `product-leadership`, `product-architecture`, `product-operating-model`, `abx-strategy`, `startup-growth-strategist`)
+- All design skills (`ui-ux-pro-max`, `design`, `design-system`, `brand`, `ui-styling`, `slides`, `banner-design`, `excalidraw-diagram`, `mermaid-diagram`)
 - `ava-pptx`, `ava-web`
 - `code-method`, `ai-native-product`, `docling-converter`
 
-Remover completamente os bundles `career`, `obsidian`, `product`, e `design` (agora são repos separados). Manter apenas: `essential`, `planning`, `research`, `content`, `orchestration`, `all`.
+Completely remove the `career`, `obsidian`, `product`, and `design` bundles (now separate repos). Keep only: `essential`, `planning`, `research`, `content`, `orchestration`, `all`.
 
-### 6.3 — Bumpar para v2.0.0
+### 6.3 — Bump to v2.0.0
 
 ```bash
 node scripts/release.js major
 ```
 
-Editar `CHANGELOG.md` — substituir o placeholder gerado pelo release.js com:
+Edit `CHANGELOG.md` — replace the placeholder generated by release.js with:
 ```markdown
 ## [2.0.0] - 2026-05-08
 
@@ -1414,12 +1414,12 @@ Editar `CHANGELOG.md` — substituir o placeholder gerado pelo release.js com:
 - claude-superskills is now a focused core: 17 skills across meta/orchestration, planning, research, and content
 ```
 
-### 6.4 — Atualizar README.md
+### 6.4 — Update README.md
 
-- Título: `# 🤖 Claude Superskills v2.0.0`
+- Title: `# 🤖 Claude Superskills v2.0.0`
 - Skill count badge: `skills-17`
-- Remover tabelas de skills removidos
-- Adicionar seção `## Related Packages`:
+- Remove tables for removed skills
+- Add `## Related Packages` section:
   ```markdown
   ## Related Packages
   | Package | Skills | Focus |
@@ -1430,15 +1430,15 @@ Editar `CHANGELOG.md` — substituir o placeholder gerado pelo release.js com:
   | [design-superskills](https://github.com/ericgandrade/design-superskills) | 9 | UI/UX design, brand & diagrams |
   ```
 
-### 6.5 — Atualizar CLAUDE.md
+### 6.5 — Update CLAUDE.md
 
 - Skill count: `64` → `17`
-- Remover skills da architecture tree (obsidian, career, product, design, ava-*)
-- Adicionar referências aos novos repos em "Related Packages"
-- Atualizar versão: `v1.25.0` → `v2.0.0`
-- Atualizar npm description: `"17 core AI skills for Claude Code, GitHub Copilot & 6 more platforms"`
+- Remove skills from the architecture tree (obsidian, career, product, design, ava-*)
+- Add references to the new repos in "Related Packages"
+- Update version: `v1.25.0` → `v2.0.0`
+- Update npm description: `"17 core AI skills for Claude Code, GitHub Copilot & 6 more platforms"`
 
-### 6.6 — Atualizar GitHub About
+### 6.6 — Update GitHub About
 
 ```bash
 gh repo edit ericgandrade/claude-superskills \
@@ -1456,47 +1456,47 @@ git push origin main && git push origin v2.0.0
 
 ---
 
-## Validation Checklist Final
+## Final Validation Checklist
 
-Execute cada check antes de considerar o plano concluído:
+Run each check before considering the plan complete:
 
 ```bash
 # obsidian-superskills
 npx obsidian-superskills --version              # → 1.0.0
 ls ~/Library/CloudStorage/.../obsidian-superskills/skills/ | wc -l   # → 6
-claude --plugin-dir ./obsidian-superskills      # carrega 6 skills sem erro
+claude --plugin-dir ./obsidian-superskills      # loads 6 skills without error
 gh repo view ericgandrade/obsidian-superskills --json visibility -q .visibility  # → PUBLIC
 
 # career-superskills
 npx career-superskills --version               # → 1.0.0
 ls ~/Library/CloudStorage/.../career-superskills/skills/ | wc -l     # → 20
-claude --plugin-dir ./career-superskills       # carrega 20 skills sem erro
+claude --plugin-dir ./career-superskills       # loads 20 skills without error
 gh repo view ericgandrade/career-superskills --json visibility -q .visibility    # → PUBLIC
 
 # product-superskills
 npx product-superskills --version              # → 1.0.0
 ls ~/Library/CloudStorage/.../product-superskills/skills/ | wc -l    # → 8
-claude --plugin-dir ./product-superskills      # carrega 8 skills sem erro
+claude --plugin-dir ./product-superskills      # loads 8 skills without error
 gh repo view ericgandrade/product-superskills --json visibility -q .visibility   # → PUBLIC
 
 # design-superskills
 npx design-superskills --version               # → 1.0.0
 ls ~/Library/CloudStorage/.../design-superskills/skills/ | wc -l     # → 9
-claude --plugin-dir ./design-superskills       # carrega 9 skills sem erro
+claude --plugin-dir ./design-superskills       # loads 9 skills without error
 gh repo view ericgandrade/design-superskills --json visibility -q .visibility    # → PUBLIC
 
 # avanade-superskills
 ls ~/Library/CloudStorage/.../avanade-superskills/skills/ | wc -l        # → 3
-./scripts/install.sh list                                                  # lista avanade-pptx, avanade-web, avanade-pdf
-claude --plugin-dir ./avanade-superskills          # carrega 3 skills sem erro
+./scripts/install.sh list                                                  # lists avanade-pptx, avanade-web, avanade-pdf
+claude --plugin-dir ./avanade-superskills          # loads 3 skills without error
 gh repo view ericgandrade/avanade-superskills --json visibility -q .visibility       # → PRIVATE
 
 # claude-superskills
 npx claude-superskills --version               # → 2.0.0
 ls ~/Library/CloudStorage/.../claude-superskills/skills/ | wc -l     # → 17
-claude --plugin-dir ./claude-superskills       # carrega 17 skills sem erro
+claude --plugin-dir ./claude-superskills       # loads 17 skills without error
 
-# npm packages visíveis
+# npm packages visible
 npm view obsidian-superskills version          # → 1.0.0
 npm view career-superskills version            # → 1.0.0
 npm view product-superskills version           # → 1.0.0

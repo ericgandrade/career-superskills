@@ -58,7 +58,7 @@ function findInstalledSkillInfo(skillsRoot) {
 }
 
 /**
- * Verifica se claude-superskills já está instalado em alguma plataforma
+ * Checks if claude-superskills is already installed on any platform
  * @returns {Object} { installed: boolean, platforms: [], versions: {}, latestVersion: string }
  */
 function checkInstalledVersion() {
@@ -94,9 +94,9 @@ function checkInstalledVersion() {
 }
 
 /**
- * Compara versões e retorna se atualização está disponível
- * @param {Object} installInfo - Retorno de checkInstalledVersion()
- * @returns {boolean} true se nova versão disponível
+ * Compares versions and returns whether an update is available
+ * @param {Object} installInfo - Return value of checkInstalledVersion()
+ * @returns {boolean} true if a new version is available
  */
 function isUpdateAvailable(installInfo) {
   if (!installInfo.installed) return false;
@@ -111,7 +111,7 @@ function isUpdateAvailable(installInfo) {
         return true;
       }
     } catch (err) {
-      // Versão inválida, assumir atualização disponível
+      // Invalid version, assume update available
       return true;
     }
   }
@@ -120,8 +120,8 @@ function isUpdateAvailable(installInfo) {
 }
 
 /**
- * Verifica se uma plataforma específica tem claude-superskills instalado
- * @param {string} platform - Nome da plataforma (copilot, claude, etc)
+ * Checks if a specific platform has claude-superskills installed
+ * @param {string} platform - Platform name (copilot, claude, etc)
  * @returns {Object} { installed: boolean, version: string }
  */
 function checkPlatformInstallation(platform) {

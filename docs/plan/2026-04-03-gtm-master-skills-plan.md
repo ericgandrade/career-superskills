@@ -1,258 +1,259 @@
-# GTM Master Skills Plan — Campeão
+# GTM Master Skills Plan
 
-> **Para Claude:** Use `executing-plans` para implementar este plano task-by-task. Respeite os Decision Gates.
+> **For Claude:** Use `executing-plans` to implement this plan task-by-task. Respect the Decision Gates.
 
-**Objetivo:** Elevar o nível dos 3 skills GTM existentes e criar 19 skills novos cobrindo GTM de Produto + GTM de Consultoria Microsoft, com convenção de nomes uniforme, posicionamento como pilar central, e dois skills de workflow que orquestram cada track completo.
+**Objective:** Elevate the 3 existing GTM skills and create 19 new skills covering Product GTM + Microsoft Consulting GTM, with a uniform naming convention, positioning as a central pillar, and two workflow skills that orchestrate each full track.
 
-**Versão atual:** v1.22.0 (55 skills)
-**Versão alvo:** v1.27.0 (74 skills)
-
----
-
-## Abordagem de Criação de Skills
-
-> **CRÍTICO para execução:** Todo skill novo neste plano deve ser criado usando o skill `skill-creator`.
-> Não escrever SKILL.md manualmente. O skill-creator cuida de triggers, description optimization e evals.
-
-**Para cada skill novo, o executor deve:**
-1. Invocar `skill-creator` com o brief do skill (purpose, trigger phrases, frameworks, output format)
-2. Deixar o skill-creator conduzir a entrevista, escrever o SKILL.md e criar os evals
-3. Rodar os test cases e iterar até aprovação
-4. Rodar description optimization para maximizar triggering accuracy
-5. Validar com `./scripts/validate-skill-yaml.sh` e `./scripts/validate-skill-content.sh`
-
-**Evals obrigatórios por skill (mínimo 3 test cases):**
-- 1 caso de uso principal (trigger phrase canônica)
-- 1 caso edge (input incompleto, contexto ambíguo)
-- 1 caso negativo (should-not-trigger — prompt similar mas que não deve ativar este skill)
+**Current version:** v1.22.0 (55 skills)
+**Target version:** v1.27.0 (74 skills)
 
 ---
 
-## Convenção de Nomes Aprovada
+## Skill Creation Approach
 
-| Prefixo | Quando usar | Exemplo |
-|---------|-------------|---------|
-| `gtm-` | Skill compartilhado pelos dois tracks | `gtm-market-sizing` |
-| `gtm-product-` | Exclusivo do GTM de Produto SaaS/PLG | `gtm-product-launch` |
-| `gtm-consulting-` | Exclusivo do GTM de Consultoria Microsoft | `gtm-consulting-icp` |
+> **CRITICAL for execution:** Every new skill in this plan must be created using the `skill-creator` skill.
+> Do not write SKILL.md manually. The skill-creator handles triggers, description optimization and evals.
 
-## Tabela de Renaming Completa
+**For each new skill, the executor must:**
+1. Invoke `skill-creator` with the skill brief (purpose, trigger phrases, frameworks, output format)
+2. Let the skill-creator conduct the interview, write the SKILL.md and create the evals
+3. Run the test cases and iterate until approval
+4. Run description optimization to maximize triggering accuracy
+5. Validate with `./scripts/validate-skill-yaml.sh` and `./scripts/validate-skill-content.sh`
 
-| Nome antigo (plano anterior) | Nome novo (este plano) | Track | P do GTM |
-|------------------------------|------------------------|-------|----------|
-| `market-sizing` | **`gtm-market-sizing`** | Shared | Praça (segmentação) |
-| `icp-designer` | **`gtm-icp-designer`** | Shared | Praça (targeting) |
-| *(novo — gap crítico)* | **`gtm-positioning`** | Shared | Promoção (mensagem) |
-| `startup-growth-strategist` *(existente — rebuild slim)* | **`gtm-product-growth`** | Product | Produto (viabilidade) |
-| `gtm-launch-strategy` | **`gtm-product-launch`** | Product | Praça + Promoção |
-| `pricing-strategy` | **`gtm-product-pricing`** | Product | Preço |
-| `signal-based-outreach` | **`gtm-product-outreach`** | Product | Praça (canal outbound) |
-| `gtm-demand-generation` | **`gtm-product-demand-gen`** | Product | Praça (canal inbound) |
-| `gtm-account-expansion` | **`gtm-product-expansion`** | Product | Preço + Produto |
-| *(novo)* | **`gtm-product-workflow`** | Product | Orquestrador |
-| `microsoft-consulting-icp` | **`gtm-consulting-icp`** | Consulting | Praça (targeting) |
-| *(novo — gap crítico)* | **`gtm-consulting-offer-design`** | Consulting | Produto (oferta) |
-| *(novo — gap crítico)* | **`gtm-consulting-pricing`** | Consulting | Preço (T&M/fixed/outcome) |
-| `consulting-gtm-designer` | **`gtm-consulting-designer`** | Consulting | Praça + Promoção |
-| `microsoft-cosell-strategy` | **`gtm-consulting-cosell`** | Consulting | Praça (canal parceiro) |
-| `presales-qualifier` | **`gtm-consulting-qualifier`** | Consulting | Praça (qualificação) |
-| `executive-account-briefing` | **`gtm-consulting-briefing`** | Consulting | Promoção (engajamento) |
-| `consulting-pursuit-governance` | **`gtm-consulting-pursuit`** | Consulting | Processo (execução) |
-| `consulting-account-expansion` | **`gtm-consulting-expansion`** | Consulting | Preço + Produto |
-| *(novo)* | **`gtm-consulting-workflow`** | Consulting | Orquestrador |
-
-**Skills existentes que ficam com nome atual** (enriquecidos, não renomeados):
-- `product-strategy` — escopo maior que GTM (posicionamento + estratégia)
-- `abx-strategy` — escopo B2B genérico (signal scoring, pipeline)
-
-**Fontes de referência usadas neste plano:**
-- `GTM-Strategist/gtm-strategist-skills` — metodologia Maja Voje, 12 fases, testada em 1000+ empresas. Skills em `.claude/skills/` no branch `master`.
-- `iamachilles/gtm-skills-os` — 151 skills, 28.500+ linhas, operacionalmente o mais profundo. Skills em `skills/<name>/SKILL.md` (flat).
-- `kenny589/gtm-flywheel` — 15 skills de uma agência $7M ARR. Skills em diretórios raiz.
+**Required evals per skill (minimum 3 test cases):**
+- 1 main use case (canonical trigger phrase)
+- 1 edge case (incomplete input, ambiguous context)
+- 1 negative case (should-not-trigger — similar prompt that should NOT activate this skill)
 
 ---
 
-## Os Dois Workflows GTM
+## Approved Naming Convention
 
-> Invocar `gtm-consulting-workflow` ou `gtm-product-workflow` para executar o workflow completo.
-> Invocar skills individuais para etapas específicas.
+| Prefix | When to use | Example |
+|--------|-------------|---------|
+| `gtm-` | Skill shared by both tracks | `gtm-market-sizing` |
+| `gtm-product-` | Exclusive to Product SaaS/PLG GTM | `gtm-product-launch` |
+| `gtm-consulting-` | Exclusive to Microsoft Consulting GTM | `gtm-consulting-icp` |
+
+## Complete Renaming Table
+
+| Old name (previous plan) | New name (this plan) | Track | GTM P |
+|--------------------------|----------------------|-------|-------|
+| `market-sizing` | **`gtm-market-sizing`** | Shared | Place (segmentation) |
+| `icp-designer` | **`gtm-icp-designer`** | Shared | Place (targeting) |
+| *(new — critical gap)* | **`gtm-positioning`** | Shared | Promotion (message) |
+| `startup-growth-strategist` *(existing — slim rebuild)* | **`gtm-product-growth`** | Product | Product (viability) |
+| `gtm-launch-strategy` | **`gtm-product-launch`** | Product | Place + Promotion |
+| `pricing-strategy` | **`gtm-product-pricing`** | Product | Price |
+| `signal-based-outreach` | **`gtm-product-outreach`** | Product | Place (outbound channel) |
+| `gtm-demand-generation` | **`gtm-product-demand-gen`** | Product | Place (inbound channel) |
+| `gtm-account-expansion` | **`gtm-product-expansion`** | Product | Price + Product |
+| *(new)* | **`gtm-product-workflow`** | Product | Orchestrator |
+| `microsoft-consulting-icp` | **`gtm-consulting-icp`** | Consulting | Place (targeting) |
+| *(new — critical gap)* | **`gtm-consulting-offer-design`** | Consulting | Product (offer) |
+| *(new — critical gap)* | **`gtm-consulting-pricing`** | Consulting | Price (T&M/fixed/outcome) |
+| `consulting-gtm-designer` | **`gtm-consulting-designer`** | Consulting | Place + Promotion |
+| `microsoft-cosell-strategy` | **`gtm-consulting-cosell`** | Consulting | Place (partner channel) |
+| `presales-qualifier` | **`gtm-consulting-qualifier`** | Consulting | Place (qualification) |
+| `executive-account-briefing` | **`gtm-consulting-briefing`** | Consulting | Promotion (engagement) |
+| `consulting-pursuit-governance` | **`gtm-consulting-pursuit`** | Consulting | Process (execution) |
+| `consulting-account-expansion` | **`gtm-consulting-expansion`** | Consulting | Price + Product |
+| *(new)* | **`gtm-consulting-workflow`** | Consulting | Orchestrator |
+
+**Existing skills keeping their current name** (enriched, not renamed):
+- `product-strategy` — broader scope than GTM (positioning + strategy)
+- `abx-strategy` — generic B2B scope (signal scoring, pipeline)
+
+**Reference sources used in this plan:**
+- `GTM-Strategist/gtm-strategist-skills` — Maja Voje methodology, 12 phases, tested with 1000+ companies. Skills in `.claude/skills/` on `master` branch.
+- `iamachilles/gtm-skills-os` — 151 skills, 28,500+ lines, operationally the deepest. Skills in `skills/<name>/SKILL.md` (flat).
+- `kenny589/gtm-flywheel` — 15 skills from a $7M ARR agency. Skills in root directories.
 
 ---
 
-### Workflow A — GTM de Consultoria Microsoft
-**Invocar:** `/gtm-consulting-workflow`
+## The Two GTM Workflows
+
+> Invoke `gtm-consulting-workflow` or `gtm-product-workflow` to execute the full workflow.
+> Invoke individual skills for specific steps.
+
+---
+
+### Workflow A — Microsoft Consulting GTM
+**Invoke:** `/gtm-consulting-workflow`
 
 ```
-╔══════════════════════════════════════════════════════════════════╗
-║  CADÊNCIA TRIMESTRAL — "Praça, Produto, Preço e Mensagem"        ║
-╠══════════════════════════════════════════════════════════════════╣
-║                                                                  ║
-║  PRAÇA ─────────────────────────────────────────────────────     ║
-║  gtm-market-sizing         → TAM/SAM/SOM do segmento alvo        ║
-║  gtm-consulting-icp        → Quem perseguir? (tier × oferta)     ║
-║                                                                  ║
-║  PRODUTO ───────────────────────────────────────────────────     ║
-║  gtm-consulting-offer-design → O QUÊ vender (escopo, entregáveis,║
-║                                 metodologia, Hero Offers)        ║
-║                                                                  ║
-║  PREÇO ─────────────────────────────────────────────────────     ║
-║  gtm-consulting-pricing    → T&M vs fixed-fee vs outcome-based    ║
-║                               rate justification, pricing psychology║
-║                                                                  ║
-║  PROMOÇÃO ──────────────────────────────────────────────────     ║
-║  gtm-positioning           → Posicionamento + Messaging House     ║
-║                               + battle cards (SHARED)            ║
-║  gtm-consulting-designer   → GTM Canvas + motion da oferta       ║
-║  gtm-consulting-cosell     → Canal Microsoft + funding            ║
-║                                                                  ║
-╠══════════════════════════════════════════════════════════════════╣
-║  POR OPORTUNIDADE — "Vale e como governar este deal?"            ║
-╠══════════════════════════════════════════════════════════════════╣
-║                                                                  ║
-║  gtm-icp-designer          → Fit score desta conta (5 dimensões) ║
-║         ↓                                                        ║
-║  gtm-consulting-qualifier  → Vale investir pre-sales?            ║
-║         ↓                                                        ║
-║  gtm-consulting-briefing   → Preparar reunião C-level            ║
-║         ↓                                                        ║
-║  gtm-consulting-pursuit    → Governar pursuit ativo              ║
-║                                                                  ║
-╠══════════════════════════════════════════════════════════════════╣
-║  TRIMESTRAL — "Como crescer em contas existentes?"               ║
-╠══════════════════════════════════════════════════════════════════╣
-║                                                                  ║
-║  gtm-consulting-expansion  → Expansão de revenue na conta        ║
-║                                                                  ║
-╚══════════════════════════════════════════════════════════════════╝
++------------------------------------------------------------------+
+|  QUARTERLY CADENCE — "Place, Product, Price and Message"         |
++------------------------------------------------------------------+
+|                                                                  |
+|  PLACE ─────────────────────────────────────────────────────     |
+|  gtm-market-sizing         → TAM/SAM/SOM of target segment       |
+|  gtm-consulting-icp        → Who to pursue? (tier x offer)       |
+|                                                                  |
+|  PRODUCT ───────────────────────────────────────────────────     |
+|  gtm-consulting-offer-design → WHAT to sell (scope,              |
+|                                 deliverables, methodology,       |
+|                                 Hero Offers)                     |
+|                                                                  |
+|  PRICE ─────────────────────────────────────────────────────     |
+|  gtm-consulting-pricing    → T&M vs fixed-fee vs outcome-based   |
+|                               rate justification, pricing psychology|
+|                                                                  |
+|  PROMOTION ──────────────────────────────────────────────────    |
+|  gtm-positioning           → Positioning + Messaging House       |
+|                               + battle cards (SHARED)            |
+|  gtm-consulting-designer   → GTM Canvas + offer motion           |
+|  gtm-consulting-cosell     → Microsoft channel + funding         |
+|                                                                  |
++------------------------------------------------------------------+
+|  PER OPPORTUNITY — "Is this deal worth governing?"               |
++------------------------------------------------------------------+
+|                                                                  |
+|  gtm-icp-designer          → Fit score for this account (5 dim.) |
+|         ↓                                                        |
+|  gtm-consulting-qualifier  → Worth investing pre-sales?          |
+|         ↓                                                        |
+|  gtm-consulting-briefing   → Prepare C-level meeting             |
+|         ↓                                                        |
+|  gtm-consulting-pursuit    → Govern active pursuit               |
+|                                                                  |
++------------------------------------------------------------------+
+|  QUARTERLY — "How to grow in existing accounts?"                 |
++------------------------------------------------------------------+
+|                                                                  |
+|  gtm-consulting-expansion  → Revenue expansion in account        |
+|                                                                  |
++------------------------------------------------------------------+
 
-Suporte (qualquer etapa):
+Support (any stage):
   abx-strategy [ENRICHED]  → Signal scoring, PURE, multi-thread
-  mckinsey-strategist       → Estrutura de problema complexo
+  mckinsey-strategist       → Complex problem structure
 ```
 
 ---
 
-### Workflow B — GTM de Produto SaaS/PLG
-**Invocar:** `/gtm-product-workflow`
+### Workflow B — Product SaaS/PLG GTM
+**Invoke:** `/gtm-product-workflow`
 
 ```
-╔══════════════════════════════════════════════════════════════════╗
-║  FOUNDATION — "Praça, Produto, Preço, Promoção — base certa"     ║
-║  Cadência: Anual / ao lançar novo produto                        ║
-╠══════════════════════════════════════════════════════════════════╣
-║                                                                  ║
-║  PRAÇA (quem e onde) ───────────────────────────────────────     ║
-║  gtm-market-sizing    → TAM/SAM/SOM com fontes e sensibilidade   ║
-║  gtm-icp-designer     → ICP 5D, Anti-ICP, triggers, committee   ║
-║                                                                  ║
-║  PRODUTO (viabilidade) ────────────────────────────────────      ║
-║  gtm-product-growth   → Unit economics, Bet Board, roadmap       ║
-║  product-strategy [ENR.] → Beachhead, GTM motion, moat          ║
-║                                                                  ║
-║  PROMOÇÃO (mensagem) ──────────────────────────────────────      ║
-║  gtm-positioning      → April Dunford, Messaging House,          ║
-║                          battle cards, message-market fit (SHARED)║
-║                                                                  ║
-╠══════════════════════════════════════════════════════════════════╣
-║  LAUNCH — "Como levar ao mercado?"                               ║
-║  Cadência: Por produto ou feature major (trimestral)             ║
-╠══════════════════════════════════════════════════════════════════╣
-║                                                                  ║
-║  PREÇO ──────────────────────────────────────────────────────    ║
-║  gtm-product-pricing  → Value metric, WTP Van Westendorp,        ║
-║                          Gabor-Granger, 3 tiers, feature gates   ║
-║                                                                  ║
-║  PRAÇA + PROMOÇÃO ──────────────────────────────────────────     ║
-║  gtm-product-launch   → 9 fases OPE Canvas → validação →         ║
-║                          assets → channels → go-live             ║
-║                                                                  ║
-╠══════════════════════════════════════════════════════════════════╣
-║  GROWTH — "Como gerar e converter demanda?"                      ║
-║  Cadência: Por canal (mensal)                                    ║
-╠══════════════════════════════════════════════════════════════════╣
-║                                                                  ║
-║  gtm-product-outreach  → Signal scoring, SPARK, 6-layer diag.   ║
-║  gtm-product-demand-gen → Paid, organic, growth loops,           ║
-║                            trial-to-paid, funnel optimization    ║
-║                                                                  ║
-╠══════════════════════════════════════════════════════════════════╣
-║  EXPANSION — "Como crescer em contas existentes?"                ║
-║  Cadência: Trimestral                                            ║
-╠══════════════════════════════════════════════════════════════════╣
-║                                                                  ║
-║  gtm-product-expansion → NRR, health scoring, upsell triggers,  ║
-║                           churn prevention                       ║
-║                                                                  ║
-╚══════════════════════════════════════════════════════════════════╝
++------------------------------------------------------------------+
+|  FOUNDATION — "Place, Product, Price, Promotion — get it right"  |
+|  Cadence: Annual / when launching new product                    |
++------------------------------------------------------------------+
+|                                                                  |
+|  PLACE (who and where) ─────────────────────────────────────     |
+|  gtm-market-sizing    → TAM/SAM/SOM with sources and sensitivity |
+|  gtm-icp-designer     → ICP 5D, Anti-ICP, triggers, committee   |
+|                                                                  |
+|  PRODUCT (viability) ──────────────────────────────────────      |
+|  gtm-product-growth   → Unit economics, Bet Board, roadmap       |
+|  product-strategy [ENR.] → Beachhead, GTM motion, moat          |
+|                                                                  |
+|  PROMOTION (message) ──────────────────────────────────────      |
+|  gtm-positioning      → April Dunford, Messaging House,          |
+|                          battle cards, message-market fit (SHARED)|
+|                                                                  |
++------------------------------------------------------------------+
+|  LAUNCH — "How to take to market?"                               |
+|  Cadence: Per product or major feature (quarterly)               |
++------------------------------------------------------------------+
+|                                                                  |
+|  PRICE ──────────────────────────────────────────────────────    |
+|  gtm-product-pricing  → Value metric, WTP Van Westendorp,        |
+|                          Gabor-Granger, 3 tiers, feature gates   |
+|                                                                  |
+|  PLACE + PROMOTION ──────────────────────────────────────────    |
+|  gtm-product-launch   → 9 phases OPE Canvas → validation →       |
+|                          assets → channels → go-live             |
+|                                                                  |
++------------------------------------------------------------------+
+|  GROWTH — "How to generate and convert demand?"                  |
+|  Cadence: Per channel (monthly)                                  |
++------------------------------------------------------------------+
+|                                                                  |
+|  gtm-product-outreach  → Signal scoring, SPARK, 6-layer diag.   |
+|  gtm-product-demand-gen → Paid, organic, growth loops,           |
+|                            trial-to-paid, funnel optimization    |
+|                                                                  |
++------------------------------------------------------------------+
+|  EXPANSION — "How to grow in existing accounts?"                 |
+|  Cadence: Quarterly                                              |
++------------------------------------------------------------------+
+|                                                                  |
+|  gtm-product-expansion → NRR, health scoring, upsell triggers,  |
+|                           churn prevention                       |
+|                                                                  |
++------------------------------------------------------------------+
 
-Suporte (qualquer etapa):
-  abx-strategy [ENR.]   → Enterprise deals >$10K ACV, ciclo longo
-  product-discovery      → Validação contínua de problema/solução
-  product-delivery       → Staged rollout + métricas de launch
+Support (any stage):
+  abx-strategy [ENR.]   → Enterprise deals >$10K ACV, long cycle
+  product-discovery      → Continuous problem/solution validation
+  product-delivery       → Staged rollout + launch metrics
   product-leadership     → Portfolio-level GTM + board
 ```
 
 ---
 
-### Skills Compartilhados (prefixo `gtm-`)
+### Shared Skills (prefix `gtm-`)
 
 ```
-  gtm-market-sizing   →  Usado em AMBOS os workflows
-  gtm-icp-designer    →  Usado em AMBOS os workflows
-  abx-strategy        →  Enterprise deals em qualquer contexto
+  gtm-market-sizing   →  Used in BOTH workflows
+  gtm-icp-designer    →  Used in BOTH workflows
+  abx-strategy        →  Enterprise deals in any context
 ```
 
 ---
 
 ## Decision Gates
 
-1. ✅ Plano aprovado (com decomposição em market-sizing + icp-designer + startup-growth-strategist slim)
-2. ⏳ User aprova Track A após Batch 1-3 (3 skills fixados + 2 novos: market-sizing, icp-designer)
-3. ⏳ User aprova Track B Batch 1 (gtm-launch-strategy + pricing-strategy) antes de continuar
-4. ⏳ User aprova Track B Batch 2 (signal-based-outreach + demand + expansion) antes de continuar
-5. ⏳ User aprova Track C Batch 1 (microsoft-consulting-icp + consulting-gtm-designer)
-6. ⏳ User aprova Track C Batch 2 (5 skills restantes)
-7. ⏳ Version bump final (v1.25.0, 69 skills)
+1. ✅ Plan approved (with decomposition into market-sizing + icp-designer + startup-growth-strategist slim)
+2. ⏳ User approves Track A after Batch 1-3 (3 fixed skills + 2 new: market-sizing, icp-designer)
+3. ⏳ User approves Track B Batch 1 (gtm-launch-strategy + pricing-strategy) before continuing
+4. ⏳ User approves Track B Batch 2 (signal-based-outreach + demand + expansion) before continuing
+5. ⏳ User approves Track C Batch 1 (microsoft-consulting-icp + consulting-gtm-designer)
+6. ⏳ User approves Track C Batch 2 (5 remaining skills)
+7. ⏳ Final version bump (v1.25.0, 69 skills)
 
 ---
 
-## Frontmatter Rules (CRÍTICO — não errar)
+## Frontmatter Rules (CRITICAL — do not get wrong)
 
 ```yaml
 ---
 name: kebab-case-name
-description: This skill should be used when... (single line, sem quotes desnecessárias)
+description: This skill should be used when... (single line, no unnecessary quotes)
 license: MIT
 ---
 ```
 
-**PROIBIDO em SKILL.md:** `version`, `author`, `platforms`, `category`, `tags`, `risk`, `created`, `updated`
-**Esses campos vão em README.md** na tabela `## Metadata`.
+**PROHIBITED in SKILL.md:** `version`, `author`, `platforms`, `category`, `tags`, `risk`, `created`, `updated`
+**These fields belong in README.md** in the `## Metadata` table.
 
 ---
 
-## TRACK A — Corrigir Skills Existentes + Criar Novos Skills de Foundation
+## TRACK A — Fix Existing Skills + Create New Foundation Skills
 
-### Batch 1: Decompor `startup-growth-strategist` em 3 skills focados
+### Batch 1: Decompose `startup-growth-strategist` into 3 focused skills
 
-**Diagnóstico original:** Stub disfarçado de skill. Phase 5 vazia. Sem ICP. Sem templates. Escrito como role description ("You are..."). Cobria 5 fases que pertencem a 3 skills distintos.
+**Original diagnosis:** Stub disguised as skill. Phase 5 empty. No ICP. No templates. Written as role description ("You are..."). Covered 5 phases that belong to 3 distinct skills.
 
-**Decisão de design:**
-- `market-sizing` [NOVO] — TAM/SAM/SOM reutilizável por ambos os workflows
-- `icp-designer` [NOVO] — ICP scoring matrix, buying triggers, Anti-ICP, buying committee — o skill mais reutilizável de todo o GTM
-- `startup-growth-strategist` [SLIM] — refocado em unit economics + Bet Board + growth roadmap
+**Design decision:**
+- `market-sizing` [NEW] — TAM/SAM/SOM reusable by both workflows
+- `icp-designer` [NEW] — ICP scoring matrix, buying triggers, intent signals, Anti-ICP, buying committee — the most reusable skill in the entire GTM suite
+- `startup-growth-strategist` [SLIM] — refocused on unit economics + Bet Board + growth roadmap
 
-**O que foi REMOVIDO do startup-growth-strategist e movido:**
+**What was REMOVED from startup-growth-strategist and moved:**
 - Phase 1 (TAM/SAM/SOM) → `market-sizing`
 - Phase 2 (ICP Definition) → `icp-designer`
-- Phase 4 GTM motion selection → já existe em `product-strategy` (enriquecido no Batch 2)
+- Phase 4 GTM motion selection → already exists in `product-strategy` (enriched in Batch 2)
 
 ---
 
-#### Task A1.1 — Criar `skills/market-sizing/SKILL.md`
+#### Task A1.1 — Create `skills/market-sizing/SKILL.md`
 
-**Arquivo:** `skills/market-sizing/SKILL.md`
-**Ação:** Criar novo skill.
+**File:** `skills/market-sizing/SKILL.md`
+**Action:** Create new skill.
 
 ```markdown
 ---
@@ -384,9 +385,9 @@ Choose the capture rate that matches your current stage. Document the assumption
 
 ---
 
-#### Task A1.2 — Criar `skills/market-sizing/README.md`
+#### Task A1.2 — Create `skills/market-sizing/README.md`
 
-**Arquivo:** `skills/market-sizing/README.md`
+**File:** `skills/market-sizing/README.md`
 
 ```markdown
 # Market Sizing
@@ -419,10 +420,10 @@ Used in both the Product GTM and Consulting GTM workflows as a foundation step. 
 
 ---
 
-#### Task A1.3 — Criar `skills/icp-designer/SKILL.md`
+#### Task A1.3 — Create `skills/icp-designer/SKILL.md`
 
-**Arquivo:** `skills/icp-designer/SKILL.md`
-**Ação:** Criar novo skill.
+**File:** `skills/icp-designer/SKILL.md`
+**Action:** Create new skill.
 
 ```markdown
 ---
@@ -591,9 +592,9 @@ Even for SMB deals, document the decision chain before investing pre-sales hours
 
 ---
 
-#### Task A1.4 — Criar `skills/icp-designer/README.md`
+#### Task A1.4 — Create `skills/icp-designer/README.md`
 
-**Arquivo:** `skills/icp-designer/README.md`
+**File:** `skills/icp-designer/README.md`
 
 ```markdown
 # ICP Designer
@@ -627,10 +628,10 @@ The most reusable skill in the GTM suite. Used in both the Product GTM workflow 
 
 ---
 
-#### Task A1.5 — Reescrever `skills/startup-growth-strategist/SKILL.md` (versão SLIM)
+#### Task A1.5 — Rewrite `skills/startup-growth-strategist/SKILL.md` (SLIM version)
 
-**Arquivo:** `skills/startup-growth-strategist/SKILL.md`
-**Ação:** SUBSTITUIR completamente pelo conteúdo abaixo. Focado exclusivamente em unit economics + financial modeling + Bet Board + growth roadmap.
+**File:** `skills/startup-growth-strategist/SKILL.md`
+**Action:** REPLACE completely with the content below. Focused exclusively on unit economics + financial modeling + Bet Board + growth roadmap.
 
 ```markdown
 ---
@@ -784,16 +785,16 @@ Document: what is our North Star? Why does improving it lead to revenue?
 
 ---
 
-#### Task A1.6 — Atualizar `skills/startup-growth-strategist/README.md`
+#### Task A1.6 — Update `skills/startup-growth-strategist/README.md`
 
-Atualizar tabela Metadata:
+Update Metadata table:
 - `Version` → `2.0.0`
 - `Updated` → `2026-04-03`
-- Atualizar Overview para refletir o escopo slim (unit economics + Bet Board)
+- Update Overview to reflect slim scope (unit economics + Bet Board)
 
 ---
 
-#### Task A1.7 — Validar os 3 skills novos/revisados
+#### Task A1.7 — Validate the 3 new/revised skills
 
 ```bash
 ./scripts/validate-skill-yaml.sh skills/market-sizing
@@ -808,307 +809,18 @@ Atualizar tabela Metadata:
 
 ---
 
-### Batch 2: Enriquecer `product-strategy`
+### Batch 2: Enrich `product-strategy`
 
-**Arquivo:** `skills/startup-growth-strategist/SKILL.md`
-**Ação:** SUBSTITUIR completamente o conteúdo atual pelo abaixo.
+The skill is good, but 7 specific additions are needed. All are surgical — do not rewrite the entire skill.
+
+#### Task A2.1 — Add Beachhead Segment to the "Where to Play" section
+
+**File:** `skills/product-strategy/SKILL.md`
+**Location:** After the "**Where to Play:**" block (around line ~155), before "**How to Win:**"
+**Action:** Insert the block below after the Where to Play list:
 
 ```markdown
----
-name: startup-growth-strategist
-description: This skill should be used when the user needs to validate a business opportunity, build market sizing (TAM/SAM/SOM), define ICP with scoring, model unit economics, design GTM motion, or create a growth roadmap for an early-stage or scaling product.
-license: MIT
----
-
-# Startup Growth Strategist
-
-Validate markets, score ICPs, model economics, and design GTM motions with data-driven precision. Built for 0→1 founders and growth leaders preparing to scale.
-
-## When to Use
-
-- Validating a new business idea or market entry
-- Building TAM/SAM/SOM analysis for fundraising or planning
-- Defining ICP before investing in sales or marketing
-- Modeling unit economics (LTV/CAC, payback, Rule of 40)
-- Choosing GTM motion (PLG vs SLG vs Partner vs Hybrid)
-- Designing a growth roadmap with hypothesis-driven bets
-- Preparing a competitive analysis with differentiation strategy
-
-## Progress Tracking
-
-```
-[████░░░░░░░░░░░░░░░░] 20% — Phase 1/5: Market Sizing (TAM/SAM/SOM)
-[████████░░░░░░░░░░░░] 40% — Phase 2/5: ICP Definition & Scoring
-[████████████░░░░░░░░] 60% — Phase 3/5: Unit Economics & Financial Model
-[████████████████░░░░] 80% — Phase 4/5: GTM Motion & Competitive Strategy
-[████████████████████] 100% — Phase 5/5: Growth Roadmap & Bet Board
-```
-
-## Workflow
-
-### Phase 1: Market Sizing (TAM/SAM/SOM)
-
-Build a sourced, segmented market model. Every number must trace to a source or a stated assumption.
-
-**Step 1 — Load context.** Identify: product description, target customer type, geography, price point hypothesis. If missing, ask before proceeding.
-
-**Step 2 — Research industry data.** Run WebSearch for: "[market] size 2024 report", "[segment] TAM analyst estimate", "[vertical] total addressable market". Use at least 2 independent sources.
-
-**Step 3 — Define segments.** Break the market into 3-5 segments by industry, company size, geography, or use case. Justify each segment boundary.
-
-**Step 4 — TAM calculation.**
-```
-TAM = Total companies matching profile × Annual Contract Value hypothesis
-```
-Document source for both inputs. Triangulate with top-down industry reports.
-
-**Step 5 — SAM filter.** Apply realistic constraints: geography, sales channel capacity, compliance requirements, language. SAM = TAM × filter rationale.
-
-**Step 6 — SOM target.** For early-stage (0→1): 1-5% of SAM in 12 months is realistic. Document the capture rate assumption.
-
-**Step 7 — Sensitivity check.** What if ACV is 30% lower? What if addressable segment is half? Show the range, not just base case.
-
-**Step 8 — Output table.**
-
-| Metric | Value | Calculation Method | Sources |
-|--------|-------|-------------------|---------|
-| TAM | $XM | [Companies × ACV] | [Source 1, Source 2] |
-| SAM | $XM | [Filter: geography + channel] | [Assumption stated] |
-| SOM (12mo) | $XM | [X% capture rate] | [Benchmark cited] |
-| ACV Hypothesis | $X | [Comparable pricing] | [Source] |
-
-**Why Now?** — State the market timing argument: regulatory change, technology shift, buyer behavior change, or competitive gap that creates the window.
-
----
-
-### Phase 2: ICP Definition & Scoring
-
-Define who to pursue with precision. A vague ICP wastes every dollar of sales and marketing.
-
-**Step 1 — Firmographic profile.** Define:
-- Company size (employees, revenue range)
-- Industry / vertical (specific, not "B2B")
-- Geography (realistic given team)
-- Tech stack signals (what do they already use?)
-- Organizational structure signals (team size, reporting lines)
-
-**Step 2 — Buyer personas.** For each buying role (Economic Buyer, User Buyer, Technical Buyer, Coach/Champion):
-- Title and seniority
-- Primary KPIs they're measured on
-- Top 3 pain points in their own language
-- Success definition (what does winning look like for them?)
-- Preferred channels (LinkedIn, email, events, referral)
-- Most common objections
-
-**Step 3 — Buying triggers.** List 5+ events that create urgency to buy NOW:
-- Leadership change (new CTO, new VP of Ops)
-- Funding round (runway to invest)
-- Regulatory deadline (compliance mandate)
-- Competitive threat (competitor just launched)
-- Organizational event (merger, reorg, scale-up)
-
-**Step 4 — Intent signals.** Observable indicators of active buying:
-- Hiring signals (job postings for related roles)
-- Tech signals (installing complementary tools)
-- Content signals (downloading relevant whitepapers)
-- Event signals (attending competitor events, speaking about the problem)
-- Financial signals (budget approval cycle timing)
-
-**Step 5 — ICP Scoring Matrix (5 dimensions, 1-5 each, max 25).**
-
-| Dimension | 1 (Weak) | 3 (Good) | 5 (Bullseye) | Score |
-|-----------|----------|----------|--------------|-------|
-| **Firmographic Fit** | Wrong size/industry | Partial match | Exact match | |
-| **Technographic Fit** | Incompatible stack | Adjacent tools | Ideal stack | |
-| **Buying Intent** | No signal | Some trigger present | Active signal + timing | |
-| **Persona Access** | No contact | IC-level only | Economic buyer reachable | |
-| **Engagement Readiness** | No relationship | Warm intro possible | Champion identified | |
-
-**Tier thresholds:**
-- 22-25: Bullseye — full investment, custom approach
-- 17-21: Strong Fit — proactive outreach, personalized
-- 12-16: Good Fit — targeted campaign, scaled personalization
-- 7-11: Stretch — nurture only, no sales investment
-- <7: Disqualified
-
-**Step 6 — Anti-ICP (binary disqualifiers).** List 5+ hard stops — if ANY is true, disqualify immediately regardless of other scores:
-- [Example: No dedicated budget owner reachable]
-- [Example: Competitive lock-in contract active]
-- [Example: No Microsoft/Azure/relevant tech adoption]
-- [Example: RFP-only with no prior relationship]
-- [Example: Decision cycle >18 months]
-
-**Step 7 — Competitive landscape.** Map 3-5 alternatives the buyer considers. Include "do nothing" as an explicit row.
-
-| Alternative | Why they choose it | Why they leave it | Your wedge |
-|-------------|-------------------|-------------------|-----------|
-| Competitor A | [reason] | [reason] | [angle] |
-| Competitor B | [reason] | [reason] | [angle] |
-| Do nothing | [inertia/cost] | [trigger to act] | [urgency play] |
-
-**Step 8 — Buying committee map.** Even for SMB, document the decision chain:
-
-| Role | Name/Title | Influence | Status | Next Action |
-|------|-----------|-----------|--------|-------------|
-| Economic Buyer | | Final authority | Cold/Warm/Engaged | |
-| User Buyer | | Day-to-day impact | Cold/Warm/Engaged | |
-| Technical Buyer | | Spec/risk eval | Cold/Warm/Engaged | |
-| Coach | | Internal champion | Cold/Warm/Engaged | |
-
----
-
-### Phase 3: Unit Economics & Financial Model
-
-Audit viability before investing in growth. No metrics = no decisions.
-
-**Build this table for each pricing scenario:**
-
-| Metric | Formula | Value | Source/Assumption |
-|--------|---------|-------|-------------------|
-| **ACV** | Annual Contract Value | $X | Pricing hypothesis |
-| **CAC** | Sales + Marketing cost ÷ New customers | $X | Budget ÷ capacity |
-| **LTV** | ACV × Gross Margin × Avg. Retention (yrs) | $X | |
-| **LTV:CAC Ratio** | LTV ÷ CAC | X:1 | Target: >3:1 |
-| **Payback Period** | CAC ÷ (ACV × Gross Margin / 12) | X months | Target: <18 months |
-| **Gross Margin** | (Revenue − COGS) ÷ Revenue | X% | Target: >70% for SaaS |
-| **Burn Multiple** | Net Burn ÷ Net New ARR | X | Target: <1.5 |
-| **Rule of 40** | ARR Growth % + Profit Margin % | X | Target: >40 |
-
-**Three scenarios — always present all three:**
-
-| Scenario | Key Assumption | ACV | CAC | LTV:CAC | Runway Implication |
-|----------|---------------|-----|-----|---------|-------------------|
-| Bear | [worst case] | | | | |
-| Base | [most likely] | | | | |
-| Bull | [best case] | | | | |
-
-**Cohort projection (12-24 months):**
-- Monthly new customers added (by channel)
-- Monthly churn rate applied to existing base
-- Expansion revenue from upsell (Net Revenue Retention target)
-- Resulting MRR/ARR curve
-
----
-
-### Phase 4: GTM Motion & Competitive Differentiation
-
-**GTM Motion Selection — score each factor:**
-
-| Factor | PLG Signal | SLG Signal | Your Score |
-|--------|-----------|-----------|-----------|
-| ACV | <$10K/yr | >$10K/yr | |
-| Buyer | End user | Economic buyer | |
-| Time to Value | Minutes/hours | Days/weeks | |
-| Integration complexity | Low | High | |
-| Trust required | Self-serve | Relationship | |
-| Support needed | Docs + chatbot | CSM + onboarding | |
-
-**GTM Triangle — three components must tell a unified story:**
-
-**1. Positioning (Market Change → Thesis → Proof):**
-```
-Market Change: [Observable trend that makes the old way obsolete]
-Thesis:        [Our opinionated take on what this means]
-Proof:         [Evidence that our thesis is already true]
-```
-
-**2. ICP Summary:** Beachhead segment first. Narrowest definition where you can win before expanding.
-
-> **Beachhead Rule:** Pick the single narrowest segment where: (a) you have 3+ reference customers, (b) the pain is highest, (c) you can dominate the conversation. Expand only after winning here.
-
-**3. Channel Effort/Impact Matrix:**
-
-| Channel | Effort (1-5) | Impact (1-5) | Priority | Owner |
-|---------|-------------|-------------|---------|-------|
-| Founder-led outbound | 2 | 5 | 🔴 First | Founder |
-| Content / SEO | 3 | 4 | 🟡 Build | Marketing |
-| Paid social | 4 | 3 | 🟡 Test | Marketing |
-| Product virality | 3 | 5 | 🔴 Design in | Product |
-| Partnerships | 4 | 4 | 🟢 6 months | BD |
-| Events | 5 | 3 | 🟢 Later | Sales |
-
-**Competitive Differentiation:**
-- Map direct competitors, indirect competitors, and "do nothing" (already done in Phase 2 — reference it here)
-- Blue Ocean check: Is there an uncontested segment where competition is irrelevant?
-- Alternatives Page strategy: Build content that captures buyers comparing alternatives
-
----
-
-### Phase 5: Growth Roadmap & Bet Board
-
-**Assumption Ranking Matrix — prioritize experiments by risk:**
-
-| Assumption | If Wrong, Impact | Confidence | Priority to Test |
-|-----------|-----------------|------------|-----------------|
-| [Riskiest assumption] | Kill the business | Low | Test NOW |
-| [Second assumption] | Miss ARR target | Medium | Test Q1 |
-| [Third assumption] | Slower growth | High | Monitor |
-
-**GTM Bet Board:**
-
-| Bet | Hypothesis | Metric | Target | Timebox | Kill Condition | Scale Condition |
-|-----|-----------|--------|--------|---------|----------------|----------------|
-| [Name] | "If we do X, we expect Y" | [KPI] | [#] | [weeks] | [If metric < X after Y weeks] | [If metric > X] |
-
-**Growth Roadmap Structure:**
-
-| Quarter | Focus | Key Bets | Success Criteria |
-|---------|-------|----------|-----------------|
-| Q1 | Beachhead validation | [2-3 bets] | [PMF signal: >40% "very disappointed"] |
-| Q2 | First repeatable motion | [2-3 bets] | [CAC < $X, pipeline self-generating] |
-| Q3 | First expansion signal | [2-3 bets] | [NRR > 100%, second ICP segment] |
-| Q4 | Scale or pivot | [Decision gate] | [Rule of 40 > X] |
-
-## Critical Rules
-
-- NEVER present TAM/SAM/SOM without sourced numbers — every estimate needs a calculation or a citation
-- NEVER skip the Anti-ICP — without it, any sales team will game the ICP criteria
-- ALWAYS include Base, Bull, and Bear scenarios in financial modeling — no single "best case"
-- ALWAYS define the Beachhead Segment before expanding ICP — win narrow first
-- NEVER conflate GTM motion — PLG and SLG have fundamentally different economics, team structures, and success metrics
-- ALWAYS validate the riskiest assumption first — don't polish secondary features while core hypothesis is unproven
-- NEVER use generic market size numbers without applying SAM filters — TAM is not your market
-
-## Example Usage
-
-1. "Calculate TAM/SAM/SOM for an AI-powered recruiting platform targeting mid-market US companies"
-2. "Define ICP for our SaaS expense management tool — we have 12 customers, what's the pattern?"
-3. "Model unit economics: $299/mo ACV, $800 CAC, 85% gross margin, 24-month avg retention"
-4. "Should we go PLG or SLG for a $5K ACV dev tools product?"
-5. "Build a GTM Bet Board for our Q1 launch into the European market"
-```
-
-**Validação após criar:**
-```bash
-./scripts/validate-skill-yaml.sh skills/startup-growth-strategist
-./scripts/validate-skill-content.sh skills/startup-growth-strategist
-```
-Esperado: sem erros, word count 1800-2500.
-
----
-
-#### Task A1.2 — Atualizar `skills/startup-growth-strategist/README.md`
-
-**Arquivo:** `skills/startup-growth-strategist/README.md`
-**Ação:** Atualizar tabela Metadata para refletir versão 2.0.0 e data de hoje.
-
-Localizar a linha `| Version | ...` e atualizar para `| Version | 2.0.0 |`
-Localizar a linha `| Updated | ...` e atualizar para `| Updated | 2026-04-03 |`
-
----
-
-### Batch 2: Enriquecer `product-strategy`
-
-O skill é bom, mas faltam 7 adições específicas. Todas são cirúrgicas — não reescrever o skill inteiro.
-
-#### Task A2.1 — Adicionar Beachhead Segment à seção "Where to Play"
-
-**Arquivo:** `skills/product-strategy/SKILL.md`
-**Localização:** Após o bloco "**Where to Play:**" (linha ~155), antes de "**How to Win:**"
-**Ação:** Inserir o bloco abaixo após a lista de Where to Play:
-
-```markdown
-**Beachhead Segment (obrigatório para 0→1):**
+**Beachhead Segment (required for 0→1):**
 Before defining the full ICP, identify the single narrowest segment where you can win first:
 - Where do you have 3+ reference customers or strong evidence?
 - Where is pain highest and buyer access easiest?
@@ -1119,11 +831,11 @@ Before defining the full ICP, identify the single narrowest segment where you ca
 
 ---
 
-#### Task A2.2 — Adicionar Buying Triggers e Intent Signals ao ICP
+#### Task A2.2 — Add Buying Triggers and Intent Signals to ICP
 
-**Arquivo:** `skills/product-strategy/SKILL.md`
-**Localização:** Após o bloco "**Anti-ICP (equally important):**" (após a linha com "Why (wrong economics, wrong fit, wrong timing)")
-**Ação:** Inserir após o bloco Anti-ICP:
+**File:** `skills/product-strategy/SKILL.md`
+**Location:** After the "**Anti-ICP (equally important):**" block
+**Action:** Insert after the Anti-ICP block:
 
 ```markdown
 **Buying Triggers (events that create urgency NOW):**
@@ -1146,11 +858,11 @@ Add 5+ triggers to your ICP definition — these are events that move a prospect
 
 ---
 
-#### Task A2.3 — Adicionar WTP Research Protocol à seção de Pricing
+#### Task A2.3 — Add WTP Research Protocol to Pricing section
 
-**Arquivo:** `skills/product-strategy/SKILL.md`
-**Localização:** Após o bloco "**0→1 Mode**: Run willingness-to-pay conversations early. Start simple: one price, test the market."
-**Ação:** Inserir após essa linha:
+**File:** `skills/product-strategy/SKILL.md`
+**Location:** After the "**0→1 Mode**: Run willingness-to-pay conversations early. Start simple: one price, test the market." line
+**Action:** Insert after that line:
 
 ```markdown
 **WTP Research Protocol (Van Westendorp method — use before setting price):**
@@ -1173,11 +885,11 @@ Plot the four curves. The Acceptable Price Range sits between the intersection o
 
 ---
 
-#### Task A2.4 — Adicionar estrutura de posicionamento 3 partes
+#### Task A2.4 — Add 3-part positioning structure
 
-**Arquivo:** `skills/product-strategy/SKILL.md`
-**Localização:** Após o bloco "**Positioning Statement Format:**" (o template "For [ICP] / Who are...")
-**Ação:** Inserir após o template de Positioning Statement:
+**File:** `skills/product-strategy/SKILL.md`
+**Location:** After the "**Positioning Statement Format:**" block
+**Action:** Insert after the Positioning Statement template:
 
 ```markdown
 **Alternative: GTM Triangle Positioning Structure (Market Change → Thesis → Proof):**
@@ -1199,11 +911,11 @@ Example:
 
 ---
 
-#### Task A2.5 — Adicionar Channel Effort/Impact Matrix ao GTM Motion
+#### Task A2.5 — Add Channel Effort/Impact Matrix to GTM Motion
 
-**Arquivo:** `skills/product-strategy/SKILL.md`
-**Localização:** Após a tabela PLG vs SLG (a tabela com ACV, Complexity, Buyer, etc.)
-**Ação:** Inserir após essa tabela:
+**File:** `skills/product-strategy/SKILL.md`
+**Location:** After the PLG vs SLG table
+**Action:** Insert after that table:
 
 ```markdown
 **Channel Effort/Impact Matrix:**
@@ -1223,11 +935,11 @@ Score each channel 1-5 on Effort (resource cost, time to results) and Impact (ex
 
 ---
 
-#### Task A2.6 — Adicionar "do nothing" como concorrente explícito
+#### Task A2.6 — Add "do nothing" as explicit competitor
 
-**Arquivo:** `skills/product-strategy/SKILL.md`
-**Localização:** Na seção "2. Market & Competitive Reality", após a tabela de análises (Porter's, 5C, etc.)
-**Ação:** Após o bloco "Key questions:", inserir:
+**File:** `skills/product-strategy/SKILL.md`
+**Location:** In the "2. Market & Competitive Reality" section, after the analysis tables
+**Action:** After "Key questions:", insert:
 
 ```markdown
 **Competitive Landscape Table — always include "do nothing":**
@@ -1244,11 +956,11 @@ Score each channel 1-5 on Effort (resource cost, time to results) and Impact (ex
 
 ---
 
-#### Task A2.7 — Adicionar Consistency Checklist
+#### Task A2.7 — Add Consistency Checklist
 
-**Arquivo:** `skills/product-strategy/SKILL.md`
-**Localização:** Na seção "Quick Reference: Strategy Quality Checklist", após os 9 itens existentes
-**Ação:** Adicionar 3 itens ao checklist existente:
+**File:** `skills/product-strategy/SKILL.md`
+**Location:** In the "Quick Reference: Strategy Quality Checklist" section, after the 9 existing items
+**Action:** Add 3 items to the existing checklist:
 
 ```markdown
 - [ ] **Beachhead identified** — You can name 20 companies to call tomorrow in the narrowest segment
@@ -1258,15 +970,15 @@ Score each channel 1-5 on Effort (resource cost, time to results) and Impact (ex
 
 ---
 
-### Batch 3: Enriquecer `abx-strategy`
+### Batch 3: Enrich `abx-strategy`
 
-O skill é forte — 3 adições cirúrgicas de alta precisão.
+The skill is strong — 3 high-precision surgical additions.
 
-#### Task A3.1 — Adicionar Step 0: GTM Diagnostic como ponto de entrada
+#### Task A3.1 — Add Step 0: GTM Diagnostic as entry point
 
-**Arquivo:** `skills/abx-strategy/SKILL.md`
-**Localização:** Logo após o bloco de Progress Tracking (após o `[████...]` lines), antes de "## Core Philosophy"
-**Ação:** Inserir novo bloco:
+**File:** `skills/abx-strategy/SKILL.md`
+**Location:** Right after the Progress Tracking block, before "## Core Philosophy"
+**Action:** Insert new block:
 
 ```markdown
 ## Step 0: GTM Diagnostic (Run Before Any ABX Work)
@@ -1294,11 +1006,11 @@ Document the 2 lowest-scoring dimensions. These become the first bets in the 90-
 
 ---
 
-#### Task A3.2 — Adicionar Composite Lead Scoring Formula ao Framework 3
+#### Task A3.2 — Add Composite Lead Scoring Formula to Framework 3
 
-**Arquivo:** `skills/abx-strategy/SKILL.md`
-**Localização:** Após a tabela de Tier Assignment no "Framework 3: PURE Problem Scoring"
-**Ação:** Inserir após a tabela de tiers:
+**File:** `skills/abx-strategy/SKILL.md`
+**Location:** After the Tier Assignment table in "Framework 3: PURE Problem Scoring"
+**Action:** Insert after the tiers table:
 
 ```markdown
 ### Live Lead Scoring Formula (for active pipeline management)
@@ -1333,11 +1045,11 @@ Lead Score = (Fit Score × 0.30) + (Intent Score × 0.45) + (Engagement Score ×
 
 ---
 
-#### Task A3.3 — Adicionar Signal Scoring Multipliers ao Signal Detection
+#### Task A3.3 — Add Signal Scoring Multipliers to Signal Detection
 
-**Arquivo:** `skills/abx-strategy/SKILL.md`
-**Localização:** Após a tabela "Signal Detection Categories" (a tabela com Policy/Regulatory, Procurement, Leadership, Competitive, Strategic)
-**Ação:** Inserir após essa tabela:
+**File:** `skills/abx-strategy/SKILL.md`
+**Location:** After the "Signal Detection Categories" table
+**Action:** Insert after that table:
 
 ```markdown
 ### Signal Scoring Multipliers
@@ -1359,58 +1071,58 @@ An account with perfect PURE score and no signals is a cold target. An account w
 
 ---
 
-## TRACK B — Novos Skills de GTM de Produto
+## TRACK B — New Product GTM Skills
 
-### Batch 4: `gtm-positioning` (novo skill — Shared, crítico)
+### Batch 4: `gtm-positioning` (new skill — Shared, critical)
 
-**Purpose:** O 4º P ausente em ambos os workflows. Posicionamento é o multiplicador — com ele certo, ICP converte mais rápido, canal funciona melhor, preço se justifica sozinho.
+**Purpose:** The missing 4th P in both workflows. Positioning is the multiplier — with it right, ICP converts faster, channel works better, price justifies itself.
 
-**Brief para `skill-creator`:**
+**Brief for `skill-creator`:**
 
 ```
-Nome: gtm-positioning
-Track: Shared (produto e consultoria)
+Name: gtm-positioning
+Track: Shared (product and consulting)
 
-Purpose: Definir posicionamento e mensagem de mercado usando April Dunford 6-step,
-criar Messaging House com variações por persona, desenvolver battle cards por
-concorrente, e medir Message-Market Fit.
+Purpose: Define market positioning and message using April Dunford 6-step,
+create a Messaging House with variations per persona, develop battle cards per
+competitor, and measure Message-Market Fit.
 
 Trigger phrases:
-- "Preciso posicionar meu produto/oferta"
-- "Como diferenciamos da concorrência?"
-- "Me ajuda a criar o messaging para [produto/oferta]"
-- "Nossa mensagem não está funcionando — o que mudar?"
-- "Crie battle cards para [concorrente]"
-- "Como sabemos se o posicionamento está certo?"
+- "I need to position my product/offer"
+- "How do we differentiate from the competition?"
+- "Help me create the messaging for [product/offer]"
+- "Our message isn't working — what to change?"
+- "Create battle cards for [competitor]"
+- "How do we know if the positioning is right?"
 
 Should NOT trigger:
-- "Preciso definir pricing" → gtm-product-pricing
-- "Qual é o meu ICP?" → gtm-icp-designer
-- "Valida se o mercado existe" → gtm-market-sizing
+- "I need to define pricing" → gtm-product-pricing
+- "What is my ICP?" → gtm-icp-designer
+- "Validate if the market exists" → gtm-market-sizing
 
-Frameworks obrigatórios:
+Required frameworks:
 1. April Dunford 6-step positioning:
    Competitive alternatives → Unique attributes → Value → Target customers
    → Market category → Relevant trends
 2. GTM Triangle positioning (Market Change → Thesis → Proof)
 3. Messaging House: Primary message (10 words) + 3 pillars + per-persona variations
-4. Battle card por concorrente: why they choose them / why they leave / your wedge / objection handlers
+4. Battle card per competitor: why they choose them / why they leave / your wedge / objection handlers
 5. Message-Market Fit measurement: % of calls where prospect uses your language back
 
 Output format:
 - Positioning Statement (April Dunford format)
-- GTM Triangle (3 linhas)
-- Messaging House (tabela)
-- Battle Cards (uma por concorrente)
+- GTM Triangle (3 lines)
+- Messaging House (table)
+- Battle Cards (one per competitor)
 - Message-Market Fit KPI target
 
 Evals (3 test cases):
-1. "Posiciona nosso AI contract review tool — concorrentes são DocuSign, Ironclad, e fazer manual"
-2. "Nossa mensagem é 'plataforma de analytics enterprise' e não está convertendo — onde está errado?"
-3. "Cria battle card para nossa proposta de Outsourcing vs. time interno do cliente" (consulting context)
+1. "Position our AI contract review tool — competitors are DocuSign, Ironclad, and doing it manually"
+2. "Our message is 'enterprise analytics platform' and it's not converting — where is it wrong?"
+3. "Create battle card for our Outsourcing proposal vs. client's internal team" (consulting context)
 ```
 
-**Validação:**
+**Validation:**
 ```bash
 ./scripts/validate-skill-yaml.sh skills/gtm-positioning
 ./scripts/validate-skill-content.sh skills/gtm-positioning
@@ -1418,14 +1130,14 @@ Evals (3 test cases):
 
 ---
 
-### Batch 5: `gtm-product-launch` (novo skill)
+### Batch 5: `gtm-product-launch` (new skill)
 
-**Purpose:** Skill mais importante do Track B. Guia o caminho completo do GTM canvas ao go-live, em 9 fases sequenciais. Baseado na metodologia Maja Voje (GTM-Strategist) + gtm-skills-os. Cada fase produz um output que alimenta a próxima.
+**Purpose:** Most important skill in Track B. Guides the complete journey from GTM canvas to go-live, in 9 sequential phases. Based on Maja Voje (GTM-Strategist) + gtm-skills-os methodology. Each phase produces an output that feeds the next.
 
-#### Task B1.1 — Criar `skills/gtm-launch-strategy/SKILL.md`
+#### Task B1.1 — Create `skills/gtm-launch-strategy/SKILL.md`
 
-**Arquivo:** `skills/gtm-launch-strategy/SKILL.md`
-**Ação:** Criar com o conteúdo abaixo.
+**File:** `skills/gtm-launch-strategy/SKILL.md`
+**Action:** Create with the content below.
 
 ```markdown
 ---
@@ -1729,10 +1441,10 @@ Create or update:
 
 ---
 
-#### Task B1.2 — Criar `skills/gtm-launch-strategy/README.md`
+#### Task B1.2 — Create `skills/gtm-launch-strategy/README.md`
 
-**Arquivo:** `skills/gtm-launch-strategy/README.md`
-**Ação:** Criar com o conteúdo abaixo.
+**File:** `skills/gtm-launch-strategy/README.md`
+**Action:** Create with the content below.
 
 ```markdown
 # GTM Launch Strategy
@@ -1783,14 +1495,14 @@ Each phase produces a file in `gtm-outputs/`:
 
 ---
 
-### Batch 5: `pricing-strategy` (novo skill)
+### Batch 5: `pricing-strategy` (new skill)
 
-**Purpose:** WTP research, value metric selection, tier design, competitive anchoring. Baseia-se no gtm-skills-os pricing-strategy — o mais rigoroso dos 3 repos neste tema.
+**Purpose:** WTP research, value metric selection, tier design, competitive anchoring. Based on gtm-skills-os pricing-strategy — the most rigorous of the 3 repos on this topic.
 
-#### Task B2.1 — Criar `skills/pricing-strategy/SKILL.md`
+#### Task B2.1 — Create `skills/pricing-strategy/SKILL.md`
 
-**Arquivo:** `skills/pricing-strategy/SKILL.md`
-**Ação:** Criar com o conteúdo abaixo.
+**File:** `skills/pricing-strategy/SKILL.md`
+**Action:** Create with the content below.
 
 ```markdown
 ---
@@ -1876,7 +1588,7 @@ Present 3-5 specific price points (derived from Van Westendorp ranges). For each
 - Calculate purchase probability at each price point
 - Use to select tier prices within the Acceptable Price Range
 
-**WTP by segment:** Run the exercise separately for different ICP tiers if ACV differs significantly. Enterprise WTP ≠ SMB WTP.
+**WTP by segment:** Run the exercise separately for different ICP tiers if ACV differs significantly. Enterprise WTP is not equal to SMB WTP.
 
 **Red flags from WTP interviews:**
 - "I'd need to get budget approval" → not current-budget (timing issue, not price issue)
@@ -1933,10 +1645,10 @@ Price exists in context. Buyers compare you — consciously or not.
 
 | Feature | Good | Better | Best | Gate Rationale |
 |---------|------|--------|------|---------------|
-| [Core feature] | ✅ | ✅ | ✅ | Must be in free/entry |
-| [Collaboration] | ❌ | ✅ | ✅ | Drives team expansion |
-| [Advanced analytics] | ❌ | ✅ | ✅ | Power user value |
-| [SSO / Security] | ❌ | ❌ | ✅ | Enterprise requirement |
+| [Core feature] | Yes | Yes | Yes | Must be in free/entry |
+| [Collaboration] | No | Yes | Yes | Drives team expansion |
+| [Advanced analytics] | No | Yes | Yes | Power user value |
+| [SSO / Security] | No | No | Yes | Enterprise requirement |
 | [API access] | Limited | Full | Full | Dev expansion |
 
 **Freemium / Free Trial decision:**
@@ -2000,10 +1712,10 @@ Price exists in context. Buyers compare you — consciously or not.
 
 ---
 
-#### Task B2.2 — Criar `skills/pricing-strategy/README.md`
+#### Task B2.2 — Create `skills/pricing-strategy/README.md`
 
-**Arquivo:** `skills/pricing-strategy/README.md`
-**Ação:** Criar com o conteúdo abaixo.
+**File:** `skills/pricing-strategy/README.md`
+**Action:** Create with the content below.
 
 ```markdown
 # Pricing Strategy
@@ -2037,14 +1749,14 @@ Built for PMs, founders, and GTM leaders designing or improving product pricing.
 
 ---
 
-### Batch 6: `signal-based-outreach` (novo skill)
+### Batch 6: `signal-based-outreach` (new skill)
 
-**Purpose:** Outbound flywheel completo — ICP matrix, intent signals com scoring formula, cold email SPARK, analytics, loop de aprendizado. Baseado em gtm-flywheel (ColdIQ) + sachacoldiq.
+**Purpose:** Complete outbound flywheel — ICP matrix, intent signals with scoring formula, cold email SPARK, analytics, learning loop. Based on gtm-flywheel (ColdIQ) + sachacoldiq.
 
-#### Task B3.1 — Criar `skills/signal-based-outreach/SKILL.md`
+#### Task B3.1 — Create `skills/signal-based-outreach/SKILL.md`
 
-**Arquivo:** `skills/signal-based-outreach/SKILL.md`
-**Ação:** Criar com o conteúdo abaixo.
+**File:** `skills/signal-based-outreach/SKILL.md`
+**Action:** Create with the content below.
 
 ```markdown
 ---
@@ -2253,10 +1965,10 @@ Update the ICP Matrix and signal weights based on these patterns.
 
 ---
 
-#### Task B3.2 — Criar `skills/signal-based-outreach/README.md`
+#### Task B3.2 — Create `skills/signal-based-outreach/README.md`
 
-**Arquivo:** `skills/signal-based-outreach/README.md`
-**Ação:** Criar com o conteúdo abaixo.
+**File:** `skills/signal-based-outreach/README.md`
+**Action:** Create with the content below.
 
 ```markdown
 # Signal-Based Outreach
@@ -2291,16 +2003,16 @@ Built for sales leaders, SDRs, founders, and GTM engineers designing or optimizi
 
 ---
 
-### Batch 7: `gtm-demand-generation` e `gtm-account-expansion`
+### Batch 7: `gtm-demand-generation` and `gtm-account-expansion`
 
-**Nota:** Estes dois skills são o Batch 7 e requerem aprovação do user após Batch 6.
+**Note:** These two skills are Batch 7 and require user approval after Batch 6.
 
-#### Task B4.1 — Criar `skills/gtm-demand-generation/SKILL.md`
+#### Task B4.1 — Create `skills/gtm-demand-generation/SKILL.md`
 
-**Purpose:** Channel architecture, growth loops, trial-to-paid conversion, funnel optimization. Cobre o gap mais crítico identificado — nenhum skill atual toca demand gen.
+**Purpose:** Channel architecture, growth loops, trial-to-paid conversion, funnel optimization. Covers the most critical gap identified — no current skill covers demand gen.
 
-**Arquivo:** `skills/gtm-demand-generation/SKILL.md`
-**Ação:** Criar com frontmatter e body completo cobrindo:
+**File:** `skills/gtm-demand-generation/SKILL.md`
+**Action:** Create with frontmatter and complete body covering:
 
 **Frontmatter:**
 ```yaml
@@ -2311,28 +2023,28 @@ license: MIT
 ---
 ```
 
-**Seções obrigatórias do body:**
-1. **Phase 1: Channel Architecture** — Channel selection matrix (effort/impact), paid (SEM, social, display) setup foundations, organic (SEO, content, community) foundations, viral/referral loop design. Regra: master 2 channels before adding a 3rd.
-2. **Phase 2: Growth Loop Design** — Identificar loops existentes (viral, content, ecosystem, sales). Documentar cada loop como: Trigger → Action → Reward → Invitation. Medir loop coefficient (K-factor para viral).
-3. **Phase 3: Trial-to-Paid Conversion** — Definir "Activation Moment" (the specific action that predicts conversion). Activation funnel (signed-up → activated → retained → paid). Identify friction points. Design onboarding that leads to Activation Moment. Target: >20% trial-to-paid in 30 days.
-4. **Phase 4: Funnel Optimization** — TOFU/MOFU/BOFU metrics. Identify the leakiest part of the funnel first. Conversion benchmarks por canal. A/B test cadence (one variable at a time).
-5. **Phase 5: Measurement & Attribution** — UTM structure, attribution model (first-touch vs last-touch vs multi-touch). CAC por canal. ROAS por canal. North Star Metric definition.
+**Required body sections:**
+1. **Phase 1: Channel Architecture** — Channel selection matrix (effort/impact), paid (SEM, social, display) setup foundations, organic (SEO, content, community) foundations, viral/referral loop design. Rule: master 2 channels before adding a 3rd.
+2. **Phase 2: Growth Loop Design** — Identify existing loops (viral, content, ecosystem, sales). Document each loop as: Trigger → Action → Reward → Invitation. Measure loop coefficient (K-factor for viral).
+3. **Phase 3: Trial-to-Paid Conversion** — Define "Activation Moment" (the specific action that predicts conversion). Activation funnel (signed-up → activated → retained → paid). Identify friction points. Design onboarding that leads to Activation Moment. Target: >20% trial-to-paid in 30 days.
+4. **Phase 4: Funnel Optimization** — TOFU/MOFU/BOFU metrics. Identify the leakiest part of the funnel first. Conversion benchmarks by channel. A/B test cadence (one variable at a time).
+5. **Phase 5: Measurement & Attribution** — UTM structure, attribution model (first-touch vs last-touch vs multi-touch). CAC per channel. ROAS per channel. North Star Metric definition.
 6. **Critical Rules + Example Usage** (5 examples)
 
 ---
 
-#### Task B4.2 — Criar `skills/gtm-demand-generation/README.md`
+#### Task B4.2 — Create `skills/gtm-demand-generation/README.md`
 
-Criar README com tabela Metadata padrão (Version 1.0.0, Author Eric Andrade, Created 2026-04-03).
+Create README with standard Metadata table (Version 1.0.0, Author Eric Andrade, Created 2026-04-03).
 
 ---
 
-#### Task B4.3 — Criar `skills/gtm-account-expansion/SKILL.md`
+#### Task B4.3 — Create `skills/gtm-account-expansion/SKILL.md`
 
-**Purpose:** NRR strategy, upsell triggers, churn prevention, customer health scoring. Cobre o gap de expansão/retention.
+**Purpose:** NRR strategy, upsell triggers, churn prevention, customer health scoring. Covers the expansion/retention gap.
 
-**Arquivo:** `skills/gtm-account-expansion/SKILL.md`
-**Ação:** Criar com frontmatter e body completo cobrindo:
+**File:** `skills/gtm-account-expansion/SKILL.md`
+**Action:** Create with frontmatter and complete body covering:
 
 **Frontmatter:**
 ```yaml
@@ -2343,9 +2055,9 @@ license: MIT
 ---
 ```
 
-**Seções obrigatórias do body:**
-1. **Phase 1: Customer Health Scoring** — Definir health score com 4-6 dimensions (product usage, support tickets, NPS/CSAT, payment health, stakeholder engagement, expansion indicators). Score 0-100. Traffic light (Green/Yellow/Red). Automatizar monitoramento semanal.
-2. **Phase 2: Expansion Triggers & Upsell Playbook** — Identificar 5+ triggers para upsell (usage hitting tier limit, new use case adoption, team growth, funding event, success milestone). Por trigger: quem contata, mensagem, oferta, timing. Regra: upsell after value demonstrated, never before.
+**Required body sections:**
+1. **Phase 1: Customer Health Scoring** — Define health score with 4-6 dimensions (product usage, support tickets, NPS/CSAT, payment health, stakeholder engagement, expansion indicators). Score 0-100. Traffic light (Green/Yellow/Red). Automate weekly monitoring.
+2. **Phase 2: Expansion Triggers & Upsell Playbook** — Identify 5+ triggers for upsell (usage hitting tier limit, new use case adoption, team growth, funding event, success milestone). Per trigger: who contacts, message, offer, timing. Rule: upsell after value demonstrated, never before.
 3. **Phase 3: Churn Prevention** — Early warning signals (login frequency drop, feature abandonment, support spike, stakeholder change). Churn risk scoring. Intervention playbook by risk level. Win-back sequence for churned accounts.
 4. **Phase 4: NRR Strategy** — NRR formula (Expansion MRR + Contraction MRR + Churn MRR) ÷ Starting MRR. Target: >110% for strong SaaS. Diagnose the gap between current and target NRR. Identify which customer segment drives most expansion.
 5. **Phase 5: Customer Success Cadence** — Check-in frequency by tier (High-touch: monthly, Mid-touch: quarterly, Low-touch: automated). QBR structure. Success plan template. Executive sponsor engagement.
@@ -2353,50 +2065,50 @@ license: MIT
 
 ---
 
-#### Task B4.4 — Criar `skills/gtm-account-expansion/README.md`
+#### Task B4.4 — Create `skills/gtm-account-expansion/README.md`
 
-Criar README com tabela Metadata padrão.
+Create README with standard Metadata table.
 
 ---
 
-## TRACK C — Skills de GTM de Consultoria Microsoft
+## TRACK C — Microsoft Consulting GTM Skills
 
-> **Referência:** O conteúdo completo de cada skill está definido em `docs/plan/2026-04-03-gtm-consulting-skills-plan-v2.md`. Este plano substitui o v2 — execute pelo conteúdo aqui e ignore o v2 para a sequência de batches. O conteúdo dos skills (SKILL.md body) está integral no v2.
+> **Reference:** The complete content for each skill is defined in `docs/plan/2026-04-03-gtm-consulting-skills-plan-v2.md`. This plan supersedes the v2 — execute from the content here and ignore the v2 for the batch sequence. The skill body content (SKILL.md body) is complete in the v2.
 
-### Batch 8: Consulting GTM — Oferta e Preço (novos)
+### Batch 8: Consulting GTM — Offer and Pricing (new)
 
 **Skills:** `gtm-consulting-offer-design` + `gtm-consulting-pricing`
 
-**Usar `skill-creator` para ambos.**
+**Use `skill-creator` for both.**
 
 #### Brief: `gtm-consulting-offer-design`
 
 ```
-Nome: gtm-consulting-offer-design
+Name: gtm-consulting-offer-design
 Track: Consulting
 
-Purpose: Projetar a oferta de consulting — definir escopo, entregáveis,
-metodologia, team structure, Hero Offers como entry point, e proposta
-comercial estruturada. O "Produto" do GTM de consultoria.
+Purpose: Design the consulting offer — define scope, deliverables,
+methodology, team structure, Hero Offers as entry point, and
+structured commercial proposal. The "Product" of consulting GTM.
 
 Trigger phrases:
-- "Preciso estruturar minha oferta de [Assessment/SI/Outsourcing]"
-- "Como defino o escopo de uma Hero Offer?"
-- "Me ajuda a desenhar o deliverable de [oferta]"
-- "Qual a diferença entre nossa oferta e do concorrente?"
-- "Preciso criar uma proposta para [cliente]"
+- "I need to structure my [Assessment/SI/Outsourcing] offer"
+- "How do I define the scope of a Hero Offer?"
+- "Help me design the deliverable for [offer]"
+- "What is the difference between our offer and the competitor's?"
+- "I need to create a proposal for [client]"
 
 Should NOT trigger:
-- "Quanto cobrar?" → gtm-consulting-pricing
-- "Quem perseguir?" → gtm-consulting-icp
-- "Como fazer o GTM desta oferta?" → gtm-consulting-designer
+- "How much should I charge?" → gtm-consulting-pricing
+- "Who should I pursue?" → gtm-consulting-icp
+- "How do I GTM this offer?" → gtm-consulting-designer
 
-Frameworks obrigatórios:
+Required frameworks:
 1. Offer Design Canvas: Problem → Approach → Deliverables → Team → Timeline → Success metrics
 2. Hero Offer structure: Entry point (fixed-fee $30-75K, 2-6 weeks) → Natural upsell path
-3. Diferenciação metodológica: o que Avanade entrega diferente dos concorrentes (IP, accelerators, Microsoft depth)
-4. Oferta vs. concorrente: feature/benefit/value table por oferta tipo
-5. Proposta comercial: Executive Summary → Problem → Approach → Deliverables → Investment → Why Avanade
+3. Methodological differentiation: what Avanade delivers differently from competitors (IP, accelerators, Microsoft depth)
+4. Offer vs. competitor: feature/benefit/value table per offer type
+5. Commercial proposal: Executive Summary → Problem → Approach → Deliverables → Investment → Why Avanade
 
 Offer types in scope:
 - Assessment ($15K-$80K): discovery, current state, roadmap
@@ -2405,73 +2117,74 @@ Offer types in scope:
 - Shared Services: process standardization, scale
 
 Output format:
-- Offer Design Canvas preenchido
+- Completed Offer Design Canvas
 - Hero Offer brief (1 page)
-- Differentiation table vs. 2-3 concorrentes
-- Proposta outline (seções + key messages)
+- Differentiation table vs. 2-3 competitors
+- Proposal outline (sections + key messages)
 
 Evals:
-1. "Estrutura uma Hero Offer de AI Assessment para uma conta Whitespace no setor de Manufatura"
-2. "Desenha os entregáveis de um engagement de SI de $500K em Azure para o setor financeiro"
-3. "Como diferenciamos nosso Outsourcing de um centro de serviços offshore genérico?"
+1. "Structure a Hero Offer for AI Assessment for a Whitespace account in the Manufacturing sector"
+2. "Design the deliverables for a $500K Azure SI engagement in the financial sector"
+3. "How do we differentiate our Outsourcing from a generic offshore service center?"
 ```
 
 #### Brief: `gtm-consulting-pricing`
 
 ```
-Nome: gtm-consulting-pricing
+Name: gtm-consulting-pricing
 Track: Consulting
 
-Purpose: Definir modelo comercial e preço para engagements de consulting —
-escolher entre T&M, fixed-fee, outcome-based ou retainer, justificar
-rate premium, estruturar pricing por tipo de oferta e tier de conta.
+Purpose: Define the commercial model and price for consulting
+engagements — choose between T&M, fixed-fee, outcome-based or
+retainer, justify rate premium, structure pricing by offer type
+and account tier.
 
 Trigger phrases:
-- "Quanto cobrar por este engagement?"
-- "Fixed-fee ou T&M para este projeto?"
-- "Como justificamos nosso rate versus o concorrente mais barato?"
-- "Preciso precificar uma proposta de Outsourcing"
-- "O cliente está pedindo outcome-based — vale a pena?"
+- "How much should I charge for this engagement?"
+- "Fixed-fee or T&M for this project?"
+- "How do we justify our rate versus the cheaper competitor?"
+- "I need to price an Outsourcing proposal"
+- "The client wants outcome-based — is it worth it?"
 
 Should NOT trigger:
-- "Preciso precificar meu SaaS" → gtm-product-pricing
-- "Estrutura a oferta de consulting" → gtm-consulting-offer-design
-- "Como qualificar este deal?" → gtm-consulting-qualifier
+- "I need to price my SaaS" → gtm-product-pricing
+- "Structure the consulting offer" → gtm-consulting-offer-design
+- "How do I qualify this deal?" → gtm-consulting-qualifier
 
-Frameworks obrigatórios:
-1. Modelo comercial por tipo de oferta:
-   - Assessment: fixed-fee (previsibilidade para cliente, low risk para Avanade)
-   - SI: T&M com teto (control + flexibility) ou fixed-fee se escopo maduro
-   - Outsourcing: SLA-based com baseline + gain-share opcional
-   - Retainer: recurring com volume commitment
+Required frameworks:
+1. Commercial model by offer type:
+   - Assessment: fixed-fee (predictability for client, low risk for Avanade)
+   - SI: T&M with cap (control + flexibility) or fixed-fee if scope is mature
+   - Outsourcing: SLA-based with baseline + optional gain-share
+   - Retainer: recurring with volume commitment
 2. Rate justification framework: value delivered vs. cost of alternatives vs. risk of doing nothing
-3. Pricing psychology: anchoring alto, decoy tier, framing como investimento não custo
-4. Discount governance: quando dar, quanto, quem aprova, contrapartidas esperadas
-5. Commercial model tradeoffs matrix: T&M vs Fixed vs Outcome vs Retainer por contexto
+3. Pricing psychology: high anchoring, decoy tier, framing as investment not cost
+4. Discount governance: when to give, how much, who approves, expected counterparts
+5. Commercial model tradeoffs matrix: T&M vs Fixed vs Outcome vs Retainer by context
 
 Output format:
-- Commercial model recommendation com rationale
-- Rate range por role/seniority
-- Pricing narrative (como apresentar ao CFO)
+- Commercial model recommendation with rationale
+- Rate range per role/seniority
+- Pricing narrative (how to present to CFO)
 - Discount governance table
 
 Evals:
-1. "É melhor T&M ou fixed-fee para um SI de $800K no setor de saúde — cliente é conservador em risco"
-2. "Justifica nosso rate de $220/hora para um Arquiteto Azure quando o offshore custa $80"
-3. "O cliente quer outcome-based para o Outsourcing — como estruturamos sem assumir risco excessivo?"
+1. "Better T&M or fixed-fee for an $800K healthcare SI — client is risk-conservative"
+2. "Justify our $220/hour rate for an Azure Architect when offshore costs $80"
+3. "The client wants outcome-based for Outsourcing — how do we structure this without assuming excessive risk?"
 ```
 
-**Gate:** User revisa os 2 skills antes de prosseguir para Batch 9.
+**Gate:** User reviews the 2 skills before proceeding to Batch 9.
 
 ---
 
-### Batch 9: Consulting GTM — ICP e Designer
+### Batch 9: Consulting GTM — ICP and Designer
 
 **Skills:** `gtm-consulting-icp` + `gtm-consulting-designer`
 
-**Usar `skill-creator` para ambos. Brief base disponível em `docs/plan/2026-04-03-gtm-consulting-skills-plan-v2.md`** — usar o conteúdo do v2 como input para o skill-creator (não copiar diretamente, deixar o skill-creator estruturar com triggers e evals).
+**Use `skill-creator` for both. Base brief available in `docs/plan/2026-04-03-gtm-consulting-skills-plan-v2.md`** — use the v2 content as input for the skill-creator (do not copy directly, let the skill-creator structure with triggers and evals).
 
-**Gate:** User revisa os 2 skills antes de prosseguir para Batch 10.
+**Gate:** User reviews the 2 skills before proceeding to Batch 10.
 
 ---
 
@@ -2479,111 +2192,111 @@ Evals:
 
 **Skills:** `presales-qualifier`, `executive-account-briefing`, `consulting-pursuit-governance`, `microsoft-cosell-strategy`, `consulting-account-expansion`
 
-**Instrução de execução:** Continuar lendo o v2 para o conteúdo de cada skill. Se algum skill não tiver conteúdo completo no v2, criar baseado nos padrões estabelecidos neste plano.
+**Execution instruction:** Continue reading the v2 for the content of each skill. If any skill does not have complete content in the v2, create based on the patterns established in this plan.
 
 ---
 
 ## TRACK D — Release
 
-### Batch 10: Version Bump e Documentation Sync
+### Batch 10: Version Bump and Documentation Sync
 
-**Pré-requisito:** Todos os Tracks A, B, C completos e aprovados pelo user.
+**Prerequisite:** All Tracks A, B, C complete and approved by user.
 
-#### Task D1 — Contar skills e definir nova versão
+#### Task D1 — Count skills and define new version
 
-Atual: 55 skills, v1.22.0
+Current: 55 skills, v1.22.0
 
-Adicionados:
+Added:
 - Shared: `gtm-market-sizing` + `gtm-icp-designer` = 2
 - Product: `gtm-product-launch` + `gtm-product-pricing` + `gtm-product-outreach` + `gtm-product-demand-gen` + `gtm-product-expansion` + `gtm-product-workflow` = 6
 - Consulting: `gtm-consulting-icp` + `gtm-consulting-designer` + `gtm-consulting-cosell` + `gtm-consulting-qualifier` + `gtm-consulting-briefing` + `gtm-consulting-pursuit` + `gtm-consulting-expansion` + `gtm-consulting-workflow` = 8
-- **Total novos: 19 skills**
+- **Total new: 19 skills**
 
-Renomeados (contam como novos, dir. antigo removido): `startup-growth-strategist` → `gtm-product-growth`
-Enriquecidos (não contam): `product-strategy`, `abx-strategy`
+Renamed (count as new, old dir removed): `startup-growth-strategist` → `gtm-product-growth`
+Enriched (don't count): `product-strategy`, `abx-strategy`
 
-Total: **74 skills**, versão alvo: **v1.27.0**
+Total: **74 skills**, target version: **v1.27.0**
 
-#### Task D2 — Executar release script
+#### Task D2 — Run release script
 
 ```bash
 node scripts/release.js minor
-# Será executado 2 vezes (minor do 1.22 → 1.23 → 1.24)
-# Ou: fazer um único bump para 1.24.0 atualizando package.json manualmente
+# Will be run 2 times (minor from 1.22 → 1.23 → 1.24)
+# Or: do a single bump to 1.24.0 by updating package.json manually
 ```
 
-Verificar após:
+Verify after:
 ```bash
 ./scripts/verify-version-sync.sh
 ```
 
-#### Task D3 — Atualizar CLAUDE.md
+#### Task D3 — Update CLAUDE.md
 
-Na seção `## Project Overview`: atualizar `v1.22.0` → `v1.24.0` e `55 skills` → `67 skills`.
+In the `## Project Overview` section: update `v1.22.0` → `v1.24.0` and `55 skills` → `67 skills`.
 
-Na seção `## Repository Architecture` (skills tree): adicionar os 12 novos skills em ordem alfabética.
+In the `## Repository Architecture` section (skills tree): add the 12 new skills in alphabetical order.
 
-Na seção `## Skill Types`: adicionar os novos skills nas categorias corretas:
+In the `## Skill Types` section: add new skills to the correct categories:
 - **GTM & Product**: `gtm-launch-strategy`, `pricing-strategy`, `signal-based-outreach`, `gtm-demand-generation`, `gtm-account-expansion`
 - **GTM & Consulting Microsoft**: `microsoft-consulting-icp`, `consulting-gtm-designer`, `microsoft-cosell-strategy`, `presales-qualifier`, `executive-account-briefing`, `consulting-pursuit-governance`, `consulting-account-expansion`
 
-#### Task D4 — Atualizar README.md
+#### Task D4 — Update README.md
 
-- H1 title: `# 🤖 Claude Superskills v1.24.0`
+- H1 title: `# Claude Superskills v1.24.0`
 - Badge: `![Version](https://img.shields.io/badge/version-1.24.0-blue.svg)`
 - Badge: `![Skills](https://img.shields.io/badge/skills-67-green.svg)`
 - Footer: `*Version 1.24.0 | April 2026*`
-- Adicionar novos skills nas tabelas de categoria relevantes
+- Add new skills to relevant category tables
 
 #### Task D5 — CHANGELOG.md
 
-Adicionar entrada:
+Add entry:
 ```markdown
 ## [1.26.0] - 2026-04-03
 
-### Added (16 novos skills com convenção gtm- / gtm-product- / gtm-consulting-)
+### Added (16 new skills with gtm- / gtm-product- / gtm-consulting- convention)
 
-**Shared (ambos os tracks):**
-- `gtm-market-sizing` — TAM/SAM/SOM 8-step workflow com fontes, filtros SAM, sensibilidade
-- `gtm-icp-designer` — ICP scoring matrix 5 dimensões, buying triggers, Anti-ICP binários, buying committee
+**Shared (both tracks):**
+- `gtm-market-sizing` — TAM/SAM/SOM 8-step workflow with sources, SAM filters, sensitivity
+- `gtm-icp-designer` — ICP scoring matrix 5 dimensions, buying triggers, binary Anti-ICP, buying committee
 
 **Product GTM (gtm-product-):**
-- `gtm-product-growth` — Unit economics + Bet Board + Assumption Ranking + Growth Roadmap *(rebuild de startup-growth-strategist)*
-- `gtm-product-launch` — 9 fases OPE Canvas → validação → pricing → positioning → assets → go-live (Maja Voje)
+- `gtm-product-growth` — Unit economics + Bet Board + Assumption Ranking + Growth Roadmap *(rebuild of startup-growth-strategist)*
+- `gtm-product-launch` — 9 phases OPE Canvas → validation → pricing → positioning → assets → go-live (Maja Voje)
 - `gtm-product-pricing` — Value metric, WTP Van Westendorp + Gabor-Granger, 3 tiers (hard cap), feature gates
 - `gtm-product-outreach` — ICP matrix 5D, signal scoring formula, SPARK cold email, 6-layer diagnostic
 - `gtm-product-demand-gen` — Channel architecture, growth loops, trial-to-paid conversion, funnel optimization
 - `gtm-product-expansion` — NRR strategy, customer health scoring, upsell triggers, churn prevention
-- `gtm-product-workflow` — Orquestrador do workflow completo de GTM de Produto
+- `gtm-product-workflow` — Orchestrator for the complete Product GTM workflow
 
 **Consulting GTM (gtm-consulting-):**
-- `gtm-consulting-icp` — ICP por tier × oferta (MVC/HG/Emerging/Whitespace), PURE scoring, Anti-ICP
-- `gtm-consulting-designer` — GTM Canvas completo para offerings de consulting Microsoft
-- `gtm-consulting-cosell` — Co-sell + funding Microsoft, DPOR, co-sell status, MCI/AMPP
-- `gtm-consulting-qualifier` — Qualificação de deal antes de investir pre-sales
-- `gtm-consulting-briefing` — Preparação de reunião C-level com contexto de conta
-- `gtm-consulting-pursuit` — Gestão de pursuit ativo com gates e risk scoring
-- `gtm-consulting-expansion` — Expansão de revenue em contas existentes
-- `gtm-consulting-workflow` — Orquestrador do workflow completo de GTM de Consultoria
+- `gtm-consulting-icp` — ICP by tier × offer (MVC/HG/Emerging/Whitespace), PURE scoring, Anti-ICP
+- `gtm-consulting-designer` — Complete GTM Canvas for Microsoft consulting offerings
+- `gtm-consulting-cosell` — Microsoft co-sell + funding, DPOR, co-sell status, MCI/AMPP
+- `gtm-consulting-qualifier` — Deal qualification before investing pre-sales
+- `gtm-consulting-briefing` — C-level meeting preparation with account context
+- `gtm-consulting-pursuit` — Active pursuit management with gates and risk scoring
+- `gtm-consulting-expansion` — Revenue expansion in existing accounts
+- `gtm-consulting-workflow` — Orchestrator for the complete Consulting GTM workflow
 
 ### Improved
-- `product-strategy` — Beachhead Segment, WTP Van Westendorp protocol, 3-part positioning (Market Change→Thesis→Proof), Buying Triggers + Intent Signals no ICP, channel effort/impact matrix, "do nothing" competitor, consistency checklist
-- `abx-strategy` — Step 0 GTM Diagnostic (7 dimensões), composite lead scoring `(Fit×0.30)+(Intent×0.45)+(Engagement×0.25)`, signal decay multipliers com SLAs, staleness rule 4 meses
+- `product-strategy` — Beachhead Segment, WTP Van Westendorp protocol, 3-part positioning (Market Change→Thesis→Proof), Buying Triggers + Intent Signals in ICP, channel effort/impact matrix, "do nothing" competitor, consistency checklist
+- `abx-strategy` — Step 0 GTM Diagnostic (7 dimensions), composite lead scoring `(Fit×0.30)+(Intent×0.45)+(Engagement×0.25)`, signal decay multipliers with SLAs, staleness rule 4 months
 ```
 
-#### Task D6 — Atualizar GitHub About
+#### Task D6 — Update GitHub About
 
 ```bash
 gh repo edit --description "67 Universal AI Skills for Claude Code, GitHub Copilot & 6 more platforms. GTM launch strategy, pricing, outbound, product strategy, consulting GTM, Obsidian, document conversion — no API keys required."
 ```
 
-#### Task D7 — Regenerar indexes
+#### Task D7 — Regenerate indexes
 
 ```bash
 npm run generate-all --prefix cli-installer
 ```
 
-#### Task D8 — Criar package do plugin
+#### Task D8 — Create plugin package
 
 ```bash
 ./scripts/package-plugin.sh
@@ -2604,23 +2317,23 @@ git push origin main && git push origin v1.27.0
 
 ---
 
-## Validation Commands (rodar após cada batch)
+## Validation Commands (run after each batch)
 
 ```bash
-# Validar um skill específico
+# Validate a specific skill
 ./scripts/validate-skill-yaml.sh skills/<skill-name>
 ./scripts/validate-skill-content.sh skills/<skill-name>
 
-# Validar todos os skills de uma vez
+# Validate all skills at once
 for skill in skills/*/; do
   ./scripts/validate-skill-yaml.sh "$skill"
   ./scripts/validate-skill-content.sh "$skill"
 done
 
-# Verificar sincronização de versões
+# Verify version synchronization
 ./scripts/verify-version-sync.sh
 
-# Contar skills
+# Count skills
 ls -d skills/*/ | wc -l
 ```
 
@@ -2628,27 +2341,27 @@ ls -d skills/*/ | wc -l
 
 ## Status Summary
 
-| Batch | Track | Skills (nomes finais) | Criação | Novos | Status |
-|-------|-------|----------------------|---------|-------|--------|
-| **1** | Shared | `gtm-market-sizing`, `gtm-icp-designer` | skill-creator | +2 | ⏳ |
-| **1** | Product | `gtm-product-growth` *(rebuild de startup-growth-strategist)* | skill-creator | rename | ⏳ |
-| **2** | Enrich | `product-strategy` (7 adições cirúrgicas) | manual edit | 0 | ⏳ |
-| **3** | Enrich | `abx-strategy` (Step 0 + scoring formula + decay) | manual edit | 0 | ⏳ |
-| **4** | Shared | `gtm-positioning` ← **4º P ausente** | skill-creator | +1 | ⏳ |
-| **5** | Product | `gtm-product-launch`, `gtm-product-pricing` | skill-creator | +2 | ⏳ |
-| **6** | Product | `gtm-product-outreach` | skill-creator | +1 | ⏳ |
-| **7** | Product | `gtm-product-demand-gen`, `gtm-product-expansion`, `gtm-product-workflow` | skill-creator | +3 | ⏳ |
-| **8** | Consulting | `gtm-consulting-offer-design` ← **Produto ausente**, `gtm-consulting-pricing` ← **Preço ausente** | skill-creator | +2 | ⏳ |
-| **9** | Consulting | `gtm-consulting-icp`, `gtm-consulting-designer` | skill-creator | +2 | ⏳ |
-| **10** | Consulting | `gtm-consulting-qualifier`, `gtm-consulting-briefing`, `gtm-consulting-pursuit`, `gtm-consulting-cosell`, `gtm-consulting-expansion`, `gtm-consulting-workflow` | skill-creator | +6 | ⏳ |
-| **11** | Release | v1.27.0, 74 skills, docs sync, GitHub push | scripts | — | ⏳ |
-| | | **Total novos** | | **+19** | |
+| Batch | Track | Skills (final names) | Creation | New | Status |
+|-------|-------|----------------------|----------|-----|--------|
+| **1** | Shared | `gtm-market-sizing`, `gtm-icp-designer` | skill-creator | +2 | Pending |
+| **1** | Product | `gtm-product-growth` *(rebuild of startup-growth-strategist)* | skill-creator | rename | Pending |
+| **2** | Enrich | `product-strategy` (7 surgical additions) | manual edit | 0 | Pending |
+| **3** | Enrich | `abx-strategy` (Step 0 + scoring formula + decay) | manual edit | 0 | Pending |
+| **4** | Shared | `gtm-positioning` — **missing 4th P** | skill-creator | +1 | Pending |
+| **5** | Product | `gtm-product-launch`, `gtm-product-pricing` | skill-creator | +2 | Pending |
+| **6** | Product | `gtm-product-outreach` | skill-creator | +1 | Pending |
+| **7** | Product | `gtm-product-demand-gen`, `gtm-product-expansion`, `gtm-product-workflow` | skill-creator | +3 | Pending |
+| **8** | Consulting | `gtm-consulting-offer-design` — **missing Product**, `gtm-consulting-pricing` — **missing Price** | skill-creator | +2 | Pending |
+| **9** | Consulting | `gtm-consulting-icp`, `gtm-consulting-designer` | skill-creator | +2 | Pending |
+| **10** | Consulting | `gtm-consulting-qualifier`, `gtm-consulting-briefing`, `gtm-consulting-pursuit`, `gtm-consulting-cosell`, `gtm-consulting-expansion`, `gtm-consulting-workflow` | skill-creator | +6 | Pending |
+| **11** | Release | v1.27.0, 74 skills, docs sync, GitHub push | scripts | — | Pending |
+| | | **Total new** | | **+19** | |
 
-**Cobertura dos 4Ps após execução:**
+**4P coverage after execution:**
 
-| P | Produto GTM | Consultoria GTM |
-|---|-------------|-----------------|
-| **Praça** | gtm-market-sizing + gtm-icp-designer + gtm-product-outreach + gtm-product-demand-gen | gtm-market-sizing + gtm-consulting-icp + gtm-consulting-cosell |
-| **Produto** | product-strategy + gtm-product-growth + gtm-product-launch | gtm-consulting-offer-design |
-| **Preço** | gtm-product-pricing | gtm-consulting-pricing |
-| **Promoção** | gtm-positioning + gtm-product-launch | gtm-positioning + gtm-consulting-designer |
+| P | Product GTM | Consulting GTM |
+|---|-------------|----------------|
+| **Place** | gtm-market-sizing + gtm-icp-designer + gtm-product-outreach + gtm-product-demand-gen | gtm-market-sizing + gtm-consulting-icp + gtm-consulting-cosell |
+| **Product** | product-strategy + gtm-product-growth + gtm-product-launch | gtm-consulting-offer-design |
+| **Price** | gtm-product-pricing | gtm-consulting-pricing |
+| **Promotion** | gtm-positioning + gtm-product-launch | gtm-positioning + gtm-consulting-designer |

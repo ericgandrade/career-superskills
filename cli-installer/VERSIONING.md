@@ -1,83 +1,83 @@
-# 📚 Guia de Versionamento - claude-superskills
+# Versioning Guide — career-superskills
 
-## 🎯 Conceitos Fundamentais
+## Core Concepts
 
 ### Latest (npm tag)
-- **O que é:** Tag padrão do npm que aponta para a versão estável mais recente
-- **Quando muda:** Toda vez que você publica uma nova versão via `npm publish`
-- **Como usuários acessam:** `npm install claude-superskills` ou `npx claude-superskills`
+- **What it is:** Default npm tag pointing to the latest stable version
+- **When it changes:** Every time you publish a new version via `npm publish`
+- **How users access it:** `npm install career-superskills` or `npx career-superskills`
 
 ### Main (Git branch)
-- **O que é:** Branch principal do código-fonte no GitHub
-- **Estado:** Pode estar "à frente" da versão publicada no npm
-- **Relação com npm:** Código em `main` → tag git `v*` → GitHub Actions → npm publish
+- **What it is:** The primary source branch on GitHub
+- **State:** May be "ahead" of the version published on npm
+- **Relationship with npm:** Code in `main` → git tag `v*` → GitHub Actions → npm publish
 
 ### Semantic Versioning (SemVer)
 
-Formato: `MAJOR.MINOR.PATCH`
+Format: `MAJOR.MINOR.PATCH`
 
 ```
 v1.2.3
  │ │ │
  │ │ └─ PATCH: Bug fixes (1.2.3 → 1.2.4)
- │ └─── MINOR: Novas features, compatível (1.2.3 → 1.3.0)
+ │ └─── MINOR: New features, backward-compatible (1.2.3 → 1.3.0)
  └───── MAJOR: Breaking changes (1.2.3 → 2.0.0)
 ```
 
-## 🔄 Workflow de Release
+## Release Workflow
 
 ### 1. Bug Fix (PATCH: 1.0.0 → 1.0.1)
 
-**Quando usar:**
-- Correção de bugs
-- Melhorias de performance
-- Correções de documentação
+**When to use:**
+- Bug fixes
+- Performance improvements
+- Documentation corrections
 
-**Passos:**
+**Steps:**
 
 ```bash
-# 1. Fazer commit das correções
+# 1. Commit fixes
 git add .
-git commit -m "fix: corrige erro no comando install"
+git commit -m "fix: correct error in install command"
 
-# 2. Bumpar versão (cria commit + tag)
+# 2. Bump version (creates commit + tag)
 cd cli-installer
 npm version patch
 
-# 3. Atualizar CHANGELOG
+# 3. Update CHANGELOG
 vim CHANGELOG.md
-# Adicionar entrada da versão
+# Add version entry
 
 # 4. Commit CHANGELOG
 git add CHANGELOG.md
 git commit --amend --no-edit
 
-# 5. Push (aciona GitHub Actions)
+# 5. Push (triggers GitHub Actions)
 git push origin main --tags
 
-# 6. Aguardar publicação (~2 min)
-# Verificar: https://github.com/ericgandrade/claude-superskills/actions
+# 6. Wait for publication (~2 min)
+# Check at: https://github.com/ericgandrade/career-superskills/actions
 ```
 
-### 2. Nova Feature (MINOR: 1.0.0 → 1.1.0)
+### 2. New Feature (MINOR: 1.0.0 → 1.1.0)
 
-**Quando usar:**
-- Novo comando
-- Nova funcionalidade
-- Melhorias que mantêm compatibilidade
+**When to use:**
+- New command
+- New functionality
+- Improvements that maintain compatibility
 
-**Passos:**
+**Steps:**
 
 ```bash
-# 1. Fazer commit da feature
+# 1. Commit the feature
 git add .
-git commit -m "feat: adiciona comando 'info' para mostrar detalhes de skills"
+git commit -m "feat: add 'info' command to show skill details"
 
-# 2. Bumpar versão
+# 2. Bump version
 cd cli-installer
 npm version minor
 
-# 3. Atualizar CHANGELOG
+# 3. Update CHANGELOG
 vim CHANGELOG.md
 
 # 4. Commit CHANGELOG
@@ -90,25 +90,25 @@ git push origin main --tags
 
 ### 3. Breaking Change (MAJOR: 1.0.0 → 2.0.0)
 
-**Quando usar:**
-- Mudanças que quebram API existente
-- Remoção de comandos/features
-- Reorganização estrutural incompatível
+**When to use:**
+- Changes that break the existing API
+- Removal of commands/features
+- Incompatible structural reorganization
 
-**Passos:**
+**Steps:**
 
 ```bash
-# 1. Fazer commit das mudanças
+# 1. Commit changes
 git add .
-git commit -m "feat!: remove comando 'uninstall', use 'remove' agora
+git commit -m "feat!: remove 'uninstall' command, use 'remove' now
 
-BREAKING CHANGE: comando 'uninstall' foi removido, use 'remove' no lugar"
+BREAKING CHANGE: 'uninstall' command has been removed, use 'remove' instead"
 
-# 2. Bumpar versão
+# 2. Bump version
 cd cli-installer
 npm version major
 
-# 3. Atualizar CHANGELOG com BREAKING CHANGES destacadas
+# 3. Update CHANGELOG with highlighted BREAKING CHANGES
 vim CHANGELOG.md
 
 # 4. Commit CHANGELOG
@@ -119,146 +119,146 @@ git commit --amend --no-edit
 git push origin main --tags
 ```
 
-## 📝 Formato do CHANGELOG
+## CHANGELOG Format
 
-Manter em `cli-installer/CHANGELOG.md`:
+Keep in `cli-installer/CHANGELOG.md`:
 
 ```markdown
 # Changelog
 
-Todas as mudanças notáveis do projeto serão documentadas aqui.
+All notable changes to this project will be documented here.
 
-O formato é baseado em [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
-e este projeto adere ao [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
+The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
+and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
 ### Added
-- Features em desenvolvimento
+- Features in development
 
 ## [1.1.0] - 2026-02-15
 
 ### Added
-- Novo comando `info` para mostrar detalhes de skills
-- Output colorido para melhor legibilidade
+- New `info` command to show skill details
+- Colored output for better readability
 
 ### Fixed
-- Progress gauge agora funciona no Windows
+- Progress gauge now works on Windows
 
 ### Changed
-- Melhorado desempenho do comando `list`
+- Improved performance of the `list` command
 
 ## [1.0.1] - 2026-02-05
 
 ### Fixed
-- Corrigido erro no version checker ao parsear YAML
+- Fixed error in version checker when parsing YAML
 
 ## [1.0.0] - 2026-02-02
 
 ### Added
-- Release inicial
-- 5 comandos: install, list, update, uninstall, doctor
-- Suporte dual-platform (Copilot + Claude)
-- Progress gauges visuais
-- Version checking automático
+- Initial release
+- 5 commands: install, list, update, uninstall, doctor
+- Dual-platform support (Copilot + Claude)
+- Visual progress gauges
+- Automatic version checking
 - GitHub Actions CI/CD
 
-[Unreleased]: https://github.com/ericgandrade/claude-superskills/compare/v1.1.0...HEAD
-[1.1.0]: https://github.com/ericgandrade/claude-superskills/compare/v1.0.1...v1.1.0
-[1.0.1]: https://github.com/ericgandrade/claude-superskills/compare/v1.0.0...v1.0.1
-[1.0.0]: https://github.com/ericgandrade/claude-superskills/releases/tag/v1.0.0
+[Unreleased]: https://github.com/ericgandrade/career-superskills/compare/v1.1.0...HEAD
+[1.1.0]: https://github.com/ericgandrade/career-superskills/compare/v1.0.1...v1.1.0
+[1.0.1]: https://github.com/ericgandrade/career-superskills/compare/v1.0.0...v1.0.1
+[1.0.0]: https://github.com/ericgandrade/career-superskills/releases/tag/v1.0.0
 ```
 
-## 🚀 Comandos Úteis
+## Useful Commands
 
 ```bash
-# Ver versão atual
+# Check current version
 cat cli-installer/package.json | grep version
 
-# Ver todas as versões publicadas no npm
-npm view claude-superskills versions
+# See all versions published on npm
+npm view career-superskills versions
 
-# Ver informações da versão latest
-npm view claude-superskills
+# See latest version info
+npm view career-superskills
 
-# Testar versão específica
-npx claude-superskills@1.0.1 --version
+# Test a specific version
+npx career-superskills@1.0.1 --version
 
-# Ver tags git locais
+# See local git tags
 git tag
 
-# Ver tags git remotas
+# See remote git tags
 git ls-remote --tags origin
 
-# Deletar tag (se errou)
+# Delete tag (if you made a mistake)
 git tag -d v1.0.1                    # Local
-git push origin :refs/tags/v1.0.1    # Remoto
+git push origin :refs/tags/v1.0.1    # Remote
 ```
 
-## ⚠️ Troubleshooting
+## Troubleshooting
 
-### Erro: "Tag já existe"
+### Error: "Tag already exists"
 
 ```bash
-# Se você já criou a tag localmente
+# If you already created the tag locally
 git tag -d v1.0.1
 
-# Se a tag existe remotamente
+# If the tag exists remotely
 git push origin :refs/tags/v1.0.1
 
-# Recriar tag
+# Recreate tag
 cd cli-installer
 npm version patch --force
 git push origin main --tags
 ```
 
-### Erro: "npm publish falhou no GitHub Actions"
+### Error: "npm publish failed in GitHub Actions"
 
-1. Verificar logs: https://github.com/ericgandrade/claude-superskills/actions
-2. Comum: Token npm expirado (expira a cada 90 dias)
-3. Solução: Criar novo token e atualizar GitHub Secret NPM_TOKEN
+1. Check logs: https://github.com/ericgandrade/career-superskills/actions
+2. Common cause: Expired npm token (expires every 90 days)
+3. Solution: Create new token and update GitHub Secret NPM_TOKEN
 
-### Publicar versão manualmente (emergência)
+### Publish version manually (emergency)
 
 ```bash
 cd cli-installer
 npm publish
-# Requer OTP do autenticador ou token com bypass 2FA
+# Requires OTP from authenticator or token with 2FA bypass
 ```
 
-## 📅 Lembrete: Token npm
+## Reminder: npm Token
 
-⚠️ **Token npm expira em 90 dias** (por volta de **2 de maio de 2026**)
+⚠️ **npm token expires in 90 days**
 
-Passos para renovar:
-1. Criar novo Granular Access Token no npm (tipo "Automation")
-2. Marcar opção "Bypass 2FA for noninteractive automated workflows"
-3. Atualizar GitHub Secret NPM_TOKEN
-4. Não precisa republicar, próxima versão usará novo token
+Steps to renew:
+1. Create a new Granular Access Token on npm (type "Automation")
+2. Check "Bypass 2FA for noninteractive automated workflows"
+3. Update GitHub Secret NPM_TOKEN
+4. No need to republish; the next version will use the new token
 
-## 🎯 Estratégia Recomendada
+## Recommended Strategy
 
-1. **Desenvolvimento contínuo:** Trabalhe em `main` normalmente
-2. **Commits frequentes:** Use conventional commits (feat:, fix:, docs:)
-3. **Release quando pronto:** Só bumpe versão quando quiser publicar
-4. **CHANGELOG sempre:** Documente todas as mudanças
-5. **Teste antes:** Use `npm link` para testar localmente antes de publicar
+1. **Continuous development:** Work in `main` normally
+2. **Frequent commits:** Use conventional commits (feat:, fix:, docs:)
+3. **Release when ready:** Only bump version when you want to publish
+4. **Always update CHANGELOG:** Document all changes
+5. **Test first:** Use `npm link` to test locally before publishing
 
-## 📊 Estado Atual
+## Current State
 
 ```
-Git main branch: claude-superskills (código-fonte)
+Git main branch: career-superskills (source code)
 ├─ package.json: v1.0.0
-├─ Tag git: v1.0.0
-└─ GitHub Actions: Acionado por tag v*
+├─ Git tag: v1.0.0
+└─ GitHub Actions: Triggered by v* tag
 
-npm registry: claude-superskills
-├─ Versão publicada: 1.0.0
+npm registry: career-superskills
+├─ Published version: 1.0.0
 ├─ Tag: latest
-└─ Disponível: npx claude-superskills
+└─ Available: npx career-superskills
 ```
 
-## 🔗 Links Úteis
+## Useful Links
 
 - [Semantic Versioning](https://semver.org/)
 - [Keep a Changelog](https://keepachangelog.com/)

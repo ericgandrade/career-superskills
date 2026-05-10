@@ -208,7 +208,7 @@ npm unpublish claude-superskills@1.0.0
 
 ---
 
-## Referências
+## References
 
 - [npm Publishing Guide](https://docs.npmjs.com/cli/v10/commands/npm-publish)
 - [SemVer Specification](https://semver.org/)
