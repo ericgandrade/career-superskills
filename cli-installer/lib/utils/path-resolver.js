@@ -52,6 +52,29 @@ function getUserSkillsPath(platform) {
 }
 
 /**
+ * Get project-local skills path for a platform.
+ * Returns a path relative to projectRoot (defaults to process.cwd()).
+ * Mirrors getUserSkillsPath but rooted in the project directory.
+ * @param {string} platform - Platform name
+ * @param {string} [projectRoot] - Project root directory (defaults to process.cwd())
+ * @returns {string}
+ */
+function getLocalSkillsPath(platform, projectRoot = process.cwd()) {
+  const platformDirs = {
+    'codex':       path.join(projectRoot, '.codex', 'skills'),
+    'copilot':     path.join(projectRoot, '.github', 'skills'),
+    'claude':      path.join(projectRoot, '.claude', 'skills'),
+    'opencode':    path.join(projectRoot, '.agent', 'skills'),
+    'gemini':      path.join(projectRoot, '.gemini', 'skills'),
+    'antigravity': path.join(projectRoot, '.gemini', 'antigravity', 'skills'),
+    'cursor':      path.join(projectRoot, '.cursor', 'skills'),
+    'adal':        path.join(projectRoot, '.adal', 'skills')
+  };
+
+  return platformDirs[platform] || path.join(projectRoot, `.${platform}`, 'skills');
+}
+
+/**
  * Validate that a skill name is safe to use as a directory component.
  * Allows only lowercase alphanumeric, hyphens, and underscores.
  * Rejects path-traversal patterns (e.g. "..", "/", "\").
@@ -81,6 +104,7 @@ function assertSafePath(resolvedPath, baseDir) {
 module.exports = {
   getCachedSkillsPath,
   getUserSkillsPath,
+  getLocalSkillsPath,
   getCodexSkillPaths,
   isValidSkillName,
   assertSafePath

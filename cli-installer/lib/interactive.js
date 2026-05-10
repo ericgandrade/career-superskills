@@ -49,6 +49,31 @@ async function confirmCancel() {
 }
 
 /**
+ * Ask user to choose install scope: global (~/.<platform>/skills/) or local (./<platform>/skills/).
+ * @returns {Promise<'global'|'local'>}
+ */
+async function promptScope() {
+  const cwd = process.cwd();
+  const { scope } = await inquirer.prompt([{
+    type: 'list',
+    name: 'scope',
+    message: 'Install scope:',
+    choices: [
+      {
+        name: `Global  — ~/.<platform>/skills/  (available to all projects)`,
+        value: 'global'
+      },
+      {
+        name: `Local   — ${cwd}/.<platform>/skills/  (this project only)`,
+        value: 'local'
+      }
+    ],
+    default: 'global'
+  }]);
+  return scope;
+}
+
+/**
  * Ask user which platforms to install to
  * Codex CLI and Codex App are always shown separately
  * @param {Object} detected - Detected tools { copilot, claude, codex_cli, codex_app, opencode, gemini }
@@ -58,13 +83,19 @@ async function promptPlatforms(detected, options = {}) {
   const {
     message = 'Install skills for which platforms? (Press ESC to cancel)',
     defaultChecked = true,
-    includeCowork = false
+    includeCowork = false,
+    scope = 'global',
+    projectRoot = process.cwd()
   } = options;
+  const { getUserSkillsPath, getLocalSkillsPath } = require('./utils/path-resolver');
+  const getPath = (platform) => scope === 'local'
+    ? getLocalSkillsPath(platform, projectRoot)
+    : getUserSkillsPath(platform);
   const choices = [];
   
   if (detected.copilot && detected.copilot.installed) {
     choices.push({
-      name: '✅ GitHub Copilot CLI (~/.github/skills/)',
+      name: `✅ GitHub Copilot CLI (${getPath('copilot')})`,
       value: 'copilot',
       checked: defaultChecked
     });
@@ -72,7 +103,7 @@ async function promptPlatforms(detected, options = {}) {
   
   if (detected.claude && detected.claude.installed) {
     choices.push({
-      name: '✅ Claude Code (~/.claude/skills/)',
+      name: `✅ Claude Code (${getPath('claude')})`,
       value: 'claude',
       checked: defaultChecked
     });
@@ -89,7 +120,7 @@ async function promptPlatforms(detected, options = {}) {
   if ((detected.codex_cli && detected.codex_cli.installed) ||
       (detected.codex_app && detected.codex_app.installed)) {
     choices.push({
-      name: '✅ OpenAI Codex CLI + App (~/.codex/skills/)',
+      name: `✅ OpenAI Codex CLI + App (${getPath('codex')})`,
       value: 'codex',
       checked: defaultChecked
     });
@@ -97,7 +128,7 @@ async function promptPlatforms(detected, options = {}) {
   
   if (detected.opencode && detected.opencode.installed) {
     choices.push({
-      name: '✅ OpenCode (~/.agent/skills/)',
+      name: `✅ OpenCode (${getPath('opencode')})`,
       value: 'opencode',
       checked: defaultChecked
     });
@@ -105,7 +136,7 @@ async function promptPlatforms(detected, options = {}) {
   
   if (detected.gemini && detected.gemini.installed) {
     choices.push({
-      name: '✅ Gemini CLI (~/.gemini/skills/)',
+      name: `✅ Gemini CLI (${getPath('gemini')})`,
       value: 'gemini',
       checked: defaultChecked
     });
@@ -113,7 +144,7 @@ async function promptPlatforms(detected, options = {}) {
 
   if (detected.antigravity && detected.antigravity.installed) {
     choices.push({
-      name: '✅ Google Antigravity (~/.gemini/antigravity/skills/)',
+      name: `✅ Google Antigravity (${getPath('antigravity')})`,
       value: 'antigravity',
       checked: defaultChecked
     });
@@ -121,7 +152,7 @@ async function promptPlatforms(detected, options = {}) {
 
   if (detected.cursor && detected.cursor.installed) {
     choices.push({
-      name: '✅ Cursor IDE (~/.cursor/skills/)',
+      name: `✅ Cursor IDE (${getPath('cursor')})`,
       value: 'cursor',
       checked: defaultChecked
     });
@@ -129,7 +160,7 @@ async function promptPlatforms(detected, options = {}) {
 
   if (detected.adal && detected.adal.installed) {
     choices.push({
-      name: '✅ AdaL CLI (~/.adal/skills/)',
+      name: `✅ AdaL CLI (${getPath('adal')})`,
       value: 'adal',
       checked: defaultChecked
     });
@@ -157,4 +188,4 @@ async function promptPlatforms(detected, options = {}) {
   return answers.platforms;
 }
 
-module.exports = { promptPlatforms, setupEscapeHandler, confirmCancel };
+module.exports = { promptPlatforms, promptScope, setupEscapeHandler, confirmCancel };
