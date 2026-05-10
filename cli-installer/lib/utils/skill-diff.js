@@ -65,6 +65,74 @@ function getInstalledSkillInventory(platform) {
   return inventory;
 }
 
+/**
+ * Get skill inventory for an arbitrary directory (not just global platform path).
+ * Used for local project-scoped installs.
+ * @param {string} skillsRoot - Directory containing skill folders
+ * @returns {Map<string, {name: string, version: string|null}>}
+ */
+function getInstalledSkillInventoryForDir(skillsRoot) {
+  const inventory = new Map();
+  for (const skillDir of listSkillDirs(skillsRoot)) {
+    const name = path.basename(skillDir);
+    if (!fs.existsSync(path.join(skillDir, 'SKILL.md'))) continue;
+    inventory.set(name, { name, version: readSkillVersion(skillDir) });
+  }
+  return inventory;
+}
+
+/**
+ * Build a skill diff against an explicit target directory instead of the global platform path.
+ * Used for local scope installs.
+ * @param {string} platform - Platform name (for labeling)
+ * @param {Map} cacheInventory - From getCachedSkillInventory()
+ * @param {string} targetDir - The local directory to compare against
+ * @returns {Object} diff object (same shape as buildPlatformSkillDiff)
+ */
+function buildPlatformSkillDiffForDir(platform, cacheInventory, targetDir) {
+  const installedInventory = getInstalledSkillInventoryForDir(targetDir);
+  const diff = {
+    platform,
+    missing: [],
+    outdated: [],
+    upToDate: [],
+    unknown: [],
+    newer: []
+  };
+
+  for (const [skillName, latest] of cacheInventory.entries()) {
+    const installed = installedInventory.get(skillName);
+    if (!installed) {
+      diff.missing.push({
+        skill: skillName,
+        installedVersion: null,
+        latestVersion: latest.version || 'unknown'
+      });
+      continue;
+    }
+
+    const status = compareVersions(installed.version, latest.version);
+    const item = {
+      skill: skillName,
+      installedVersion: installed.version || 'unknown',
+      latestVersion: latest.version || 'unknown'
+    };
+
+    if (status === 'outdated') diff.outdated.push(item);
+    else if (status === 'up_to_date') diff.upToDate.push(item);
+    else if (status === 'newer') diff.newer.push(item);
+    else diff.unknown.push(item);
+  }
+
+  diff.missing.sort((a, b) => a.skill.localeCompare(b.skill));
+  diff.outdated.sort((a, b) => a.skill.localeCompare(b.skill));
+  diff.upToDate.sort((a, b) => a.skill.localeCompare(b.skill));
+  diff.newer.sort((a, b) => a.skill.localeCompare(b.skill));
+  diff.unknown.sort((a, b) => a.skill.localeCompare(b.skill));
+
+  return diff;
+}
+
 function compareVersions(installedVersion, latestVersion) {
   if (!installedVersion || !latestVersion) return 'unknown';
   if (!semver.valid(installedVersion) || !semver.valid(latestVersion)) return 'unknown';
@@ -131,7 +199,9 @@ function getRecommendedSkills(diff) {
 module.exports = {
   getCachedSkillInventory,
   getInstalledSkillInventory,
+  getInstalledSkillInventoryForDir,
   buildPlatformSkillDiff,
+  buildPlatformSkillDiffForDir,
   hasChanges,
   getRecommendedSkills
 };
