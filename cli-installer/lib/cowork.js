@@ -9,7 +9,7 @@ const REPO_NAME = require('../package.json').name;
 const MAX_UPLOAD_BYTES = 50 * 1024 * 1024;
 
 function getOutputDir() {
-  return path.join(os.homedir(), `.${REPO_NAME}`, 'plugin-output');
+  return path.join(os.homedir(), '.claude-cowork', 'plugin-output');
 }
 
 function getGitHubHeaders() {
