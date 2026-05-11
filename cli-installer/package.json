@@ -1,6 +1,6 @@
 {
   "name": "career-superskills",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "20 AI skills for job search, resume optimization, and career development. Works with Claude Code, GitHub Copilot, and 6 more AI platforms.",
   "main": "lib/index.js",
   "bin": {
