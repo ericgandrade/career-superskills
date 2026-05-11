@@ -245,6 +245,7 @@ async function uninstallManagedSkills(platforms, quiet) {
     return;
   }
 
+  const managedSet = new Set(managedSkills);
   for (const targetDir of targets) {
     if (!(await fs.pathExists(targetDir))) continue;
 
@@ -253,6 +254,16 @@ async function uninstallManagedSkills(platforms, quiet) {
       if (await fs.pathExists(skillDir)) {
         await fs.remove(skillDir);
         removedCount++;
+      }
+    }
+
+    if (!quiet) {
+      const remaining = (await fs.readdir(targetDir).catch(() => [])).filter(e => !managedSet.has(e));
+      if (remaining.length > 0) {
+        console.log(chalk.yellow(`  ⚠️  ${remaining.length} skill(s) from other packages remain in ${targetDir}:`));
+        for (const s of remaining.slice(0, 5)) console.log(chalk.dim(`     - ${s}`));
+        if (remaining.length > 5) console.log(chalk.dim(`     ... and ${remaining.length - 5} more`));
+        console.log(chalk.dim('  Use the ☢️  Nuclear option to remove all skills from all packages.\n'));
       }
     }
   }
@@ -292,8 +303,25 @@ async function uninstallManagedSkillsForScope(platforms, quiet, scope = 'global'
   }
 }
 
+function getLocalProjectSkillDirs(cwd) {
+  const home = os.homedir();
+  if (!cwd || cwd === home) return [];
+  const candidates = [
+    { name: 'GitHub Copilot (local)', dir: path.join(cwd, '.github', 'skills') },
+    { name: 'Claude Code (local)',    dir: path.join(cwd, '.claude', 'skills') },
+    { name: 'Codex (local)',          dir: path.join(cwd, '.codex', 'skills') },
+    { name: 'OpenCode (local)',       dir: path.join(cwd, '.agent', 'skills') },
+    { name: 'Gemini CLI (local)',     dir: path.join(cwd, '.gemini', 'skills') },
+    { name: 'Antigravity (local)',    dir: path.join(cwd, '.gemini', 'antigravity', 'skills') },
+    { name: 'Cursor IDE (local)',     dir: path.join(cwd, '.cursor', 'skills') },
+    { name: 'AdaL CLI (local)',       dir: path.join(cwd, '.adal', 'skills') },
+  ];
+  return candidates.filter(({ dir }) => fs.existsSync(dir));
+}
+
 async function nuclearUninstall(quiet) {
   const home = os.homedir();
+  const localDirs = getLocalProjectSkillDirs(process.cwd());
   const allPlatformDirs = [
     { name: 'GitHub Copilot', dir: path.join(home, '.github', 'skills') },
     { name: 'Claude Code',    dir: path.join(home, '.claude', 'skills') },
@@ -303,6 +331,7 @@ async function nuclearUninstall(quiet) {
     { name: 'Antigravity',    dir: path.join(home, '.gemini', 'antigravity', 'skills') },
     { name: 'Cursor IDE',     dir: path.join(home, '.cursor', 'skills') },
     { name: 'AdaL CLI',       dir: path.join(home, '.adal', 'skills') },
+    ...localDirs,
   ];
 
   let removed = 0;
@@ -337,6 +366,9 @@ async function nuclearUninstall(quiet) {
 }
 
 async function runNuclearFlow(quiet) {
+  const cwd = process.cwd();
+  const localDirs = getLocalProjectSkillDirs(cwd);
+
   console.log('\n' + chalk.bgRed.white.bold('  ☢️  NUCLEAR UNINSTALL — THIS CANNOT BE UNDONE  ') + '\n');
   console.log(chalk.red('  This will delete ALL skill folders from ALL AI platforms:\n'));
   console.log(chalk.dim('    ~/.github/skills/              (GitHub Copilot)'));
@@ -346,7 +378,14 @@ async function runNuclearFlow(quiet) {
   console.log(chalk.dim('    ~/.gemini/skills/              (Gemini CLI)'));
   console.log(chalk.dim('    ~/.gemini/antigravity/skills/  (Antigravity)'));
   console.log(chalk.dim('    ~/.cursor/skills/              (Cursor IDE)'));
-  console.log(chalk.dim('    ~/.adal/skills/                (AdaL CLI)\n'));
+  console.log(chalk.dim('    ~/.adal/skills/                (AdaL CLI)'));
+  if (localDirs.length > 0) {
+    console.log(chalk.yellow('\n  Local project skill folders detected in current directory:'));
+    for (const { name, dir } of localDirs) {
+      console.log(chalk.yellow(`    ${dir}  (${name})`));
+    }
+  }
+  console.log();
   console.log(chalk.red('  Skills from ALL installed packages will be removed,'));
   console.log(chalk.red('  including claude-superskills, design-superskills,'));
   console.log(chalk.red('  obsidian-superskills, product-superskills, and any others.\n'));
