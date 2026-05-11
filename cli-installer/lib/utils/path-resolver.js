@@ -39,7 +39,7 @@ function getUserSkillsPath(platform) {
 
   const platformDirs = {
     'codex':       path.join(home, '.codex', 'skills'),
-    'copilot':     path.join(home, '.github', 'skills'),
+    'copilot':     path.join(home, '.copilot', 'skills'),
     'claude':      path.join(home, '.claude', 'skills'),
     'opencode':    path.join(home, '.agent', 'skills'),
     'gemini':      path.join(home, '.gemini', 'skills'),
@@ -62,7 +62,7 @@ function getUserSkillsPath(platform) {
 function getLocalSkillsPath(platform, projectRoot = process.cwd()) {
   const platformDirs = {
     'codex':       path.join(projectRoot, '.codex', 'skills'),
-    'copilot':     path.join(projectRoot, '.github', 'skills'),
+    'copilot':     path.join(projectRoot, '.copilot', 'skills'),
     'claude':      path.join(projectRoot, '.claude', 'skills'),
     'opencode':    path.join(projectRoot, '.agent', 'skills'),
     'gemini':      path.join(projectRoot, '.gemini', 'skills'),

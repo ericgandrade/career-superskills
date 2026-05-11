@@ -1,7 +1,24 @@
 const fs = require('fs-extra');
 const path = require('path');
+const os = require('os');
 const chalk = require('chalk');
 const { getUserSkillsPath, isValidSkillName, assertSafePath } = require('./utils/path-resolver');
+
+const LEGACY_COPILOT_SKILLS_DIR = path.join(os.homedir(), '.github', 'skills');
+
+async function migrateLegacySkills(quiet) {
+  if (!fs.existsSync(LEGACY_COPILOT_SKILLS_DIR)) return;
+  const entries = (await fs.readdir(LEGACY_COPILOT_SKILLS_DIR)).filter(e =>
+    fs.existsSync(path.join(LEGACY_COPILOT_SKILLS_DIR, e, 'SKILL.md'))
+  );
+  if (entries.length === 0) return;
+  for (const entry of entries) {
+    await fs.remove(path.join(LEGACY_COPILOT_SKILLS_DIR, entry));
+  }
+  if (!quiet) {
+    console.log(chalk.dim(`  ↩️  Cleaned ${entries.length} skill(s) from old location ~/.github/skills/ (now using ~/.copilot/skills/)`));
+  }
+}
 
 /**
  * Install skills for GitHub Copilot CLI.
@@ -13,6 +30,7 @@ const { getUserSkillsPath, isValidSkillName, assertSafePath } = require('./utils
  */
 async function installCopilotSkills(cacheDir, skills = null, quiet = false, targetDirOverride = null, label = 'Copilot') {
   const targetDir = targetDirOverride || getUserSkillsPath('copilot');
+  await migrateLegacySkills(quiet);
   await fs.ensureDir(targetDir);
 
   const availableSkills = (await fs.readdir(cacheDir)).filter(f =>
