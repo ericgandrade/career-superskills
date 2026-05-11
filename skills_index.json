@@ -1,0 +1,542 @@
+{
+  "version": "1.0.0",
+  "generated": "2026-05-10T22:06:49.497744Z",
+  "skills": [
+    {
+      "name": "academic-cv-builder",
+      "version": "2.1.0",
+      "description": "This skill should be used when the user needs to format a curriculum vitae for academic positions including faculty, research, or postdoc roles. Use when organizing publications, grants, teaching experience, presentations, and service for tenure-track, lecturer, or research scientist applications.",
+      "category": "career",
+      "tags": [
+        "academic",
+        "cv",
+        "curriculum-vitae",
+        "faculty",
+        "postdoc",
+        "publications",
+        "tenure"
+      ],
+      "risk": "safe",
+      "platforms": [
+        "GitHub Copilot CLI",
+        "Claude Code",
+        "OpenAI Codex",
+        "OpenCode",
+        "Gemini CLI",
+        "Antigravity",
+        "Cursor IDE",
+        "AdaL CLI"
+      ],
+      "triggers": []
+    },
+    {
+      "name": "career-changer-translator",
+      "version": "2.1.0",
+      "description": "This skill should be used when the user needs to translate skills from one industry to another or identify transferable experience for a career pivot. Use when switching careers, repositioning experience for a new field, bridging skill gaps, or rewriting resume bullets in target industry language.",
+      "category": "career",
+      "tags": [
+        "career-change",
+        "transferable-skills",
+        "career-pivot",
+        "resume",
+        "industry-translation",
+        "professional-growth"
+      ],
+      "risk": "safe",
+      "platforms": [
+        "GitHub Copilot CLI",
+        "Claude Code",
+        "OpenAI Codex",
+        "OpenCode",
+        "Gemini CLI",
+        "Antigravity",
+        "Cursor IDE",
+        "AdaL CLI"
+      ],
+      "triggers": []
+    },
+    {
+      "name": "cover-letter-generator",
+      "version": "2.1.0",
+      "description": "This skill should be used when the user needs to create a personalized, compelling cover letter from a resume and job description. Use when writing job application letters, addressing specific role requirements, handling career change narratives, or structuring persuasive arguments for candidacy.",
+      "category": "career",
+      "tags": [
+        "cover-letter",
+        "job-application",
+        "resume",
+        "career",
+        "personalization",
+        "job-search"
+      ],
+      "risk": "safe",
+      "platforms": [
+        "GitHub Copilot CLI",
+        "Claude Code",
+        "OpenAI Codex",
+        "OpenCode",
+        "Gemini CLI",
+        "Antigravity",
+        "Cursor IDE",
+        "AdaL CLI"
+      ],
+      "triggers": []
+    },
+    {
+      "name": "creative-portfolio-resume",
+      "version": "2.1.0",
+      "description": "This skill should be used when the user needs to balance visual design with ATS compatibility for a creative role resume. Use when building portfolio resumes for design, marketing, writing, or other creative fields, and when deciding between a designed version versus an ATS-safe version.",
+      "category": "career",
+      "tags": [
+        "resume",
+        "creative",
+        "portfolio",
+        "design",
+        "ats",
+        "ux",
+        "art-director",
+        "creative-roles"
+      ],
+      "risk": "safe",
+      "platforms": [
+        "GitHub Copilot CLI",
+        "Claude Code",
+        "OpenAI Codex",
+        "OpenCode",
+        "Gemini CLI",
+        "Antigravity",
+        "Cursor IDE",
+        "AdaL CLI"
+      ],
+      "triggers": []
+    },
+    {
+      "name": "executive-resume-writer",
+      "version": "2.1.0",
+      "description": "This skill should be used when the user needs to create a C-suite or VP-level resume emphasizing strategic leadership, board-level impact, and P&L ownership. Use when writing resumes for CEO, COO, CTO, CFO, VP, or Director positions that require executive positioning and achievement-driven narrative.",
+      "category": "career",
+      "tags": [
+        "executive-resume",
+        "c-suite",
+        "vp",
+        "leadership",
+        "board",
+        "strategic",
+        "cto",
+        "ceo",
+        "cfo"
+      ],
+      "risk": "safe",
+      "platforms": [
+        "GitHub Copilot CLI",
+        "Claude Code",
+        "OpenAI Codex",
+        "OpenCode",
+        "Gemini CLI",
+        "Antigravity",
+        "Cursor IDE",
+        "AdaL CLI"
+      ],
+      "triggers": []
+    },
+    {
+      "name": "interview-prep-generator",
+      "version": "2.1.0",
+      "description": "This skill should be used when the user needs to generate STAR stories, behavioral practice questions, and talking points from a resume or job description. Use when preparing for job interviews, practicing competency-based questions, or building structured answers for behavioral and situational interview scenarios.",
+      "category": "career",
+      "tags": [
+        "interview",
+        "star-stories",
+        "interview-prep",
+        "behavioral",
+        "job-search",
+        "talking-points"
+      ],
+      "risk": "safe",
+      "platforms": [
+        "GitHub Copilot CLI",
+        "Claude Code",
+        "OpenAI Codex",
+        "OpenCode",
+        "Gemini CLI",
+        "Antigravity",
+        "Cursor IDE",
+        "AdaL CLI"
+      ],
+      "triggers": []
+    },
+    {
+      "name": "job-description-analyzer",
+      "version": "2.1.0",
+      "description": "This skill should be used when the user needs to analyze a job posting, calculate resume-to-job match scores, identify skill gaps, and create an application strategy. Use when evaluating fit for a specific role, extracting key requirements, or preparing targeted resume and cover letter materials.",
+      "category": "career",
+      "tags": [
+        "job-description",
+        "ats",
+        "keyword-extraction",
+        "match-score",
+        "gap-analysis",
+        "job-search",
+        "application-strategy"
+      ],
+      "risk": "safe",
+      "platforms": [
+        "GitHub Copilot CLI",
+        "Claude Code",
+        "OpenAI Codex",
+        "OpenCode",
+        "Gemini CLI",
+        "Antigravity",
+        "Cursor IDE",
+        "AdaL CLI"
+      ],
+      "triggers": []
+    },
+    {
+      "name": "linkedin-profile-optimizer",
+      "version": "2.1.0",
+      "description": "This skill should be used when the user needs to optimize a LinkedIn profile for recruiter searchability, visibility, and engagement. Use when rewriting LinkedIn headlines, About sections, or experience entries, or when improving profile keyword density and completeness for target roles.",
+      "category": "career",
+      "tags": [
+        "linkedin",
+        "profile",
+        "recruiter",
+        "keywords",
+        "personal-brand",
+        "job-search",
+        "social-selling"
+      ],
+      "risk": "safe",
+      "platforms": [
+        "GitHub Copilot CLI",
+        "Claude Code",
+        "OpenAI Codex",
+        "OpenCode",
+        "Gemini CLI",
+        "Antigravity",
+        "Cursor IDE",
+        "AdaL CLI"
+      ],
+      "triggers": []
+    },
+    {
+      "name": "offer-comparison-analyzer",
+      "version": "2.1.0",
+      "description": "This skill should be used when the user needs to compare multiple job offers side-by-side with total compensation analysis. Use when evaluating competing offers, calculating equity value and benefits, scoring offers against personal priorities, or deciding between roles with different salary and compensation structures.",
+      "category": "career",
+      "tags": [
+        "job-offer",
+        "compensation",
+        "equity",
+        "total-comp",
+        "offer-comparison",
+        "negotiation",
+        "career-decision"
+      ],
+      "risk": "safe",
+      "platforms": [
+        "GitHub Copilot CLI",
+        "Claude Code",
+        "OpenAI Codex",
+        "OpenCode",
+        "Gemini CLI",
+        "Antigravity",
+        "Cursor IDE",
+        "AdaL CLI"
+      ],
+      "triggers": []
+    },
+    {
+      "name": "portfolio-case-study-writer",
+      "version": "2.1.0",
+      "description": "This skill should be used when the user needs to transform resume bullets into detailed portfolio case studies. Use when building a project portfolio, documenting design thinking processes, writing UX or product case studies, or showcasing problem-solving approaches for creative, product, or technical roles.",
+      "category": "career",
+      "tags": [
+        "portfolio",
+        "case-study",
+        "ux",
+        "product",
+        "storytelling",
+        "career",
+        "resume-expansion"
+      ],
+      "risk": "safe",
+      "platforms": [
+        "GitHub Copilot CLI",
+        "Claude Code",
+        "OpenAI Codex",
+        "OpenCode",
+        "Gemini CLI",
+        "Antigravity",
+        "Cursor IDE",
+        "AdaL CLI"
+      ],
+      "triggers": []
+    },
+    {
+      "name": "reference-list-builder",
+      "version": "2.1.0",
+      "description": "This skill should be used when the user needs to format professional references properly and prepare reference materials for job applications. Use when creating reference sheets, selecting appropriate references, preparing referees with talking points, or structuring reference documentation for job applications.",
+      "category": "career",
+      "tags": [
+        "references",
+        "job-application",
+        "reference-list",
+        "professional-references",
+        "career",
+        "job-search"
+      ],
+      "risk": "safe",
+      "platforms": [
+        "GitHub Copilot CLI",
+        "Claude Code",
+        "OpenAI Codex",
+        "OpenCode",
+        "Gemini CLI",
+        "Antigravity",
+        "Cursor IDE",
+        "AdaL CLI"
+      ],
+      "triggers": []
+    },
+    {
+      "name": "resume-ats-optimizer",
+      "version": "2.1.0",
+      "description": "This skill should be used when the user needs to optimize a resume for Applicant Tracking Systems, check ATS compatibility, and analyze keyword match against a job description. Use when a resume is failing screening filters, keyword density is low, or formatting is causing ATS parsing errors.",
+      "category": "career",
+      "tags": [
+        "resume",
+        "ats",
+        "applicant-tracking",
+        "keyword-optimization",
+        "job-search",
+        "parse-ability"
+      ],
+      "risk": "safe",
+      "platforms": [
+        "GitHub Copilot CLI",
+        "Claude Code",
+        "OpenAI Codex",
+        "OpenCode",
+        "Gemini CLI",
+        "Antigravity",
+        "Cursor IDE",
+        "AdaL CLI"
+      ],
+      "triggers": []
+    },
+    {
+      "name": "resume-bullet-writer",
+      "version": "2.1.0",
+      "description": "This skill should be used when the user needs to transform weak resume bullets into achievement-focused statements with metrics and impact. Use when rewriting job descriptions on a resume, converting duties to accomplishments, or adding quantified results to career experience bullets.",
+      "category": "career",
+      "tags": [
+        "resume",
+        "bullets",
+        "achievement",
+        "metrics",
+        "action-verbs",
+        "impact",
+        "job-search"
+      ],
+      "risk": "safe",
+      "platforms": [
+        "GitHub Copilot CLI",
+        "Claude Code",
+        "OpenAI Codex",
+        "OpenCode",
+        "Gemini CLI",
+        "Antigravity",
+        "Cursor IDE",
+        "AdaL CLI"
+      ],
+      "triggers": []
+    },
+    {
+      "name": "resume-formatter",
+      "version": "2.1.0",
+      "description": "This skill should be used when the user needs to ensure ATS-friendly formatting and create a clean, scannable resume layout. Use when fixing resume structure, standardizing fonts and spacing, checking for parsing-breaking elements, or converting a resume to ATS-compatible format.",
+      "category": "career",
+      "tags": [
+        "resume",
+        "formatting",
+        "layout",
+        "ats",
+        "markdown",
+        "scannable",
+        "clean"
+      ],
+      "risk": "safe",
+      "platforms": [
+        "GitHub Copilot CLI",
+        "Claude Code",
+        "OpenAI Codex",
+        "OpenCode",
+        "Gemini CLI",
+        "Antigravity",
+        "Cursor IDE",
+        "AdaL CLI"
+      ],
+      "triggers": []
+    },
+    {
+      "name": "resume-quantifier",
+      "version": "2.1.0",
+      "description": "This skill should be used when the user needs to find opportunities to add metrics to a resume and estimate numbers when exact data is unavailable. Use when resume bullets lack quantification, when the user needs help estimating impact figures, or when strengthening achievement statements with data.",
+      "category": "career",
+      "tags": [
+        "resume",
+        "metrics",
+        "quantification",
+        "achievements",
+        "numbers",
+        "impact",
+        "job-search"
+      ],
+      "risk": "safe",
+      "platforms": [
+        "GitHub Copilot CLI",
+        "Claude Code",
+        "OpenAI Codex",
+        "OpenCode",
+        "Gemini CLI",
+        "Antigravity",
+        "Cursor IDE",
+        "AdaL CLI"
+      ],
+      "triggers": []
+    },
+    {
+      "name": "resume-section-builder",
+      "version": "2.1.0",
+      "description": "This skill should be used when the user needs to create targeted resume sections optimized for different experience levels and roles. Use when building a professional summary, skills section, education block, or any specific resume section tailored to a job target or career stage.",
+      "category": "career",
+      "tags": [
+        "resume",
+        "sections",
+        "executive-summary",
+        "skills",
+        "education",
+        "projects",
+        "resume-writing"
+      ],
+      "risk": "safe",
+      "platforms": [
+        "GitHub Copilot CLI",
+        "Claude Code",
+        "OpenAI Codex",
+        "OpenCode",
+        "Gemini CLI",
+        "Antigravity",
+        "Cursor IDE",
+        "AdaL CLI"
+      ],
+      "triggers": []
+    },
+    {
+      "name": "resume-tailor",
+      "version": "2.1.0",
+      "description": "This skill should be used when the user needs to customize a resume for a specific job posting while maintaining truthfulness. Use when adapting an existing resume to match a job description, repositioning experience for a new role, or aligning resume language with target role keywords and requirements.",
+      "category": "career",
+      "tags": [
+        "resume",
+        "tailoring",
+        "job-application",
+        "keyword-alignment",
+        "customization",
+        "job-search"
+      ],
+      "risk": "safe",
+      "platforms": [
+        "GitHub Copilot CLI",
+        "Claude Code",
+        "OpenAI Codex",
+        "OpenCode",
+        "Gemini CLI",
+        "Antigravity",
+        "Cursor IDE",
+        "AdaL CLI"
+      ],
+      "triggers": []
+    },
+    {
+      "name": "resume-version-manager",
+      "version": "2.1.0",
+      "description": "This skill should be used when the user needs to track different resume versions, maintain a master resume, and manage tailored versions for multiple applications. Use when juggling multiple job targets, tracking which version was sent where, or maintaining a centralized resume source of truth.",
+      "category": "career",
+      "tags": [
+        "resume",
+        "version-control",
+        "master-resume",
+        "job-search",
+        "tracking",
+        "tailoring"
+      ],
+      "risk": "safe",
+      "platforms": [
+        "GitHub Copilot CLI",
+        "Claude Code",
+        "OpenAI Codex",
+        "OpenCode",
+        "Gemini CLI",
+        "Antigravity",
+        "Cursor IDE",
+        "AdaL CLI"
+      ],
+      "triggers": []
+    },
+    {
+      "name": "salary-negotiation-prep",
+      "version": "2.1.0",
+      "description": "This skill should be used when the user needs to research market rates, build a salary negotiation strategy, and create counter-offer scripts. Use when preparing to negotiate a job offer, requesting a raise, evaluating compensation packages, or responding to lowball offers with data-backed confidence.",
+      "category": "career",
+      "tags": [
+        "salary-negotiation",
+        "compensation",
+        "counter-offer",
+        "market-rates",
+        "batna",
+        "equity",
+        "job-offer"
+      ],
+      "risk": "safe",
+      "platforms": [
+        "GitHub Copilot CLI",
+        "Claude Code",
+        "OpenAI Codex",
+        "OpenCode",
+        "Gemini CLI",
+        "Antigravity",
+        "Cursor IDE",
+        "AdaL CLI"
+      ],
+      "triggers": []
+    },
+    {
+      "name": "tech-resume-optimizer",
+      "version": "2.1.0",
+      "description": "This skill should be used when the user needs to optimize a resume for software engineering, product management, or technical roles. Use when tailoring a tech resume to emphasize engineering contributions, open-source work, system design, or technical leadership for software and product positions.",
+      "category": "career",
+      "tags": [
+        "resume",
+        "tech-resume",
+        "software-engineer",
+        "faang",
+        "technical-roles",
+        "pm",
+        "product-manager"
+      ],
+      "risk": "safe",
+      "platforms": [
+        "GitHub Copilot CLI",
+        "Claude Code",
+        "OpenAI Codex",
+        "OpenCode",
+        "Gemini CLI",
+        "Antigravity",
+        "Cursor IDE",
+        "AdaL CLI"
+      ],
+      "triggers": []
+    }
+  ]
+}

@@ -5,17 +5,17 @@ const os = require('os');
 const path = require('path');
 
 const REPO_OWNER = 'ericgandrade';
-const REPO_NAME = 'claude-superskills';
+const REPO_NAME = require('../package.json').name;
 const MAX_UPLOAD_BYTES = 50 * 1024 * 1024;
 
 function getOutputDir() {
-  return path.join(os.homedir(), '.claude-superskills', 'plugin-output');
+  return path.join(os.homedir(), `.${REPO_NAME}`, 'plugin-output');
 }
 
 function getGitHubHeaders() {
   return {
     Accept: 'application/vnd.github.v3+json',
-    'User-Agent': 'claude-superskills-installer'
+    'User-Agent': `${REPO_NAME}-installer`
   };
 }
 
@@ -84,13 +84,14 @@ async function buildZipFromGitHubRelease(version, zipPath) {
 
 async function packageCoworkPlugin({ version, quiet = false, pluginRoot }) {
   const outputDir = getOutputDir();
-  const zipName = `claude-superskills-v${version}.zip`;
+  const zipName = `${REPO_NAME}-v${version}.zip`;
   const zipPath = path.join(outputDir, zipName);
 
   await fs.ensureDir(outputDir);
 
+  const zipPattern = new RegExp(`^${REPO_NAME}-v.*\\.zip$`);
   for (const file of await fs.readdir(outputDir)) {
-    if (/^claude-superskills-v.*\.zip$/.test(file)) {
+    if (zipPattern.test(file)) {
       await fs.remove(path.join(outputDir, file));
     }
   }
@@ -131,7 +132,7 @@ function printCoworkInstructions({ zipPath, sizeBytes }, version) {
   console.log('  1. Open Claude Desktop and switch to the Cowork tab');
   console.log('  2. Open Customize');
   console.log('  3. Open your installed plugins list or browse plugins');
-  console.log('  4. Find the existing claude-superskills plugin');
+  console.log(`  4. Find the existing ${REPO_NAME} plugin`);
   console.log('  5. Remove or uninstall the previous version first');
   console.log('  6. Upload the new zip file shown above');
   console.log('  7. Confirm the new version appears in Cowork');

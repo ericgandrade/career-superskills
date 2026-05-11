@@ -2,7 +2,7 @@
 
 20 AI skills for job search, resume optimization, career transitions, and professional development. Install once across all 8 AI platforms.
 
-![Version](https://img.shields.io/badge/version-1.0.1-blue.svg)
+![Version](https://img.shields.io/badge/version-1.0.2-blue.svg)
 ![License](https://img.shields.io/badge/license-MIT-green.svg)
 ![Skills](https://img.shields.io/badge/skills-20-brightgreen.svg)
 ![Platforms](https://img.shields.io/badge/platforms-8-orange.svg)
@@ -233,4 +233,4 @@ MIT - See [LICENSE](./LICENSE) for details.
 
 **Built with ❤️ by [Eric Andrade](https://github.com/ericgandrade)**
 
-*Version 1.0.1 | May 2026*
+*Version 1.0.2 | May 2026*

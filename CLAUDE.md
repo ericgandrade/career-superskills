@@ -6,7 +6,7 @@ This file provides guidance to Claude Code when working in this repository.
 
 **career-superskills** is a focused AI skills package for job search and career development. Part of the Superskills family.
 
-- **npm package**: `career-superskills` (v1.0.1) — `npx career-superskills` — **20 skills**
+- **npm package**: `career-superskills` (v1.0.2) — `npx career-superskills` — **20 skills**
 - **Claude Code plugin**: `claude --plugin-dir ./career-superskills`
 - **GitHub**: `https://github.com/ericgandrade/career-superskills`
 
@@ -16,7 +16,7 @@ Resume skills, job search skills, portfolio & presence skills. See README.md for
 
 ## Version Management
 
-Current version: **v1.0.1**. Use `node scripts/release.js [patch|minor|major]` to bump.
+Current version: **v1.0.2**. Use `node scripts/release.js [patch|minor|major]` to bump.
 
 ## Publishing
 
